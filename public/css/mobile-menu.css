@@ -1,0 +1,169 @@
+/* Mobile Menu Styles - Dark Theme */
+.mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #2a2a2a;
+    z-index: 9999;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.mobile-menu-overlay.active {
+    transform: translateX(0);
+}
+
+.mobile-menu-header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 15px 20px;
+    flex-shrink: 0;
+}
+
+.mobile-menu-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: opacity 0.3s ease;
+}
+
+.mobile-menu-close:hover {
+    opacity: 0.7;
+}
+
+.mobile-menu-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.mobile-menu-item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-menu-item:first-child {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-menu-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px;
+    color: white;
+    text-decoration: none;
+    font-family: 'Kantumruy Pro', 'Khmer OS Muol Light', serif;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.mobile-menu-link:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: white;
+}
+
+.mobile-menu-link .expand-icon {
+    font-size: 18px;
+    opacity: 0.7;
+}
+
+.mobile-menu-search {
+    padding: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    flex-shrink: 0;
+    background-color: #2a2a2a;
+}
+
+.mobile-menu-search-input {
+    width: 100%;
+    padding: 12px 45px 12px 20px;
+    background-color: #3a3a3a;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-family: 'Kantumruy Pro', 'Khmer OS Muol Light', serif;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.mobile-menu-search-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.mobile-menu-search-input:focus {
+    outline: none;
+    background-color: #4a4a4a;
+}
+
+.mobile-menu-search-wrapper {
+    position: relative;
+}
+
+.mobile-menu-search-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.6);
+    pointer-events: none;
+}
+
+/* Responsive adjustments - Hide mobile menu only on desktop (1200px+) */
+@media (min-width: 1200px) {
+    .mobile-menu-overlay {
+        display: none !important;
+    }
+}
+
+/* Tablet specific styles - iPad and iPad Pro */
+@media (min-width: 768px) and (max-width: 1199px) {
+    .mobile-menu-link {
+        font-size: 18px;
+        padding: 20px 25px;
+    }
+    
+    .mobile-menu-search-input {
+        font-size: 16px;
+        padding: 14px 50px 14px 25px;
+    }
+}
+
+/* iPad Pro specific adjustments */
+@media (min-width: 1024px) and (max-width: 1199px) {
+    .mobile-menu-link {
+        font-size: 19px;
+        padding: 22px 30px;
+    }
+    
+    .mobile-menu-search-input {
+        font-size: 17px;
+        padding: 15px 55px 15px 30px;
+    }
+    
+    .mobile-menu-header {
+        padding: 20px 30px;
+    }
+    
+    .mobile-menu-search {
+        padding: 25px 30px;
+    }
+}
+
+/* Prevent body scroll when menu is open */
+body.mobile-menu-open {
+    overflow: hidden;
+}
+

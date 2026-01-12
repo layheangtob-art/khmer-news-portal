@@ -1,0 +1,151 @@
+/* Modern UI Styles */
+.hover-shadow {
+    transition: all 0.3s ease;
+}
+
+.hover-shadow:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+.transition-300 {
+    transition: all 0.3s ease;
+}
+
+.img-zoomin {
+    transition: transform 0.5s ease;
+}
+
+.img-zoomin:hover {
+    transform: scale(1.05);
+}
+
+.card {
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.shadow-sm {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+}
+
+.shadow-lg {
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+}
+
+.nav-pills .nav-link.active {
+    background-color: #0d6efd;
+    color: white !important;
+}
+
+.nav-pills .nav-link.active span {
+    color: white !important;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #0052a5 0%, #003d7a 100%);
+    border: none;
+}
+
+.btn-outline-primary {
+    border-color: #0052a5;
+    color: #0052a5;
+}
+
+.btn-outline-primary:hover {
+    background: linear-gradient(135deg, #0052a5 0%, #003d7a 100%);
+    border-color: transparent;
+}
+
+.text-primary {
+    color: #0052a5 !important;
+}
+
+.bg-primary {
+    background: linear-gradient(135deg, #0052a5 0%, #003d7a 100%) !important;
+}
+
+.rounded-pill {
+    border-radius: 50rem !important;
+}
+
+/* Sticky Navbar Styles */
+.container-fluid.sticky-top {
+    position: sticky !important;
+    top: 0;
+    z-index: 999;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.container-fluid.sticky-top .container-fluid {
+    position: relative;
+}
+
+/* Responsive Navbar Styles */
+@media (max-width: 1199px) {
+    .navbar-brand img {
+        max-width: 70px !important;
+    }
+    
+    .navbar-brand span {
+        font-size: 20px !important;
+    }
+    
+    .navbar-toggler {
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 4px 8px;
+    }
+    
+    .navbar-toggler:focus {
+        box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar-brand img {
+        max-width: 60px !important;
+    }
+    
+    .navbar-brand span {
+        font-size: 18px !important;
+    }
+    
+    .navbar {
+        padding: 10px 0 !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-brand img {
+        max-width: 50px !important;
+    }
+    
+    .navbar-brand span {
+        font-size: 16px !important;
+    }
+}
+
+/* iPad Pro specific responsive styles */
+@media (min-width: 1024px) and (max-width: 1199px) {
+    .navbar-brand img {
+        max-width: 80px !important;
+    }
+    
+    .navbar-brand span {
+        font-size: 22px !important;
+    }
+    
+    .navbar {
+        padding: 12px 0 !important;
+    }
+    
+    /* Ensure mobile menu toggle is visible on iPad Pro */
+    .navbar-toggler {
+        display: block !important;
+    }
+    
+    /* Hide desktop menu on iPad Pro */
+    #navbarCollapse {
+        display: none !important;
+    }
+}

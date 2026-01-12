@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="728" height="90" viewBox="0 0 728 90">
+  <!-- Background -->
+  <rect width="728" height="90" fill="#003366" />
+  
+  <!-- Logo on left -->
+  <g transform="translate(20, 15)">
+    <polygon points="30,0 60,30 30,60 0,30" fill="#FFC107" />
+    <polygon points="30,10 50,30 30,50 10,30" fill="#003366" />
+    <text x="0" y="75" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#FFC107">INVA</text>
+    <text x="0" y="90" font-family="Arial, sans-serif" font-size="10" fill="#FFC107">REAL ESTATE</text>
+  </g>
+  
+  <!-- Khmer Text in middle -->
+  <text x="180" y="55" font-family="Koulen, Arial, sans-serif" font-size="28" fill="#FFFFFF">ភ្នំពេញ ផ្សារថ្មីទី១</text>
+  
+  <!-- Gold Number on right -->
+  <g transform="translate(580, 20)">
+    <text font-family="Arial, sans-serif" font-size="60" font-weight="bold" fill="#FFC107">25</text>
+    <text x="80" y="25" font-family="Koulen, Arial, sans-serif" font-size="20" fill="#FFFFFF">ខេត្ត/ក្រុង</text>
+  </g>
+</svg>

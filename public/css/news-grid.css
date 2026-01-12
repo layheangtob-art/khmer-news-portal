@@ -1,0 +1,95 @@
+/* News Grid Layout Styles */
+.news-card {
+    border: 1px solid #eaeaea;
+    background-color: #fff;
+    transition: all 0.3s ease;
+}
+
+.news-card:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.news-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    line-height: 1.4;
+    text-decoration: none;
+}
+
+.news-title:hover {
+    color: #0d6efd;
+}
+
+.news-excerpt {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+}
+
+.news-meta {
+    font-size: 12px;
+}
+
+/* Flag corners */
+.flag-corner {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 40px 40px 0 0;
+}
+
+.flag-blue {
+    border-color: #0d6efd transparent transparent transparent;
+}
+
+.flag-red {
+    border-color: #dc3545 transparent transparent transparent;
+}
+
+/* Sidebar styles */
+.sidebar-section {
+    background-color: #fff;
+    border: 1px solid #eaeaea;
+    padding: 15px;
+}
+
+.sidebar-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #0d6efd;
+}
+
+.sidebar-news-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    text-decoration: none;
+    line-height: 1.4;
+}
+
+.sidebar-news-title:hover {
+    color: #0d6efd;
+}
+
+.app-download-banner {
+    border-radius: 5px;
+}
+
+.app-download-btn {
+    display: block;
+    width: 48%;
+    padding: 5px;
+    background-color: #fff;
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+    .news-card {
+        margin-bottom: 15px;
+    }
+}

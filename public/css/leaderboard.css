@@ -1,0 +1,41 @@
+/* Leaderboard Banner Styles */
+.leaderboard-banner {
+    background-color: #f8f9fa;
+    /* padding: 10px 0; */
+}
+
+.leaderboard-ad {
+    width: 728px;
+    max-width: 100%;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.leaderboard-ad:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.leaderboard-ad img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .leaderboard-ad {
+        width: 468px;
+        height: 60px;
+    }
+}
+
+@media (max-width: 576px) {
+    .leaderboard-ad {
+        width: 320px;
+        height: 50px;
+    }
+}

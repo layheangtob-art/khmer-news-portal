@@ -1,0 +1,177 @@
+/* Homepage Layout Styles */
+
+/* Section Headers */
+.section-header {
+    border-bottom: 3px solid #0052a5;
+    padding-bottom: 10px;
+}
+
+.section-title {
+    font-family: 'Kantumruy Pro', 'Khmer OS Muol Light', serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: #0052a5;
+    margin: 0;
+}
+
+/* Featured News Card */
+.featured-news-card {
+    transition: transform 0.3s ease;
+}
+
+.featured-news-card:hover {
+    transform: translateY(-5px);
+}
+
+.featured-news-title {
+    font-family: 'Kantumruy Pro', 'Khmer OS Muol Light', serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+    line-height: 1.4;
+    margin: 0;
+    transition: color 0.3s ease;
+}
+
+.featured-news-card:hover .featured-news-title {
+    color: #0052a5;
+}
+
+/* Small News Items */
+.small-news-item {
+    transition: background-color 0.3s ease;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.small-news-item:hover {
+    background-color: #f8f9fa;
+}
+
+.small-news-title {
+    font-family: 'Kantumruy Pro', 'Khmer OS Muol Light', serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    line-height: 1.4;
+    margin: 0;
+    transition: color 0.3s ease;
+}
+
+.small-news-item:hover .small-news-title {
+    color: #0052a5;
+}
+
+/* Technology News Cards */
+.tech-news-card {
+    background: white;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.tech-news-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.tech-news-title {
+    font-family: 'Kantumruy Pro', 'Khmer OS Muol Light', serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: #333;
+    line-height: 1.4;
+    margin: 10px 0 5px 0;
+    transition: color 0.3s ease;
+}
+
+.tech-news-card:hover .tech-news-title {
+    color: #0052a5;
+}
+
+/* Business News Cards */
+.business-news-card {
+    background: white;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.business-news-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.business-news-title {
+    font-family: 'Kantumruy Pro', 'Khmer OS Muol Light', serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: #333;
+    line-height: 1.4;
+    margin: 10px 0 5px 0;
+    transition: color 0.3s ease;
+}
+
+.business-news-card:hover .business-news-title {
+    color: #0052a5;
+}
+
+/* Top Banner */
+.top-banner-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+.top-banner-wrapper img {
+    transition: transform 0.5s ease;
+}
+
+.top-banner-wrapper:hover img {
+    transform: scale(1.02);
+}
+
+/* Image Hover Effects */
+.featured-news-card img,
+.tech-news-card img,
+.business-news-card img {
+    transition: transform 0.5s ease;
+}
+
+.featured-news-card:hover img,
+.tech-news-card:hover img,
+.business-news-card:hover img {
+    transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 20px;
+    }
+    
+    .featured-news-title {
+        font-size: 16px;
+    }
+    
+    .small-news-title {
+        font-size: 13px;
+    }
+    
+    .tech-news-title,
+    .business-news-title {
+        font-size: 14px;
+    }
+}
+
+/* Link Styles */
+a.text-decoration-none {
+    color: inherit;
+}
+
+a.text-decoration-none:hover {
+    text-decoration: none;
+}

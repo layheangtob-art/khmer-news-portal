@@ -1,0 +1,300 @@
+/* Modern Category View Styles */
+
+/* Category Title */
+.category-title {
+    font-family: 'Koulen', 'Khmer OS Muol Light', serif;
+    font-size: 32px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #0052a5 0%, #00a8ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 3px solid transparent;
+    border-image: linear-gradient(90deg, #0052a5 0%, #00a8ff 100%) 1;
+}
+
+/* Featured News Card */
+.news-featured-image {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0, 82, 165, 0.15);
+    margin-bottom: 25px;
+}
+
+.news-featured-image img {
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 20px;
+}
+
+.news-featured-image:hover img {
+    transform: scale(1.08);
+}
+
+.featured-news-content {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 30px;
+    border-radius: 0 0 20px 20px;
+}
+
+.featured-news-content h2 a {
+    color: white;
+    text-decoration: none;
+    font-family: 'Kantumruy Pro', 'Khmer OS Muol Light', serif;
+    font-size: 28px;
+    font-weight: 700;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+.featured-news-content h2 a:hover {
+    color: #00a8ff;
+    transform: translateX(5px);
+}
+
+.featured-news-content p {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 16px;
+    line-height: 1.6;
+    margin-top: 15px;
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+.featured-news-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.featured-news-meta .badge {
+    background: linear-gradient(135deg, #0052a5 0%, #00a8ff 100%);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0, 82, 165, 0.3);
+}
+
+.featured-news-meta .text-muted {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-size: 14px;
+}
+
+/* Modern News Item Cards */
+.news-item {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 0;
+    margin-bottom: 30px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(0, 82, 165, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    position: relative;
+}
+
+.news-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #0052a5 0%, #00a8ff 100%);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+    z-index: 1;
+}
+
+.news-item:hover {
+    box-shadow: 0 12px 40px rgba(0, 82, 165, 0.18);
+    transform: translateY(-6px);
+    border-color: rgba(0, 82, 165, 0.2);
+}
+
+.news-item:hover::before {
+    transform: scaleX(1);
+}
+
+.news-item img {
+    border-radius: 16px 0 0 16px;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100%;
+    object-fit: cover;
+}
+
+.news-item:hover img {
+    transform: scale(1.1);
+}
+
+.news-item-content {
+    padding: 25px;
+}
+
+.news-item-content h4 a {
+    color: #1a1a1a;
+    text-decoration: none;
+    font-family: 'Kantumruy Pro', 'Khmer OS Muol Light', serif;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.4;
+    transition: all 0.3s ease;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.news-item-content h4 a:hover {
+    color: #0052a5;
+    transform: translateX(5px);
+}
+
+.news-item-content p {
+    color: #666;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.news-item-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(0, 82, 165, 0.1);
+}
+
+.news-item-meta .text-primary {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.news-item-meta .text-muted {
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.news-item-stats {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.news-item-stats div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #666;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.news-item-stats i {
+    color: #0052a5;
+    font-size: 16px;
+}
+
+/* Image Indicators */
+.image-indicator {
+    background: linear-gradient(135deg, rgba(0, 82, 165, 0.9) 0%, rgba(0, 168, 255, 0.9) 100%);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0, 82, 165, 0.4);
+    transition: all 0.3s ease;
+}
+
+.image-indicator:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0, 82, 165, 0.5);
+}
+
+/* Flag Corners - Modern Style */
+.flag-corner-blue {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 40px 40px 0 0;
+    border-color: #0052a5 transparent transparent transparent;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.flag-corner-red {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 0 40px 40px;
+    border-color: transparent transparent #dc3545 transparent;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .category-title {
+        font-size: 24px;
+    }
+    
+    .featured-news-content {
+        padding: 20px;
+    }
+    
+    .featured-news-content h2 a {
+        font-size: 20px;
+    }
+    
+    .news-item {
+        margin-bottom: 20px;
+    }
+    
+    .news-item img {
+        border-radius: 16px 16px 0 0;
+        height: 200px;
+    }
+    
+    .news-item-content {
+        padding: 20px;
+    }
+    
+    .news-item-content h4 a {
+        font-size: 18px;
+    }
+    
+    .news-item-stats {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+}
+
+/* Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.news-item {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.news-item:nth-child(1) { animation-delay: 0.1s; }
+.news-item:nth-child(2) { animation-delay: 0.2s; }
+.news-item:nth-child(3) { animation-delay: 0.3s; }
+.news-item:nth-child(4) { animation-delay: 0.4s; }

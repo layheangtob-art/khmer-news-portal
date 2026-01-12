@@ -1,0 +1,251 @@
+/* CKEditor Content Styles - For displaying content in views */
+
+/* Main content wrapper */
+.news-content-wrapper,
+.ck-content {
+    font-family: 'Kantumruy Pro', 'Khmer OS Muol Light', sans-serif;
+    font-size: 16px;
+    line-height: 1.8;
+    color: #333;
+}
+
+/* Headings */
+.news-content-wrapper h1,
+.ck-content h1 {
+    font-family: 'Kantumruy Pro', 'Khmer OS Muol Light', serif;
+    font-size: 32px;
+    font-weight: 700;
+    margin: 30px 0 20px 0;
+    color: #1a1a1a;
+    line-height: 1.3;
+}
+
+.news-content-wrapper h2,
+.ck-content h2 {
+    font-family: 'Kantumruy Pro', 'Khmer OS Muol Light', serif;
+    font-size: 28px;
+    font-weight: 600;
+    margin: 25px 0 15px 0;
+    color: #1a1a1a;
+    line-height: 1.3;
+}
+
+.news-content-wrapper h3,
+.ck-content h3 {
+    font-family: 'Kantumruy Pro', 'Khmer OS Muol Light', serif;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 20px 0 12px 0;
+    color: #1a1a1a;
+    line-height: 1.3;
+}
+
+.news-content-wrapper h4,
+.ck-content h4 {
+    font-family: 'Kantumruy Pro', 'Khmer OS Muol Light', serif;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 18px 0 10px 0;
+    color: #1a1a1a;
+    line-height: 1.3;
+}
+
+/* Paragraphs */
+.news-content-wrapper p,
+.ck-content p {
+    margin: 15px 0;
+    line-height: 1.8;
+    color: #333;
+}
+
+/* Images */
+.news-content-wrapper figure,
+.ck-content figure {
+    margin: 25px 0;
+    display: block;
+}
+
+.news-content-wrapper figure.image,
+.ck-content figure.image {
+    margin: 25px 0;
+}
+
+/* Image alignment styles */
+.news-content-wrapper figure.image.image-style-side,
+.ck-content figure.image.image-style-side {
+    float: right;
+    margin-left: 30px;
+    margin-right: 0;
+    max-width: 50%;
+}
+
+.news-content-wrapper figure.image.image-style-side-left,
+.ck-content figure.image.image-style-side-left {
+    float: left;
+    margin-right: 30px;
+    margin-left: 0;
+    max-width: 50%;
+}
+
+.news-content-wrapper figure.image.image-style-block,
+.ck-content figure.image.image-style-block {
+    display: block;
+    margin: 25px auto;
+    max-width: 100%;
+}
+
+.news-content-wrapper figure.image.image-style-inline,
+.ck-content figure.image.image-style-inline {
+    display: inline-block;
+    margin: 0 5px;
+    vertical-align: middle;
+}
+
+/* Image element */
+.news-content-wrapper figure img,
+.ck-content figure img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Image captions */
+.news-content-wrapper figure figcaption,
+.ck-content figure figcaption {
+    font-size: 14px;
+    color: #666;
+    font-style: italic;
+    margin-top: 10px;
+    text-align: center;
+    padding: 0 10px;
+    line-height: 1.5;
+}
+
+/* Blockquotes */
+.news-content-wrapper blockquote,
+.ck-content blockquote {
+    border-left: 4px solid #0052a5;
+    padding: 15px 20px;
+    margin: 25px 0;
+    background-color: #f8f9fa;
+    font-style: italic;
+    color: #555;
+    border-radius: 0 8px 8px 0;
+}
+
+.news-content-wrapper blockquote p,
+.ck-content blockquote p {
+    margin: 0;
+    color: #555;
+}
+
+/* Lists */
+.news-content-wrapper ul,
+.news-content-wrapper ol,
+.ck-content ul,
+.ck-content ol {
+    margin: 15px 0;
+    padding-left: 30px;
+}
+
+.news-content-wrapper li,
+.ck-content li {
+    margin: 8px 0;
+    line-height: 1.8;
+}
+
+/* Links */
+.news-content-wrapper a,
+.ck-content a {
+    color: #0052a5;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+.news-content-wrapper a:hover,
+.ck-content a:hover {
+    color: #00a8ff;
+}
+
+/* Tables */
+.news-content-wrapper table,
+.ck-content table {
+    border-collapse: collapse;
+    margin: 20px 0;
+    width: 100%;
+    border: 1px solid #ddd;
+}
+
+.news-content-wrapper table td,
+.news-content-wrapper table th,
+.ck-content table td,
+.ck-content table th {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.news-content-wrapper table th,
+.ck-content table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+/* Code */
+.news-content-wrapper code,
+.ck-content code {
+    background-color: #f4f4f4;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    color: #d63384;
+}
+
+.news-content-wrapper pre,
+.ck-content pre {
+    background-color: #f4f4f4;
+    padding: 15px;
+    border-radius: 5px;
+    overflow-x: auto;
+    margin: 20px 0;
+}
+
+.news-content-wrapper pre code,
+.ck-content pre code {
+    background-color: transparent;
+    padding: 0;
+    color: #333;
+}
+
+/* Horizontal rule */
+.news-content-wrapper hr,
+.ck-content hr {
+    border: none;
+    border-top: 2px solid #e0e0e0;
+    margin: 30px 0;
+}
+
+/* Clear floats */
+.news-content-wrapper::after,
+.ck-content::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Responsive images */
+@media (max-width: 768px) {
+    .news-content-wrapper figure.image.image-style-side,
+    .ck-content figure.image.image-style-side,
+    .news-content-wrapper figure.image.image-style-side-left,
+    .ck-content figure.image.image-style-side-left {
+        float: none;
+        margin-left: 0;
+        margin-right: 0;
+        max-width: 100%;
+    }
+}
+
