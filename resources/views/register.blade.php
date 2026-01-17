@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <section class="form-02-main">
+    <section>
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -37,7 +37,7 @@
                                 </div>
                             @endif
 
-                            <form method="POST" action="{{ route('register.submit') }}" class="modern-form-content">
+                            <form id="registerForm" method="POST" action="{{ route('register.submit') }}" class="modern-form-content">
                                 @csrf
 
                                 <div class="form-group modern-input-group">
@@ -89,7 +89,7 @@
                                     <span>Or continue with</span>
                                 </div>
 
-                                <div class="form-group social-buttons">
+                                {{-- <div class="form-group social-buttons">
                                     <div class="_social_04">
                                         <ol>
                                             <li class="social-btn" data-social="facebook">
@@ -111,7 +111,7 @@
                                             </li>
                                         </ol>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="form-footer">
                                     <p>Already have an account? <a href="{{ route('login') }}" class="register-link">Sign in</a></p>

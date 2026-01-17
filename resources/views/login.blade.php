@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <section class="">
+    <section>
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -37,7 +37,7 @@
                                 </div>
                             @endif
 
-                            <form method="POST" action="{{ route('login.submit') }}" class="modern-form-content">
+                            <form id="loginForm" method="POST" action="{{ route('login.submit') }}" class="modern-form-content">
                                 @csrf
 
                                 <div class="form-group modern-input-group">

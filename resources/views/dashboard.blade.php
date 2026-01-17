@@ -1,10 +1,11 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="main-content m-3">
+    <div class="main-content">
 
         <!-- Header Section -->
-        <div class="dashboard-header mb-5">
+        <div class="dashboard-header mb-4 ">
+            <br><br><br><br>
             <div class="container-fluid">
                 <div class="row align-items-center justify-content-between">
                     <div class="col-lg-6">

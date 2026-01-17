@@ -38,20 +38,36 @@ class LoginController extends Controller
                     Cookie::queue(Cookie::forget('email'));
                 }
 
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Login successful',
-                    'user' => $user,
-                    'redirect_url' => route('dashboard')
-                ]);
+                if ($request->ajax()) {
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Login successful',
+                        'user' => $user,
+                        'redirect_url' => route('dashboard')
+                    ]);
+                }
+
+                return redirect()->route('dashboard');
             } else {
-                throw new \Exception('Your email/password is incorrect');
+                if ($request->ajax()) {
+                    throw new \Exception('Your email/password is incorrect');
+                }
+
+                return back()->withErrors([
+                    'email' => 'Your email/password is incorrect'
+                ])->withInput();
             }
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage()
-            ], 401);
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $e->getMessage()
+                ], 401);
+            }
+
+            return back()->withErrors([
+                'email' => $e->getMessage()
+            ])->withInput();
         }
     }
 
@@ -84,11 +100,17 @@ class LoginController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => $validator->errors()->first(),
-                    'errors' => $validator->errors(),
-                ], 422);
+                if ($request->ajax()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => $validator->errors()->first(),
+                        'errors' => $validator->errors(),
+                    ], 422);
+                }
+
+                return redirect()->back()
+                    ->withErrors($validator)
+                    ->withInput();
             }
 
             $user = User::create([
@@ -101,23 +123,40 @@ class LoginController extends Controller
             if ($memberRole) {
                 $user->assignRole($memberRole);
             } else {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Role Member not found'
-                ], 404);
+                if ($request->ajax()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Role Member not found'
+                    ], 404);
+                }
+
+                return redirect()->back()
+                    ->withErrors(['role' => 'Role Member not found'])
+                    ->withInput();
             }
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Register successful',
-                'user' => $user,
-                'redirect_url' => route('login')
-            ]);
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Register successful',
+                    'user' => $user,
+                    'redirect_url' => route('login')
+                ]);
+            }
+
+            return redirect()->route('login')
+                ->with('success', 'Register successful');
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage()
-            ]);
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $e->getMessage()
+                ]);
+            }
+
+            return redirect()->back()
+                ->withErrors(['error' => $e->getMessage()])
+                ->withInput();
         }
     }
 }

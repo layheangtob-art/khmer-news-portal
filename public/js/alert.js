@@ -110,14 +110,14 @@ $(document).ready(function() {
         }
     });
     });
-    
+
     // Edit Submit Button
     $(document).on('submit', 'form#editForm', function(event) {
         event.preventDefault();
-    
+
         var form = $(this);
         var formData = new FormData(form[0]);
-    
+
         Swal.fire({
             title: 'Are you sure?',
             text: 'You won\'t be able to revert this!',
@@ -156,10 +156,10 @@ $(document).ready(function() {
             }
         });
     });
-    
+
     // Discard Button
     $('#discardButton').on('click', function(event) {
-        event.preventDefault(); 
+        event.preventDefault();
 
         var form = $(this).closest('form');
         showDiscardConfirmation(form);
@@ -183,11 +183,11 @@ $(document).ready(function() {
             if (discardResult.isConfirmed) {
                 form.trigger('reset');
                 var inputFile = form.find('input[type="file"]');
-                var imagePreview = $('#imagePreview');          
-                inputFile.val(''); 
+                var imagePreview = $('#imagePreview');
+                inputFile.val('');
                 imagePreview.attr('src', '');
                 imagePreview.hide();
-                
+
                 Swal.fire({
                     title: 'Changes discarded',
                     text: '',
@@ -204,10 +204,10 @@ $(document).ready(function() {
     // Delete Button
     $(document).on('submit', '#deleteButton', function(event) {
         event.preventDefault();
-    
-        var form = this; 
-        var id = $(form).data('id'); 
-    
+
+        var form = this;
+        var id = $(form).data('id');
+
         Swal.fire({
             title: 'Are you sure?',
             text: 'You won\'t be able to revert this!',
@@ -223,7 +223,7 @@ $(document).ready(function() {
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: $(form).attr('action'), 
+                    url: $(form).attr('action'),
                     method: 'POST',
                     data: $(form).serialize(),
                     success: function(response) {
@@ -240,14 +240,13 @@ $(document).ready(function() {
                 });
             }
         });
-    });    
+    });
 
-    // Login Button
-    $('#loginButton').on('click', function(event) {
+    $('#loginForm').on('submit', function(event) {
         event.preventDefault();
 
-        var form = $(this).closest('form');
-        var formData = new FormData(form[0]);
+        var form = $(this);
+        var formData = new FormData(this);
 
         $.ajax({
             url: form.attr('action'),
@@ -266,7 +265,36 @@ $(document).ready(function() {
                 }
             },
             error: function(xhr, status, error) {
-                var errorMessage = xhr.responseJSON.message || 'Error';
+                var errorMessage = (xhr.responseJSON && xhr.responseJSON.message) ? xhr.responseJSON.message : 'Error';
+                showAlert('error', errorMessage);
+            }
+        });
+    });
+
+    $('#registerForm').on('submit', function(event) {
+        event.preventDefault();
+
+        var form = $(this);
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: form.attr('action'),
+            method: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                if (response.success && response.redirect_url) {
+                    window.location.href = response.redirect_url;
+                } else if (!response.success) {
+                    showAlert('error', response.message || 'Error');
+                }
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = (xhr.responseJSON && xhr.responseJSON.message) ? xhr.responseJSON.message : 'Error';
                 showAlert('error', errorMessage);
             }
         });
