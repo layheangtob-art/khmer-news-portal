@@ -2,9 +2,7 @@
 
 @section('content')
     <div class="main-content m-3">
-        <br>
-        <br>
-        <br>
+
         <!-- Header Section -->
         <div class="dashboard-header mb-5">
             <div class="container-fluid">

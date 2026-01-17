@@ -4,15 +4,15 @@
 
     <!-- Top Banner Section -->
     @if(isset($homeBanners) && $homeBanners->count() > 0)
-    <div class="container px-0 mb-4">
-        <div class="top-banner-wrapper">
+    <div class="container mt-3">
+        <div class="sponsor-cover p-3 rounded mb-3">
             @foreach($homeBanners->take(1) as $banner)
                 @if($banner->url)
                     <a href="{{ $banner->url }}" target="_blank" rel="noopener">
                         <img src="{{ asset('storage/banners/' . $banner->image) }}"
                              alt="{{ $banner->title }}"
                              class="img-fluid w-100"
-                             style="max-height: 400px;"
+                             style="max-height: 300px;"
                              onerror="this.style.display='none';">
                     </a>
                 @else
@@ -28,8 +28,8 @@
     @endif
 
     <!-- Hero / Latest News Section -->
-    <div class="container py-4">
-        <div class="row g-4">
+    <div class="container py-2">
+        <div class="row ">
             <!-- Main Featured News (Left) -->
             <div class="col-lg-8">
                 <div class="section-header mb-3 d-flex align-items-center justify-content-between">
@@ -73,8 +73,10 @@
                                     </div>
                                     <div class="col-8">
                                         <div class="card-body py-2 pe-2">
-                                            <a href="{{ route('news.show', $news->id) }}" class="text-decoration-none text-dark">
-                                                <h6 class="card-title fw-bold mb-2 line-clamp-2">{{ Str::limit($news->title, 50) }}</h6>
+                                            <a href="{{ route('news.show', $news->id) }}" class="text-decoration-none">
+                                                <h6 class="card-title fw-bold mb-2 line-clamp-2 news-title">
+                                                    {{ Str::limit($news->title, 50) }}
+                                                </h6>
                                             </a>
                                             <small class="text-muted">
                                                 <i class="far fa-calendar-alt me-1"></i>{{ $news->created_at->translatedFormat('d/m/Y') }}
@@ -91,7 +93,7 @@
 
             <!-- Popular / Trending (Right) -->
             <div class="col-lg-4">
-                <div class="section-header mb-3">
+                <div class="section-header mb-3 py-2">
                     <h3 class="section-title text-danger border-start border-5 border-danger ps-3 mb-0">ពេញនិយម</h3>
                 </div>
                 <div class="bg-white p-3 rounded shadow-sm">
@@ -101,8 +103,10 @@
                             <span class="badge bg-light text-dark border fw-bold rounded-circle d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;">{{ $index + 1 }}</span>
                         </div>
                         <div class="flex-grow-1">
-                            <a href="{{ route('news.show', $news->id) }}" class="text-decoration-none text-dark">
-                                <h6 class="mb-1 fw-bold line-clamp-2">{{ Str::limit($news->title, 60) }}</h6>
+                            <a href="{{ route('news.show', $news->id) }}" class="text-decoration-none">
+                                <h6 class="mb-1 fw-bold line-clamp-2 news-title">
+                                    {{ Str::limit($news->title, 60) }}
+                                </h6>
                             </a>
                             <div class="d-flex justify-content-between align-items-center mt-1">
                                 <small class="text-muted" style="font-size: 0.8rem;">
@@ -119,17 +123,20 @@
     </div>
 
     <!-- Middle Banner -->
+
     @if(isset($homeBanners) && $homeBanners->count() > 1)
-    <div class="container py-2">
-        @foreach($homeBanners->slice(1, 1) as $banner)
-            @if($banner->url)
-                <a href="{{ $banner->url }}" target="_blank" rel="noopener">
-                    <img src="{{ asset('storage/banners/' . $banner->image) }}" alt="{{ $banner->title }}" class="img-fluid w-100 rounded" style="max-height: 200px; object-fit: cover;">
-                </a>
-            @else
-                <img src="{{ asset('storage/banners/' . $banner->image) }}" alt="{{ $banner->title }}" class="img-fluid w-100 rounded" style="max-height: 200px; object-fit: cover;">
-            @endif
-        @endforeach
+    <div class="container mt-4">
+        <div class="sponsor-cover p-3 rounded mb-3">
+            @foreach($homeBanners->slice(1, 1) as $banner)
+                @if($banner->url)
+                    <a href="{{ $banner->url }}" target="_blank" rel="noopener">
+                        <img src="{{ asset('storage/banners/' . $banner->image) }}" alt="{{ $banner->title }}" class="img-fluid w-100" style="max-height: 300px; object-fit: cover;">
+                    </a>
+                @else
+                    <img src="{{ asset('storage/banners/' . $banner->image) }}" alt="{{ $banner->title }}" class="img-fluid w-100" style="max-height: 400px; object-fit: cover;">
+                @endif
+            @endforeach
+        </div>
     </div>
     @endif
 
@@ -176,8 +183,10 @@
                                 </div>
                             </div>
                             <div class="card-body d-flex flex-column">
-                                <a href="{{ route('news.show', $news->id) }}" class="text-decoration-none text-dark mb-auto">
-                                    <h5 class="card-title fw-bold line-clamp-2" style="font-size: 1.1rem;">{{ Str::limit($news->title, 60) }}</h5>
+                                <a href="{{ route('news.show', $news->id) }}" class="text-decoration-none mb-auto">
+                                    <h5 class="card-title fw-bold line-clamp-2 news-title" style="font-size: 1.1rem;">
+                                        {{ Str::limit($news->title, 60) }}
+                                    </h5>
                                 </a>
                                 <div class="mt-3 d-flex justify-content-between align-items-center text-muted small">
                                     <span><i class="far fa-calendar-alt me-1"></i>{{ $news->created_at->translatedFormat('d/m/Y') }}</span>
@@ -206,8 +215,10 @@
                                      alt="{{ $news->title }}">
                             </div>
                             <div class="card-body d-flex flex-column">
-                                <a href="{{ route('news.show', $news->id) }}" class="text-decoration-none text-dark mb-auto">
-                                    <h5 class="card-title fw-bold line-clamp-2" style="font-size: 1.1rem;">{{ Str::limit($news->title, 60) }}</h5>
+                                <a href="{{ route('news.show', $news->id) }}" class="text-decoration-none mb-auto">
+                                    <h5 class="card-title fw-bold line-clamp-2 news-title" style="font-size: 1.1rem;">
+                                        {{ Str::limit($news->title, 60) }}
+                                    </h5>
                                 </a>
                                 <div class="mt-3 d-flex justify-content-between align-items-center text-muted small">
                                     <span><i class="far fa-calendar-alt me-1"></i>{{ $news->created_at->translatedFormat('d/m/Y') }}</span>
@@ -283,7 +294,7 @@
                 font-size: 14px !important;
             }
 
-            .top-banner-wrapper img {
+            .sponsor-cover img {
                 max-height: 200px !important;
             }
 
@@ -355,7 +366,7 @@
                 font-size: 18px !important;
             }
 
-            .top-banner-wrapper img {
+            .sponsor-cover img {
                 max-height: 300px !important;
             }
         }

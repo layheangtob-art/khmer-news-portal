@@ -86,16 +86,16 @@
     .navbar-brand img {
         max-width: 70px !important;
     }
-    
+
     .navbar-brand span {
         font-size: 20px !important;
     }
-    
+
     .navbar-toggler {
         border: 1px solid rgba(255, 255, 255, 0.3);
         padding: 4px 8px;
     }
-    
+
     .navbar-toggler:focus {
         box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
     }
@@ -105,11 +105,11 @@
     .navbar-brand img {
         max-width: 60px !important;
     }
-    
+
     .navbar-brand span {
         font-size: 18px !important;
     }
-    
+
     .navbar {
         padding: 10px 0 !important;
     }
@@ -119,7 +119,7 @@
     .navbar-brand img {
         max-width: 50px !important;
     }
-    
+
     .navbar-brand span {
         font-size: 16px !important;
     }
@@ -130,22 +130,289 @@
     .navbar-brand img {
         max-width: 80px !important;
     }
-    
+
     .navbar-brand span {
         font-size: 22px !important;
     }
-    
+
     .navbar {
         padding: 12px 0 !important;
     }
-    
-    /* Ensure mobile menu toggle is visible on iPad Pro */
+
     .navbar-toggler {
         display: block !important;
     }
-    
-    /* Hide desktop menu on iPad Pro */
+
     #navbarCollapse {
         display: none !important;
     }
+}
+
+.theme-toggle-active {
+    background-color: rgba(255, 255, 255, 0.12) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+body.dark-mode {
+    background-color: #050816;
+    color: #e5e7eb;
+}
+
+body.dark-mode a {
+    color: #93c5fd;
+}
+
+body.dark-mode a:hover {
+    color: #bfdbfe;
+}
+
+body.dark-mode .main-header-wrapper {
+    background: #030712;
+}
+
+body.dark-mode .topbar {
+    background: #020617;
+    color: #e5e7eb;
+}
+
+body.dark-mode .topbar-label {
+    background: #f97316;
+}
+
+body.dark-mode .topbar-text {
+    color: #e5e7eb;
+}
+
+body.dark-mode .main-navbar {
+    background: #020617;
+}
+
+body.dark-mode .navbar .navbar-nav .nav-link {
+    color: #e5e7eb !important;
+}
+
+body.dark-mode .navbar .navbar-nav .nav-link:hover,
+body.dark-mode .navbar .navbar-nav .nav-link.active {
+    color: #38bdf8 !important;
+}
+
+body.dark-mode .modal-content {
+    background-color: #020617;
+    color: #e5e7eb;
+}
+
+body.dark-mode #searchModal .modal-content {
+    background: rgba(15, 23, 42, 0.98);
+}
+
+body.dark-mode .admin-footer {
+    background-color: #020617;
+    color: #e5e7eb;
+}
+
+body.dark-mode .admin-footer a {
+    color: #93c5fd;
+}
+
+body.dark-mode .admin-footer a:hover {
+    color: #bfdbfe;
+}
+
+body.dark-mode .copyright {
+    background-color: #030712;
+    color: #9ca3af;
+}
+
+body.dark-mode .card {
+    background-color: #020617;
+    color: #e5e7eb;
+}
+
+body.dark-mode .card .text-muted {
+    color: #9ca3af !important;
+}
+
+body.dark-mode .btn-primary {
+    background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
+}
+
+body.dark-mode .btn-outline-primary {
+    border-color: #38bdf8;
+    color: #38bdf8;
+}
+
+body.dark-mode .btn-outline-primary:hover {
+    background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
+    border-color: transparent;
+}
+
+body.dark-mode .back-to-top-square {
+    background-color: #111827;
+    border-color: #1f2937;
+}
+
+body.dark-mode .back-to-top-square i {
+    color: #e5e7eb;
+}
+
+body.dark-mode .mobile-menu-overlay {
+    background-color: #020617;
+}
+
+body.dark-mode .mobile-menu-search {
+    background-color: #020617;
+}
+
+body.dark-mode .mobile-menu-footer {
+    background-color: #020617;
+}
+
+body.dark-mode .bg-white {
+    background-color: #020617 !important;
+}
+
+body.dark-mode .bg-light {
+    background-color: #020617 !important;
+}
+
+body.dark-mode .text-dark {
+    color: #e5e7eb !important;
+}
+
+body.dark-mode .text-muted {
+    color: #9ca3af !important;
+}
+
+body.dark-mode .badge.bg-light {
+    background-color: #111827 !important;
+    color: #e5e7eb !important;
+    border-color: #1f2937 !important;
+}
+
+body.dark-mode .section-header {
+    border-bottom-color: #1d4ed8;
+}
+
+body.dark-mode .section-title {
+    color: #e5e7eb;
+}
+
+body.dark-mode .sponsor-cover {
+    background-color: #020617;
+    border-color: #1f2937;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.5);
+}
+
+body.dark-mode .featured-news-title,
+body.dark-mode .tech-news-title,
+body.dark-mode .business-news-title,
+body.dark-mode .small-news-title {
+    color: #e5e7eb;
+}
+
+body.dark-mode .small-news-item:hover {
+    background-color: #111827;
+}
+
+body.dark-mode .news-card,
+body.dark-mode .sidebar-section,
+body.dark-mode .app-download-btn {
+    background-color: #020617;
+    border-color: #1f2937;
+}
+
+body.dark-mode .news-title,
+body.dark-mode .sidebar-news-title {
+    color: #e5e7eb;
+}
+
+body.dark-mode .news-excerpt,
+body.dark-mode .news-item-content p,
+body.dark-mode .news-item-stats div {
+    color: #9ca3af;
+}
+
+body.dark-mode .news-item {
+    background-color: #020617;
+    border-color: #1f2937;
+}
+
+body.dark-mode .news-item-content h4 a {
+    color: #e5e7eb;
+}
+
+body.dark-mode .news-item-content h4 a:hover {
+    color: #38bdf8;
+}
+
+body.dark-mode .tech-news-card,
+body.dark-mode .business-news-card {
+    background-color: #020617;
+    border-color: #1f2937;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.5);
+}
+
+body.dark-mode .news-content-wrapper,
+body.dark-mode .ck-content {
+    color: #e5e7eb;
+}
+
+body.dark-mode .news-content-wrapper h1,
+body.dark-mode .news-content-wrapper h2,
+body.dark-mode .news-content-wrapper h3,
+body.dark-mode .news-content-wrapper h4,
+body.dark-mode .ck-content h1,
+body.dark-mode .ck-content h2,
+body.dark-mode .ck-content h3,
+body.dark-mode .ck-content h4 {
+    color: #e5e7eb;
+}
+
+body.dark-mode .news-content-wrapper p,
+body.dark-mode .ck-content p,
+body.dark-mode .news-content-wrapper li,
+body.dark-mode .ck-content li {
+    color: #e5e7eb;
+}
+
+body.dark-mode .news-content-wrapper blockquote,
+body.dark-mode .ck-content blockquote {
+    background-color: #020617;
+    color: #e5e7eb;
+    border-left-color: #1d4ed8;
+}
+
+body.dark-mode .news-content-wrapper blockquote p,
+body.dark-mode .ck-content blockquote p {
+    color: #e5e7eb;
+}
+
+body.dark-mode .news-content-wrapper table,
+body.dark-mode .ck-content table {
+    border-color: #1f2937;
+}
+
+body.dark-mode .news-content-wrapper table td,
+body.dark-mode .news-content-wrapper table th,
+body.dark-mode .ck-content table td,
+body.dark-mode .ck-content table th {
+    border-color: #1f2937;
+}
+
+body.dark-mode .news-content-wrapper table th,
+body.dark-mode .ck-content table th {
+    background-color: #030712;
+}
+
+body.dark-mode .news-content-wrapper code,
+body.dark-mode .ck-content code,
+body.dark-mode .news-content-wrapper pre,
+body.dark-mode .ck-content pre {
+    background-color: #020617;
+    color: #e5e7eb;
+}
+
+body.dark-mode .news-content-wrapper hr,
+body.dark-mode .ck-content hr {
+    border-top-color: #1f2937;
 }

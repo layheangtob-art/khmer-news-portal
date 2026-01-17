@@ -40,7 +40,6 @@
 
     {{-- Custom CSS --}}
     <link rel="stylesheet" href="{{ asset('css/scroll.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/modern-style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/news-grid.css') }}">
     <link rel="stylesheet" href="{{ asset('css/back-to-top.css') }}">
     <link rel="stylesheet" href="{{ asset('css/category-view.css') }}">
@@ -49,19 +48,18 @@
     <link rel="stylesheet" href="{{ asset('css/admin-footer.css') }}">
     <link rel="stylesheet" href="{{ asset('css/homepage-layout.css') }}">
     <link rel="stylesheet" href="{{ asset('css/mobile-menu.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/modern-style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/ckeditor-content.css') }}">
 </head>
 
 <body>
-    <!-- Navbar start -->
-    <div class="container-fluid sticky-top px-0">
-        <!-- Top trending bar -->
+    <div class="container-fluid sticky-top main-header-wrapper">
         <div class="container-fluid topbar d-none d-lg-block">
             <div class="container px-0">
-                <div class="topbar-top d-flex justify-content-between py-2">
+                <div class="topbar-top d-flex align-items-center py-1">
+                    <span class="topbar-label me-3">NEWS</span>
                     <div class="top-info flex-grow-1">
                         @php
-                            // Show all pinned news (2 or more), fallback to most liked if none
                             $pinnedNews = \App\Models\News::where('status', 'Accept')
                                 ->where('is_pinned', true)
                                 ->latest()
@@ -78,8 +76,7 @@
                             <div id="note">
                                 @foreach ($pinnedNews as $news)
                                     <a href="{{ route('news.show', $news->id) }}" class="text-decoration-none me-3">
-                                        <span
-                                            style="font-family:'koulen','Khmer OS Muol Light',serif;font-size:14px;color:black;">
+                                        <span class="topbar-text">
                                             {{ ' ' . trim($news->title) . ' ' }}
                                         </span>
                                     </a>
@@ -91,17 +88,12 @@
             </div>
         </div>
 
-        <!-- Main Navigation Bar -->
-        <div class="container-fluid" style="background: linear-gradient(135deg, #0052a5 0%, #003d7a 100%);">
+        <div class="container-fluid main-navbar">
             <div class="container px-0">
-                <nav class="navbar navbar-dark navbar-expand-xl py-2">
+                <nav class="navbar navbar-dark navbar-expand-xl px-0">
                     <a href="{{ route('index') }}" class="navbar-brand d-flex align-items-center">
-                        <img src="{{ asset('img/kh-news.png') }}" alt="KH News Logo" class=" rounded "
-                            style="max-width: 90px;">
-                        <span class="text-white "
-                            style="font-family: 'Kantumruy Pro', 'Khmer OS Muol Light', serif; font-size: 24px; font-weight: 500;">
-
-                        </span>
+                        <img src="{{ asset('img/kh-news.png') }}" alt="KH News Logo" class="rounded"
+                            style="max-width: 90px; height: auto;">
                     </a>
 
                     <button class="navbar-toggler d-xl-none" type="button" id="mobileMenuToggle">
@@ -118,16 +110,21 @@
                                 </a>
                             @endforeach
 
-                            <!-- Search button -->
                             <button class="btn btn-light btn-sm rounded-circle ms-3" data-bs-toggle="modal"
                                 data-bs-target="#searchModal" style="width: 35px; height: 35px;">
                                 <i class="fas fa-search text-primary"></i>
+                            </button>
+
+                            <button class="btn btn-outline-light btn-sm rounded-circle ms-2" type="button"
+                                id="themeToggleButton" style="width: 35px; height: 35px;">
+                                <i class="fas fa-moon"></i>
                             </button>
                         </div>
                     </div>
                 </nav>
             </div>
         </div>
+
     </div>
     <!-- Navbar End -->
 
@@ -160,6 +157,12 @@
                         id="mobileSearchInput">
                     <i class="fas fa-search mobile-menu-search-icon"></i>
                 </div>
+            </div>
+            <div class="mobile-menu-footer">
+                <button type="button" class="mobile-theme-toggle-button" id="themeToggleButtonMobile">
+                    <i class="fas fa-moon me-2"></i>
+                    <span>Dark mode</span>
+                </button>
             </div>
         </div>
     </div>
@@ -375,6 +378,67 @@
                     closeMobileMenu();
                 }
             });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const body = document.body;
+            const themeToggleButton = document.getElementById('themeToggleButton');
+            const themeToggleButtonMobile = document.getElementById('themeToggleButtonMobile');
+            const themeKey = 'khnews-theme';
+
+            function applyTheme(theme) {
+                if (theme === 'dark') {
+                    body.classList.add('dark-mode');
+                    if (themeToggleButton) {
+                        themeToggleButton.classList.add('theme-toggle-active');
+                        themeToggleButton.innerHTML = '<i class="fas fa-sun"></i>';
+                    }
+                    if (themeToggleButtonMobile) {
+                        themeToggleButtonMobile.classList.add('theme-toggle-active');
+                        themeToggleButtonMobile.innerHTML = '<i class="fas fa-sun me-2"></i><span>Light mode</span>';
+                    }
+                } else {
+                    body.classList.remove('dark-mode');
+                    if (themeToggleButton) {
+                        themeToggleButton.classList.remove('theme-toggle-active');
+                        themeToggleButton.innerHTML = '<i class="fas fa-moon"></i>';
+                    }
+                    if (themeToggleButtonMobile) {
+                        themeToggleButtonMobile.classList.remove('theme-toggle-active');
+                        themeToggleButtonMobile.innerHTML = '<i class="fas fa-moon me-2"></i><span>Dark mode</span>';
+                    }
+                }
+            }
+
+            function getInitialTheme() {
+                const stored = localStorage.getItem(themeKey);
+                if (stored === 'light' || stored === 'dark') {
+                    return stored;
+                }
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    return 'dark';
+                }
+                return 'light';
+            }
+
+            let currentTheme = getInitialTheme();
+            applyTheme(currentTheme);
+
+            if (themeToggleButton) {
+                themeToggleButton.addEventListener('click', function() {
+                    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                    localStorage.setItem(themeKey, currentTheme);
+                    applyTheme(currentTheme);
+                });
+            }
+            if (themeToggleButtonMobile) {
+                themeToggleButtonMobile.addEventListener('click', function() {
+                    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                    localStorage.setItem(themeKey, currentTheme);
+                    applyTheme(currentTheme);
+                });
+            }
         });
     </script>
 </body>

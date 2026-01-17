@@ -3,8 +3,8 @@
 @section('content')
     <!-- Sponsor Banner for Detail Page -->
     @if ($detailBanners->count() > 0)
-        <div class="container-fluid py-2 mb-3">
-            <div class="container">
+        <div class="container-fluid py-2 mb-3 ">
+            <div  class="container">
                 <div class="sponsor-cover p-3 rounded">
                     <div class="row align-items-center">
                         <div class="col-md-12">
@@ -299,9 +299,9 @@
                                             style="width: 120px; height: 120px; object-fit: cover; border-radius: 10px;">
                                         <div class="ms-3">
                                             <a href="{{ route('news.show', $news->id) }}"
-                                                class="h5 mb-2 text-decoration-none" style="color: #1a1a1a; font-weight: 600; transition: color 0.3s ease; display: block;"
-                                                onmouseover="this.style.color='#0052a5'"
-                                                onmouseout="this.style.color='#1a1a1a'">{{ Str::limit($news->title, 60) }}</a>
+                                                class="h5 mb-2 text-decoration-none news-title">
+                                                {{ Str::limit($news->title, 60) }}
+                                            </a>
                                             <p class="text-muted mt-2 mb-0" style="font-size: 13px;">
                                                 <i class="fa fa-calendar-alt me-1 text-primary"></i>
                                                 {{ $news->created_at->translatedFormat('d F Y') }}

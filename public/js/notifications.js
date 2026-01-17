@@ -25,62 +25,84 @@ function displayNotifications(notifications) {
 
     if (notificationsContainer) {
         notificationsContainer.innerHTML = '';
-            notifications.forEach(function(notification) {
-                var notificationElement = document.createElement('a');
-                notificationElement.href = '#';
-                notificationElement.className = '' + (notification.read_at ? 'text-dark' : 'bg-black text-light');
-                notificationElement.onclick = function() {
-                    markNotificationAsRead(notification.id);
-                    return false;
-                };
 
-                var iconElement = document.createElement('div');
-                iconElement.className = 'notif-icon notif-success';
-                iconElement.innerHTML = '<i class="fa fa-comment"></i>';
+        if (!notifications || notifications.length === 0) {
+            var emptyState = document.createElement('div');
+            emptyState.className = 'notif-empty';
+            emptyState.innerHTML = '<i class="fa fa-bell-slash"></i><p>No notifications</p>';
+            notificationsContainer.appendChild(emptyState);
+            return;
+        }
 
-                var contentElement = document.createElement('div');
-                contentElement.className = 'notif-content';
+        notifications.forEach(function(notification, index) {
+            var notificationElement = document.createElement('a');
+            notificationElement.href = '#';
+            notificationElement.className = notification.read_at ? '' : 'unread';
+            notificationElement.style.animationDelay = (index * 0.05) + 's';
+            notificationElement.onclick = function(e) {
+                e.preventDefault();
+                markNotificationAsRead(notification.id);
+                return false;
+            };
 
-                function timeAgo(timestamp) {
-                    const date = new Date(timestamp);
-                    const now = new Date();
-                    const seconds = Math.floor((now - date) / 1000);
+            var iconElement = document.createElement('div');
+            iconElement.className = 'notif-icon notif-success';
+            iconElement.innerHTML = '<i class="fa fa-comment"></i>';
 
-                    let interval = Math.floor(seconds / 31536000);
+            var contentElement = document.createElement('div');
+            contentElement.className = 'notif-content';
 
-                    if (interval > 1) {
-                        return interval + " years ago";
-                    }
-                    interval = Math.floor(seconds / 2592000);
-                    if (interval > 1) {
-                        return interval + " months ago";
-                    }
-                    interval = Math.floor(seconds / 86400);
-                    if (interval > 1) {
-                        return interval + " days ago";
-                    }
-                    interval = Math.floor(seconds / 3600);
-                    if (interval > 1) {
-                        return interval + " hours ago";
-                    }
-                    interval = Math.floor(seconds / 60);
-                    if (interval > 1) {
-                        return interval + " minutes ago";
-                    }
-                    return Math.floor(seconds) + " seconds ago";
+            function timeAgo(timestamp) {
+                const date = new Date(timestamp);
+                const now = new Date();
+                const seconds = Math.floor((now - date) / 1000);
+
+                if (seconds < 60) {
+                    return seconds <= 1 ? 'just now' : seconds + ' seconds ago';
                 }
 
-                var timeAgoString = timeAgo(notification.created_at);
+                const minutes = Math.floor(seconds / 60);
+                if (minutes < 60) {
+                    return minutes === 1 ? '1 minute ago' : minutes + ' minutes ago';
+                }
 
-                contentElement.innerHTML = '<span class="block text-wrap">' + notification.data + '</span>' + '<span class="time text-wrap">' + timeAgoString + '</span>';
+                const hours = Math.floor(seconds / 3600);
+                if (hours < 24) {
+                    return hours === 1 ? '1 hour ago' : hours + ' hours ago';
+                }
 
-                notificationElement.appendChild(iconElement);
-                notificationElement.appendChild(contentElement);
+                const days = Math.floor(seconds / 86400);
+                if (days < 30) {
+                    return days === 1 ? '1 day ago' : days + ' days ago';
+                }
 
-                notificationsContainer.appendChild(notificationElement);
-            });
-    } else {
-        //
+                const months = Math.floor(seconds / 2592000);
+                if (months < 12) {
+                    return months === 1 ? '1 month ago' : months + ' months ago';
+                }
+
+                const years = Math.floor(seconds / 31536000);
+                return years === 1 ? '1 year ago' : years + ' years ago';
+            }
+
+            var timeAgoString = timeAgo(notification.created_at);
+
+            var notificationText = document.createElement('span');
+            notificationText.className = 'block text-wrap';
+            notificationText.textContent = notification.data || '';
+
+            var timeElement = document.createElement('span');
+            timeElement.className = 'time text-wrap';
+            timeElement.textContent = timeAgoString;
+
+            contentElement.appendChild(notificationText);
+            contentElement.appendChild(timeElement);
+
+            notificationElement.appendChild(iconElement);
+            notificationElement.appendChild(contentElement);
+
+            notificationsContainer.appendChild(notificationElement);
+        });
     }
 }
 
@@ -88,7 +110,7 @@ function markNotificationAsRead(notificationId) {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/notifications/' + notificationId + '/read', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
-    
+
     var csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
     xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
 
@@ -99,7 +121,7 @@ function markNotificationAsRead(notificationId) {
                 if (response.success) {
                     console.log('Notification marked as read successfully');
                     fetchUnreadNotificationsCount();
-                    fetchNotifications(); 
+                    fetchNotifications();
                 } else {
                     console.error('Failed to mark notification as read:', response.message);
                 }
@@ -141,7 +163,12 @@ function fetchUnreadNotificationsCount() {
 function updateUnreadNotificationsCount(count) {
     var unreadCountElement = document.getElementById('unread-notification-count');
     if (unreadCountElement) {
-        unreadCountElement.textContent = count.toString();
+        if (count > 0) {
+            unreadCountElement.textContent = count > 99 ? '99+' : count.toString();
+            unreadCountElement.style.display = 'block';
+        } else {
+            unreadCountElement.style.display = 'none';
+        }
     }
 }
 

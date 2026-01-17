@@ -138,8 +138,10 @@
                                         class="rounded" style="width: 80px; height: 60px; object-fit: cover;" alt="{{ $news->title }}">
                                 </div>
                                 <div class="flex-grow-1">
-                                    <a href="{{ route('news.show', $news->id) }}" class="text-decoration-none text-dark">
-                                        <h6 class="mb-1 fw-bold line-clamp-2" style="font-size: 0.9rem;">{{ Str::limit($news->title, 50) }}</h6>
+                                    <a href="{{ route('news.show', $news->id) }}" class="text-decoration-none">
+                                        <h6 class="mb-1 fw-bold line-clamp-2 news-title" style="font-size: 0.9rem;">
+                                            {{ Str::limit($news->title, 50) }}
+                                        </h6>
                                     </a>
                                     <div class="d-flex justify-content-between align-items-center mt-1">
                                         <small class="text-muted" style="font-size: 0.75rem;">
@@ -163,8 +165,10 @@
                                     <span class="badge bg-light text-dark border fw-bold rounded-circle d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;">{{ $index + 1 }}</span>
                                 </div>
                                 <div class="flex-grow-1">
-                                    <a href="{{ route('news.show', $news->id) }}" class="text-decoration-none text-dark">
-                                        <h6 class="mb-1 fw-bold line-clamp-2" style="font-size: 0.9rem;">{{ Str::limit($news->title, 50) }}</h6>
+                                    <a href="{{ route('news.show', $news->id) }}" class="text-decoration-none">
+                                        <h6 class="mb-1 fw-bold line-clamp-2 news-title" style="font-size: 0.9rem;">
+                                            {{ Str::limit($news->title, 50) }}
+                                        </h6>
                                     </a>
                                     <div class="d-flex justify-content-between align-items-center mt-1">
                                         <small class="text-muted" style="font-size: 0.75rem;">

@@ -1,0 +1,13 @@
+METHODOLOGY
+SYSTEM ARCHITECTURE
+
+News portal web                    Backend
+↓                                   ↓
+• register/log in                  • Authentication & Authorization (register, login, logout, roles, permissions)
+                                   • News Management (CRUD, drafts, status updates, search, categories)
+                                   • Category Management (create, update, delete)
+                                   • Banner Management (CRUD, status toggle)
+                                   • User Management (list, delete, role assignment)
+                                   • Like System (like/unlike news)
+                                   • Notification System (send, fetch, mark as read)
+                                   • File/Image Storage (upload, serve images)

@@ -26,7 +26,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Sidebar -->
         <div class="sidebar" data-background-color="dark">
             <div class="sidebar-logo">
@@ -207,11 +207,7 @@
                                 <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
                                     <li>
                                         <div class="dropdown-title">
-                                            @if (auth()->user()->notifications->count() > 0)
-                                                You have notifications
-                                            @else
-                                                Nothing notifications
-                                            @endif
+                                            <span>Notifications</span>
                                         </div>
                                     </li>
                                     <li>

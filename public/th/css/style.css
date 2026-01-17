@@ -92,12 +92,27 @@
 /*** Topbar Start ***/
 .sticky-top {
     transition: 0.5s;
-    background: var(--bs-white);
+}
+
+.main-header-wrapper {
+    background: #0052a5;
 }
 
 .topbar {
-    padding: 10px 0;
+    padding: 4px 0;
+    background: #004691;
 
+    color: #ffffff;
+}
+
+.topbar-label {
+    background: #ff1a1a;
+    color: #ffffff;
+    font-family: 'Kantumruy Pro', 'Khmer OS Muol Light', serif;
+    font-size: 13px;
+    font-weight: 600;
+    /* padding: 3px 10px; */
+    border-radius: 3px;
 }
 
 .topbar .top-info {
@@ -144,6 +159,12 @@
     color: var(--bs-primary) !important;
 }
 
+.topbar-text {
+    font-family: 'Koulen', 'Khmer OS Muol Light', serif;
+    font-size: 14px;
+    color: #ffffff;
+}
+
 #note {
     display: inline-block;
     white-space: nowrap;
@@ -163,6 +184,16 @@
 /*** Topbar End ***/
 
 /*** Navbar Start ***/
+.main-navbar {
+    background: #0052a5;
+    padding: 0;
+}
+
+.main-navbar-inner {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
 .navbar .navbar-nav .nav-link {
     padding: 10px 15px;
     font-weight: 400;
@@ -433,6 +464,5 @@
     border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 /*** Footer End ***/
-
 
 

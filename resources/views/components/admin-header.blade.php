@@ -29,3 +29,4 @@
 <link rel="stylesheet" href="{{ asset('admin/css/kaiadmin.min.css') }}" />
 <link rel="stylesheet" href="{{ asset('css/leaderboard.css') }}" />
 <link rel="stylesheet" href="{{ asset('css/admin-footer.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/notifications-modern.css') }}" />

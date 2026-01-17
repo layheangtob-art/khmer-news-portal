@@ -9,8 +9,8 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: 30px;
-    padding-bottom: 15px;
+    /* margin-bottom: 30px; */
+    /* padding-bottom: 15px; */
     border-bottom: 3px solid transparent;
     border-image: linear-gradient(90deg, #0052a5 0%, #00a8ff 100%) 1;
 }
@@ -246,32 +246,32 @@
     .category-title {
         font-size: 24px;
     }
-    
+
     .featured-news-content {
         padding: 20px;
     }
-    
+
     .featured-news-content h2 a {
         font-size: 20px;
     }
-    
+
     .news-item {
         margin-bottom: 20px;
     }
-    
+
     .news-item img {
         border-radius: 16px 16px 0 0;
         height: 200px;
     }
-    
+
     .news-item-content {
         padding: 20px;
     }
-    
+
     .news-item-content h4 a {
         font-size: 18px;
     }
-    
+
     .news-item-stats {
         flex-wrap: wrap;
         gap: 15px;

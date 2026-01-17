@@ -94,9 +94,14 @@ class User extends Authenticatable
             return $diffInSeconds . ($diffInSeconds == 1 ? ' second ago' : ' seconds ago');
         }
 
-        $diffInMinutes = $lastSeen->diffInMinutes($now);
+        $diffInMinutes = round($lastSeen->diffInMinutes($now));
 
-        // Always show in minutes format
-        return $diffInMinutes . ($diffInMinutes == 1 ? ' minute ago' : ' minutes ago');
+        if ($diffInMinutes < 60) {
+            return $diffInMinutes . ($diffInMinutes == 1 ? ' minute ago' : ' minutes ago');
+        }
+
+        $diffInHours = round($lastSeen->diffInHours($now));
+
+        return $diffInHours . ($diffInHours == 1 ? ' hour ago' : ' hours ago');
     }
 }
