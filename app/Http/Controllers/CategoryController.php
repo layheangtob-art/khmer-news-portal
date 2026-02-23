@@ -108,16 +108,27 @@ class CategoryController extends Controller
         try {
             $category->delete();
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Successfully delete the data.',
-                'redirect_url' => route('admin.category.manage')
-            ]);
+            if (request()->ajax() || request()->wantsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Successfully delete the data.',
+                    'redirect_url' => route('admin.category.manage')
+                ]);
+            }
+
+            return redirect()->route('admin.category.manage')
+                ->with('success', 'Successfully delete the data.');
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage()
-            ]);
+            if (request()->ajax() || request()->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $e->getMessage()
+                ]);
+            }
+
+            return redirect()->route('admin.category.manage')
+                ->with('error', $e->getMessage());
+                
         }
     }
 }

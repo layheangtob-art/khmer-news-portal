@@ -128,10 +128,12 @@
                                                         <span data-bs-toggle="tooltip" title="Delete">
                                                             <form
                                                                 action="{{ route('admin.category.destroy', $categories->id) }}"
-                                                                class="deleteForm" data-id="{{ $categories->id }}">
+                                                                method="POST"
+                                                                class="deleteForm d-inline"
+                                                                data-id="{{ $categories->id }}">
                                                                 @csrf
                                                                 @method('DELETE')
-                                                                <button type="submit" class="btn btn-link btn-danger">
+                                                                <button type="submit" class="btn btn-link btn-danger" data-id="{{ $categories->id }}">
                                                                     <i class="fa fa-times"></i>
                                                                 </button>
                                                             </form>

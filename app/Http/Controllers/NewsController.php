@@ -228,7 +228,23 @@ class NewsController extends Controller
             ->ordered()
             ->get();
 
-        return view('detail', compact('news', 'randomNews', 'detailBanners'));
+        // Get sidebar data
+        $categories = Category::all();
+        $popularPosts = News::where('status', 'Accept')
+            ->withCount('likes')
+            ->orderBy('likes_count', 'desc')
+            ->orderBy('views', 'desc')
+            ->take(3)
+            ->get();
+
+        // Get archive data (grouped by month/year)
+        $archives = News::where('status', 'Accept')
+            ->selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, COUNT(*) as count')
+            ->groupByRaw('YEAR(created_at), MONTH(created_at)')
+            ->orderByRaw('YEAR(created_at) DESC, MONTH(created_at) DESC')
+            ->get();
+
+        return view('detail', compact('news', 'randomNews', 'detailBanners', 'categories', 'popularPosts', 'archives'));
     }
 
     /**
@@ -468,12 +484,14 @@ class NewsController extends Controller
             return response()->json([
                 'success' => $results->count() > 0,
                 'message' => $message,
-                'data' => $results,
+                'data' => $results->values()->all(),
                 'total' => $results->count()
             ]);
         }
 
-        return view('search-results', compact('results', 'query'));
+        // Convert collection to array for the view
+        $resultsArray = $results->values()->all();
+        return view('search-results', ['resultsArray' => $resultsArray, 'query' => $query]);
     }
 
     /**

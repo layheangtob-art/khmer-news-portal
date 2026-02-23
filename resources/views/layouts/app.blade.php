@@ -49,121 +49,206 @@
     <link rel="stylesheet" href="{{ asset('css/homepage-layout.css') }}">
     <link rel="stylesheet" href="{{ asset('css/mobile-menu.css') }}">
     <link rel="stylesheet" href="{{ asset('css/modern-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/category-nav.css') }}">
     <link rel="stylesheet" href="{{ asset('css/ckeditor-content.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/magnews-style.css') }}">
 </head>
 
 <body>
-    <div class="container-fluid sticky-top main-header-wrapper">
-        <div class="container-fluid topbar d-none d-lg-block">
-            <div class="container px-0">
-                <div class="topbar-top d-flex align-items-center py-1">
-                    <span class="topbar-label me-3">NEWS</span>
-                    <div class="top-info flex-grow-1">
-                        @php
-                            $pinnedNews = \App\Models\News::where('status', 'Accept')
-                                ->where('is_pinned', true)
-                                ->latest()
-                                ->get();
-                            if ($pinnedNews->isEmpty()) {
-                                $pinnedNews = \App\Models\News::where('status', 'Accept')
-                                    ->withCount('likes')
-                                    ->orderBy('likes_count', 'desc')
-                                    ->take(2)
-                                    ->get();
-                            }
-                        @endphp
-                        @if ($pinnedNews->count() > 0)
-                            <div id="note">
-                                @foreach ($pinnedNews as $news)
-                                    <a href="{{ route('news.show', $news->id) }}" class="text-decoration-none me-3">
-                                        <span class="topbar-text">
-                                            {{ ' ' . trim($news->title) . ' ' }}
-                                        </span>
+    <!-- Top Dark Bar -->
+    <div class="magnews-topbar d-none d-xl-block">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center py-2">
+                <div class="magnews-topbar-left">
+                    <span class="magnews-date">{{ now()->translatedFormat('l F d, Y') }}</span>
+                </div>
+                <div class="magnews-topbar-right d-flex align-items-center gap-3">
+                    <a href="#" class="magnews-topbar-link">Login</a>
+                    <a href="#" class="magnews-topbar-link">Register</a>
+                    <div class="magnews-social-icons d-flex align-items-center gap-2">
+                        <a href="#" class="magnews-social-icon" title="Facebook"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="magnews-social-icon" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="magnews-social-icon" title="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="magnews-social-icon" title="Vimeo"><i class="fab fa-vimeo-v"></i></a>
+                    </div>
+                    {{-- <button class="magnews-search-icon-btn" data-bs-toggle="modal" data-bs-target="#searchModal">
+                        <i class="fas fa-search"></i>
+                    </button> --}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Section with Logo and Ad -->
+    <div class="magnews-header d-none d-xl-block">
+        <div class="container">
+            <div class="row align-items-center py-3">
+                <div class="col-md-4">
+                    <a href="{{ route('index') }}" class="magnews-logo">
+                        <span class="magnews-logo-mag">MAG</span><span class="magnews-logo-news">NEWS</span>
+                    </a>
+                </div>
+                <div class="col-md-8 d-none d-md-block">
+                    <div class="magnews-ad-banner">
+                        @if (isset($homeBanners) && $homeBanners->count() > 0)
+                            @foreach ($homeBanners->take(1) as $banner)
+                                @if ($banner->url)
+                                    <a href="{{ $banner->url }}" target="_blank" rel="noopener">
+                                        <img src="{{ asset('storage/banners/' . $banner->image) }}"
+                                            alt="{{ $banner->title }}" class="img-fluid w-100"
+                                            style="max-height: 100px; object-fit: cover;"
+                                            onerror="this.style.display='none';">
                                     </a>
-                                @endforeach
-                            </div>
+                                @else
+                                    <img src="{{ asset('storage/banners/' . $banner->image) }}"
+                                        alt="{{ $banner->title }}" class="img-fluid w-100"
+                                        style="max-height: 100px; object-fit: cover;"
+                                        onerror="this.style.display='none';">
+                                @endif
+                            @endforeach
+                        @else
+                            {{-- <div class="magnews-ad-placeholder">
+                                <span class="magnews-ad-text">THIS IS AN ADVERTISEMENT</span>
+                                <button class="magnews-ad-btn">DOWNLOAD</button>
+                            </div> --}}
                         @endif
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="container-fluid main-navbar">
-            <div class="container px-0">
-                <nav class="navbar navbar-dark navbar-expand-xl px-0">
-                    <a href="{{ route('index') }}" class="navbar-brand d-flex align-items-center">
-                        <img src="{{ asset('img/kh-news.png') }}" alt="KH News Logo" class="rounded"
-                            style="max-width: 90px; height: auto;">
-                    </a>
-
-                    <button class="navbar-toggler d-xl-none" type="button" id="mobileMenuToggle">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div class="collapse navbar-collapse d-none d-xl-flex" id="navbarCollapse">
-                        <div class="navbar-nav ms-auto align-items-center">
-                            @foreach (\App\Models\Category::all() as $categories)
-                                <a href="{{ route('news.viewCategory', $categories->id) }}"
-                                    class="nav-item nav-link text-white px-3 py-2"
-                                    style="font-family: 'koulen', 'Khmer OS Battambang', sans-serif; font-size: 16px; font-weight: 500;">
-                                    {{ $categories->name }}
-                                </a>
-                            @endforeach
-
-                            <button class="btn btn-light btn-sm rounded-circle ms-3" data-bs-toggle="modal"
-                                data-bs-target="#searchModal" style="width: 35px; height: 35px;">
-                                <i class="fas fa-search text-primary"></i>
-                            </button>
-
-                            <button class="btn btn-outline-light btn-sm rounded-circle ms-2" type="button"
-                                id="themeToggleButton" style="width: 35px; height: 35px;">
-                                <i class="fas fa-moon"></i>
-                            </button>
-                        </div>
-                    </div>
-                </nav>
+    <!-- Mobile Header Bar (Responsive) -->
+    <div class="magnews-mobile-header d-xl-none">
+        <div class="container">
+            <div class="magnews-mobile-header-content">
+                <a href="{{ route('index') }}" class="magnews-mobile-logo">
+                    <span class="magnews-logo-mag">MAG</span><span class="magnews-logo-news">NEWS</span>
+                </a>
+                <button class="magnews-mobile-menu-toggle" type="button" id="mobileMenuToggle" aria-label="Toggle menu">
+                    <span class="magnews-hamburger-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </button>
             </div>
         </div>
+    </div>
 
+    <!-- Main Navigation Bar -->
+    <div class="magnews-navbar sticky-top d-none d-xl-block">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg px-0">
+
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav magnews-nav-menu">
+                        <li class="nav-item">
+                            <a href="{{ route('index') }}"
+                                class="nav-link {{ request()->routeIs('index') ? 'active' : '' }}">Home</a>
+                        </li>
+                        @php
+                            $navCategories = \App\Models\Category::all();
+                            $catParam =
+                                request()->route() && request()->route()->getName() === 'news.viewCategory'
+                                    ? request()->route()->parameter('categories')
+                                    : null;
+                            $currentCategoryId =
+                                $catParam instanceof \App\Models\Category
+                                    ? $catParam->id
+                                    : (is_numeric($catParam)
+                                        ? (int) $catParam
+                                        : null);
+                        @endphp
+
+                        @php
+                            $displayCategories = $navCategories->take(7);
+                            $remainingCategories = $navCategories->slice(7);
+                        @endphp
+                        @foreach ($displayCategories as $cat)
+                            <li
+                                class="nav-item {{ $loop->last && $remainingCategories->isNotEmpty() ? 'dropdown' : '' }}">
+                                <a href="{{ route('news.viewCategory', $cat->id) }}"
+                                    class="nav-link {{ $currentCategoryId === $cat->id ? 'active' : '' }}"
+                                    @if ($loop->last && $remainingCategories->isNotEmpty()) data-bs-toggle="dropdown" 
+                                       aria-expanded="false" @endif>
+                                    {{ $cat->name }}
+                                    @if ($loop->last && $remainingCategories->isNotEmpty())
+                                        <i class="fas fa-chevron-down ms-1" style="font-size: 10px;"></i>
+                                    @endif
+                                </a>
+                                @if ($loop->last && $remainingCategories->isNotEmpty())
+                                    <ul class="dropdown-menu">
+                                        @foreach ($remainingCategories as $subCat)
+                                            <li>
+                                                <a class="dropdown-item {{ $currentCategoryId === $subCat->id ? 'active' : '' }}"
+                                                    href="{{ route('news.viewCategory', $subCat->id) }}">
+                                                    {{ $subCat->name }}
+                                                </a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @endif
+                            </li>
+                        @endforeach
+                    </ul>
+                    <div class="magnews-nav-right d-flex align-items-center gap-2 ms-auto">
+                        <form action="{{ route('news.search') }}" method="GET" class="magnews-search-form"
+                            id="navbarSearchForm">
+                            <div class="magnews-search-wrapper">
+                                <input type="text" class="magnews-search-input" name="q"
+                                    id="navbarSearchInput" placeholder="Search" autocomplete="off"
+                                    data-bs-target="#searchModal">
+                                <button type="button" class="magnews-search-icon-btn" id="navbarSearchIcon">
+                                    <i class="fas fa-search magnews-search-icon"></i>
+                                </button>
+                            </div>
+                        </form>
+                        {{-- <button class="magnews-contact-btn">Contact</button> --}}
+                        <button class="magnews-theme-toggle-btn" type="button" id="themeToggleButton">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                    </div>
+                </div>
+            </nav>
+        </div>
     </div>
     <!-- Navbar End -->
 
     <!-- Mobile Menu Overlay -->
     <div class="mobile-menu-overlay d-xl-none" id="mobileMenuOverlay">
         <div class="d-flex flex-column" style="min-height: 100vh;">
+            <!-- Top White Header with Logo and Close Button -->
             <div class="mobile-menu-header">
-                <div></div>
+                <a href="{{ route('index') }}" class="mobile-menu-logo">
+                    <span class="magnews-logo-mag">MAG</span><span class="magnews-logo-news">NEWS</span>
+                </a>
                 <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
 
+
+            <!-- Main Navigation Menu with Muted Green Background -->
             <ul class="mobile-menu-list flex-grow-1">
+                <li class="mobile-menu-item">
+                    <a href="{{ route('index') }}" class="mobile-menu-link">
+                        <span>Home</span>
+                        <i class="fas fa-chevron-right mobile-menu-chevron"></i>
+                    </a>
+                </li>
                 @foreach (\App\Models\Category::all() as $categories)
                     <li class="mobile-menu-item">
                         <a href="{{ route('news.viewCategory', $categories->id) }}" class="mobile-menu-link">
                             <span>{{ $categories->name }}</span>
-                            @if ($loop->first)
-                                <span class="expand-icon">+</span>
+                            @if ($loop->last)
+                                <i class="fas fa-chevron-right mobile-menu-chevron"></i>
                             @endif
                         </a>
                     </li>
                 @endforeach
             </ul>
-
-            <div class="mobile-menu-search">
-                <div class="mobile-menu-search-wrapper">
-                    <input type="text" class="mobile-menu-search-input" placeholder="ស្វែងរក..."
-                        id="mobileSearchInput">
-                    <i class="fas fa-search mobile-menu-search-icon"></i>
-                </div>
-            </div>
-            <div class="mobile-menu-footer">
-                <button type="button" class="mobile-theme-toggle-button" id="themeToggleButtonMobile">
-                    <i class="fas fa-moon me-2"></i>
-                    <span>Dark mode</span>
-                </button>
-            </div>
         </div>
     </div>
     <!-- Mobile Menu End -->
@@ -194,8 +279,10 @@
                                         </div>
 
                                         <!-- Close Button -->
-                                        <button type="button" class="btn-close btn-close-white"
-                                            data-bs-dismiss="modal" aria-label="Close"></button>
+                                        <button type="button" class="search-modal-close-btn" data-bs-dismiss="modal"
+                                            aria-label="Close">
+                                            <i class="fas fa-times"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -245,63 +332,85 @@
     @yield('content')
 
     <!-- Footer Start -->
-    <footer class="admin-footer">
+    <footer class="magnews-footer">
         <div class="container">
             <div class="row">
                 <!-- Left Column - About/Contact -->
-                <div class="col-md-6 footer-column">
-                    <div class="mb-3">
-                        <img src="{{ asset('img/kh-news.png') }}" style="max-width: 80px; margin-bottom: 10px;" alt="KH News Logo" class=" rounded ">
-                        {{-- <h5 class="mb-3">ព័ត៌មាន</h5> --}}
-                        <p class="mb-2">ប្រព័ន្ធផ្សព្វផ្សាយ ហ្វេសប៊ុក ទូរស័ព្ទ អ៊ីនធឺណិត និងការផ្សាយពាណិជ្ជកម្ម
-                            ក្នុងស្រុក</p>
-                        <p class="mb-1"><i class="fas fa-phone me-2"></i>ទូរស័ព្ទ: +855 855 481 01</p>
-                        <p class="mb-1"><i class="fas fa-envelope me-2"></i>អ៊ីម៉ែល: sela168@gmail.com</p>
-                        <p class="mb-3"><i class="fas fa-map-marker-alt me-2"></i>អាសយដ្ឋាន: ភ្នំពេញ, កម្ពុជា</p>
+                <div class="col-md-4 magnews-footer-column">
+                    <div class="magnews-footer-logo mb-3">
+                        <span class="magnews-logo-mag">MAG</span><span class="magnews-logo-news">NEWS</span>
                     </div>
-                    <div class="copyright-text">
-                        <p class="mb-0">© {{ date('Y') }} - រក្សាសិទ្ធិគ្រប់យ៉ាងដោយ ព័ត៌មាន</p>
+                    <p class="magnews-footer-text mb-3">ប្រព័ន្ធផ្សព្វផ្សាយ ហ្វេសប៊ុក ទូរស័ព្ទ អ៊ីនធឺណិត
+                        និងការផ្សាយពាណិជ្ជកម្ម ក្នុងស្រុក</p>
+                    <p class="magnews-footer-contact mb-2"><i class="fas fa-phone me-2"></i>Phone: +855 855 481 01</p>
+                    <p class="magnews-footer-contact mb-2"><i class="fas fa-envelope me-2"></i>Email:
+                        sela168@gmail.com</p>
+                    <div class="magnews-footer-social mt-3">
+                        <a href="#" class="magnews-footer-social-icon" title="Facebook"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="magnews-footer-social-icon" title="Twitter"><i
+                                class="fab fa-twitter"></i></a>
+                        <a href="#" class="magnews-footer-social-icon" title="YouTube"><i
+                                class="fab fa-youtube"></i></a>
+                        <a href="#" class="magnews-footer-social-icon" title="Vimeo"><i
+                                class="fab fa-vimeo-v"></i></a>
+                        <a href="#" class="magnews-footer-social-icon" title="RSS"><i
+                                class="fas fa-rss"></i></a>
                     </div>
                 </div>
-                <!-- Right Column - Categories & Social Media -->
-                <div class="col-md-6 footer-column">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h5 class="mb-3">ប្រភេទព័ត៌មាន</h5>
-                            <ul class="list-unstyled">
-                                @foreach (\App\Models\Category::orderBy('views', 'desc')->take(6)->get() as $category)
-                                    <li class="mb-2">
-                                        <a href="{{ route('news.viewCategory', $category->id) }}"
-                                            class="text-decoration-none">
-                                            {{ $category->name }}
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        <div class="col-md-6">
-                            <h5 class="mb-3">បណ្តាញសង្គម</h5>
-                            <div class="social-icons mb-3">
-                                <a href="#" class="me-3" title="Facebook"><i
-                                        class="fab fa-facebook-f fa-lg"></i></a>
-                                <a href="#" class="me-3" title="Telegram"><i
-                                        class="fab fa-telegram fa-lg"></i></a>
-                                <a href="#" class="me-3" title="YouTube"><i
-                                        class="fab fa-youtube fa-lg"></i></a>
-                                <a href="#" class="me-3" title="X (Twitter)"><i
-                                        class="fab fa-x-twitter fa-lg"></i></a>
+                <!-- Middle Column - Popular Posts -->
+                <div class="col-md-4 magnews-footer-column">
+                    <h5 class="magnews-footer-title mb-3">Popular Posts</h5>
+                    @php
+                        $popularPosts = \App\Models\News::where('status', 'Accept')
+                            ->withCount('likes')
+                            ->orderBy('likes_count', 'desc')
+                            ->orderBy('views', 'desc')
+                            ->take(3)
+                            ->get();
+                    @endphp
+                    @foreach ($popularPosts as $post)
+                        <div class="magnews-footer-post mb-3">
+                            <div class="row g-2">
+                                <div class="col-4">
+                                    <img src="{{ $post->image ? asset('storage/images/' . $post->image) : asset('img/noimg.jpg') }}"
+                                        alt="{{ $post->title }}" class="magnews-footer-post-img">
+                                </div>
+                                <div class="col-8">
+                                    <a href="{{ route('news.show', $post->id) }}" class="magnews-footer-post-title">
+                                        {{ Str::limit($post->title, 50) }}
+                                    </a>
+                                    <p class="magnews-footer-post-date mb-0">
+                                        {{ $post->created_at->translatedFormat('M d, Y') }}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endforeach
+                </div>
+                <!-- Right Column - Categories -->
+                <div class="col-md-4 magnews-footer-column">
+                    <h5 class="magnews-footer-title mb-3">Category</h5>
+                    <ul class="magnews-footer-category-list">
+                        @foreach (\App\Models\Category::orderBy('views', 'desc')->take(10)->get() as $category)
+                            <li class="magnews-footer-category-item">
+                                <a href="{{ route('news.viewCategory', $category->id) }}"
+                                    class="magnews-footer-category-link">
+                                    {{ $category->name }} <span
+                                        class="magnews-footer-category-count">({{ $category->news()->where('status', 'Accept')->count() }})</span>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
                 </div>
             </div>
         </div>
-    </footer>
-    <div class="copyright">
-        <div class="container">
-            <p class="mb-0">© {{ date('Y') }} - រក្សាសិទ្ធិគ្រប់យ៉ាងដោយ ក្រុមហ៊ុនយើង</p>
+        <div class="magnews-footer-bottom">
+            <div class="container">
+                <p class="mb-0">Copyright © {{ date('Y') }} All rights reserved | This template is made with
+                    love by Colorlib</p>
+            </div>
         </div>
-    </div>
+    </footer>
     <!-- Footer End -->
 
     <!-- Back to Top -->
@@ -325,6 +434,77 @@
     <script src="{{ asset('js/shortcut.js') }}"></script>
     <script src="{{ asset('js/back-to-top.js') }}"></script>
     <script src="{{ asset('js/search.js') }}"></script>
+
+    {{-- Navbar Search Functionality --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navbarSearchInput = document.getElementById('navbarSearchInput');
+            const navbarSearchForm = document.getElementById('navbarSearchForm');
+            const navbarSearchIcon = document.getElementById('navbarSearchIcon');
+            let isModalOpening = false;
+
+            // Handle Enter key press
+            if (navbarSearchInput) {
+                navbarSearchInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const query = this.value.trim();
+                        if (query !== '') {
+                            // Submit form to search results page
+                            navbarSearchForm.submit();
+                        }
+                    }
+                });
+
+                // Handle click on input - open modal if empty, otherwise allow typing
+                navbarSearchInput.addEventListener('click', function(e) {
+                    const query = this.value.trim();
+                    if (query === '') {
+                        // If empty, open modal
+                        isModalOpening = true;
+                        setTimeout(function() {
+                            isModalOpening = false;
+                        }, 300);
+                    }
+                });
+
+                // Handle focus - allow typing
+                navbarSearchInput.addEventListener('focus', function() {
+                    this.removeAttribute('readonly');
+                });
+            }
+
+            // Handle search icon click
+            if (navbarSearchIcon) {
+                navbarSearchIcon.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const query = navbarSearchInput.value.trim();
+                    if (query !== '') {
+                        // Submit form if there's a query
+                        navbarSearchForm.submit();
+                    } else {
+                        // Open modal if empty
+                        const modal = new bootstrap.Modal(document.getElementById('searchModal'));
+                        modal.show();
+                    }
+                });
+            }
+
+            // Prevent form submission when clicking input (to allow modal opening)
+            if (navbarSearchForm) {
+                navbarSearchForm.addEventListener('submit', function(e) {
+                    const query = navbarSearchInput.value.trim();
+                    if (query === '' && !isModalOpening) {
+                        e.preventDefault();
+                        // Open modal if empty
+                        const modal = new bootstrap.Modal(document.getElementById('searchModal'));
+                        modal.show();
+                    }
+                });
+            }
+        });
+    </script>
 
     {{-- Mobile Menu JS --}}
     <script>
@@ -396,7 +576,8 @@
                     }
                     if (themeToggleButtonMobile) {
                         themeToggleButtonMobile.classList.add('theme-toggle-active');
-                        themeToggleButtonMobile.innerHTML = '<i class="fas fa-sun me-2"></i><span>Light mode</span>';
+                        themeToggleButtonMobile.innerHTML =
+                        '<i class="fas fa-sun me-2"></i><span>Light mode</span>';
                     }
                 } else {
                     body.classList.remove('dark-mode');
@@ -406,7 +587,8 @@
                     }
                     if (themeToggleButtonMobile) {
                         themeToggleButtonMobile.classList.remove('theme-toggle-active');
-                        themeToggleButtonMobile.innerHTML = '<i class="fas fa-moon me-2"></i><span>Dark mode</span>';
+                        themeToggleButtonMobile.innerHTML =
+                        '<i class="fas fa-moon me-2"></i><span>Dark mode</span>';
                     }
                 }
             }

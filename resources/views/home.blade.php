@@ -2,31 +2,6 @@
 
 @section('content')
 
-    <!-- Top Banner Section -->
-    @if(isset($homeBanners) && $homeBanners->count() > 0)
-    <div class="container mt-3">
-        <div class="sponsor-cover p-3 rounded mb-3">
-            @foreach($homeBanners->take(1) as $banner)
-                @if($banner->url)
-                    <a href="{{ $banner->url }}" target="_blank" rel="noopener">
-                        <img src="{{ asset('storage/banners/' . $banner->image) }}"
-                             alt="{{ $banner->title }}"
-                             class="img-fluid w-100"
-                             style="max-height: 300px;"
-                             onerror="this.style.display='none';">
-                    </a>
-                @else
-                    <img src="{{ asset('storage/banners/' . $banner->image) }}"
-                         alt="{{ $banner->title }}"
-                         class="img-fluid w-100"
-                         style="max-height: 400px; object-fit: cover;"
-                         onerror="this.style.display='none';">
-                @endif
-            @endforeach
-        </div>
-    </div>
-    @endif
-
     <!-- Hero / Latest News Section -->
     <div class="container py-2">
         <div class="row ">
@@ -126,7 +101,7 @@
 
     @if(isset($homeBanners) && $homeBanners->count() > 1)
     <div class="container mt-4">
-        <div class="sponsor-cover p-3 rounded mb-3">
+        <div class=" rounded mb-3">
             @foreach($homeBanners->slice(1, 1) as $banner)
                 @if($banner->url)
                     <a href="{{ $banner->url }}" target="_blank" rel="noopener">

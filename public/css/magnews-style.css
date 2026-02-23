@@ -1,0 +1,850 @@
+/* MagNews Template Styles */
+
+/* Top Dark Bar */
+.magnews-topbar {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    border-bottom: 1px solid #333;
+}
+
+.magnews-topbar-left {
+    display: flex;
+    align-items: center;
+}
+
+.magnews-date {
+    font-size: 14px;
+    color: #ffffff;
+    font-family: 'Kantumruy Pro', sans-serif;
+}
+
+.magnews-topbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.magnews-topbar-link {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+    font-family: 'Kantumruy Pro', sans-serif;
+}
+
+.magnews-topbar-link:hover {
+    color: #4CAF50;
+}
+
+.magnews-social-icons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 15px;
+    padding-left: 15px;
+    border-left: 1px solid #333;
+}
+
+.magnews-social-icon {
+    color: #ffffff;
+    font-size: 14px;
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+
+.magnews-social-icon:hover {
+    color: #4CAF50;
+}
+
+.magnews-search-icon-btn {
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 5px 10px;
+    margin-left: 10px;
+    transition: color 0.3s ease;
+}
+
+.magnews-search-icon-btn:hover {
+    color: #4CAF50;
+}
+
+/* Header Section */
+.magnews-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.magnews-logo {
+    text-decoration: none;
+    display: inline-block;
+    font-size: 36px;
+    font-weight: 800;
+    font-family: 'Raleway', sans-serif;
+    letter-spacing: -1px;
+}
+
+.magnews-logo-mag {
+    color: #4CAF50;
+}
+
+.magnews-logo-news {
+    color: #000000;
+}
+
+/* Mobile Header Bar (Responsive) */
+.magnews-mobile-header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 15px 0;
+}
+
+.magnews-mobile-header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.magnews-mobile-logo {
+    text-decoration: none;
+    display: inline-block;
+    font-size: 28px;
+    font-weight: 800;
+    font-family: 'Raleway', sans-serif;
+    letter-spacing: -1px;
+}
+
+.magnews-mobile-logo .magnews-logo-mag {
+    color: #4CAF50;
+}
+
+.magnews-mobile-logo .magnews-logo-news {
+    color: #000000;
+}
+
+.magnews-mobile-menu-toggle {
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease;
+}
+
+.magnews-mobile-menu-toggle:hover {
+    opacity: 0.7;
+}
+
+.magnews-mobile-menu-toggle:focus {
+    outline: 2px solid #4CAF50;
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+.magnews-hamburger-icon {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 24px;
+    height: 18px;
+}
+
+.magnews-hamburger-icon span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: #000000;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+/* .magnews-ad-banner {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 4px;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} */
+
+.magnews-ad-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.magnews-ad-text {
+    color: #cccccc;
+    font-size: 14px;
+    font-family: 'Kantumruy Pro', sans-serif;
+}
+
+.magnews-ad-btn {
+    background-color: #2196F3;
+    color: #ffffff;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.magnews-ad-btn:hover {
+    background-color: #1976D2;
+}
+
+/* Mobile/Tablet Ad Banner (iPad & Phone) */
+.magnews-mobile-ad-banner {
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 12px 0;
+}
+
+.magnews-mobile-ad-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60px;
+}
+
+.magnews-mobile-ad-link {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.magnews-mobile-ad-img {
+    width: 100%;
+    max-height: 80px;
+    object-fit: contain;
+    display: block;
+}
+
+.magnews-mobile-ad-placeholder {
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e8e8e8;
+    border-radius: 6px;
+    padding: 12px;
+}
+
+.magnews-mobile-ad-placeholder-box {
+    flex-direction: column;
+    gap: 10px;
+    min-height: 70px;
+}
+
+/* Slightly larger ad on iPad */
+@media (min-width: 768px) and (max-width: 1199px) {
+    .magnews-mobile-ad-banner {
+        padding: 14px 0;
+    }
+
+    .magnews-mobile-ad-inner {
+        min-height: 80px;
+    }
+
+    .magnews-mobile-ad-img {
+        max-height: 100px;
+    }
+
+    .magnews-mobile-ad-placeholder,
+    .magnews-mobile-ad-placeholder-box {
+        min-height: 80px;
+    }
+}
+
+/* Main Navigation Bar */
+.magnews-navbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+.magnews-nav-menu {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 0;
+}
+
+.magnews-nav-menu .nav-item {
+    position: relative;
+}
+
+.magnews-nav-menu .nav-link {
+    color: #333333;
+    text-decoration: none;
+    padding: 15px 20px;
+    font-size: 15px;
+    font-weight: 500;
+    font-family: 'Kantumruy Pro', sans-serif;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    border-bottom: 3px solid transparent;
+}
+
+.magnews-nav-menu .nav-link:hover,
+.magnews-nav-menu .nav-link.active {
+    color: #4CAF50;
+    border-bottom-color: #4CAF50;
+}
+
+.magnews-nav-menu .nav-link i {
+    margin-left: 5px;
+    font-size: 10px;
+}
+
+.magnews-nav-menu .dropdown-menu {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 10px 0;
+    margin-top: 0;
+    min-width: 200px;
+}
+
+.magnews-nav-menu .dropdown-item {
+    color: #333333;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-family: 'Kantumruy Pro', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.magnews-nav-menu .dropdown-item:hover,
+.magnews-nav-menu .dropdown-item.active {
+    background-color: #f5f5f5;
+    color: #4CAF50;
+}
+
+.magnews-navbar .navbar-toggler {
+    border: 1px solid #e0e0e0;
+    padding: 5px 10px;
+}
+
+.magnews-navbar .navbar-toggler:focus {
+    box-shadow: none;
+    outline: 2px solid #4CAF50;
+    outline-offset: 2px;
+}
+
+.magnews-navbar .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2833, 33, 33, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.magnews-nav-right {
+    display: flex;
+    align-items: center;
+}
+
+.magnews-search-form {
+    margin: 0;
+    padding: 0;
+}
+
+.magnews-search-wrapper {
+    position: relative;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.magnews-search-input {
+    border: 1px solid #e0e0e0;
+    padding: 8px 40px 8px 15px;
+    border-radius: 25px;
+    font-size: 14px;
+    width: 200px;
+    font-family: 'Kantumruy Pro', sans-serif;
+    transition: all 0.3s ease;
+    background-color: #ffffff;
+}
+
+.magnews-search-input::placeholder {
+    color: #999999;
+}
+
+.magnews-search-input:focus {
+    outline: none;
+    border-color: #e0e0e0;
+    box-shadow: none;
+}
+
+.magnews-search-icon-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 5px 8px;
+    cursor: pointer;
+    color: #000000;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+}
+
+.magnews-search-icon-btn:hover {
+    color: #333333;
+}
+
+.magnews-search-icon {
+    font-size: 14px;
+    pointer-events: none;
+}
+
+.magnews-contact-btn {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: 'Kantumruy Pro', sans-serif;
+}
+
+.magnews-contact-btn:hover {
+    background-color: #333333;
+}
+
+.magnews-theme-toggle-btn {
+    background: none;
+    border: 1px solid #e0e0e0;
+    color: #333333;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+}
+
+.magnews-theme-toggle-btn:hover {
+    background-color: #f5f5f5;
+    border-color: #4CAF50;
+    color: #4CAF50;
+}
+
+/* Footer Styles */
+.magnews-footer {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    padding: 50px 0 0;
+    margin-top: 50px;
+}
+
+.magnews-footer-column {
+    margin-bottom: 30px;
+}
+
+.magnews-footer-logo {
+    font-size: 28px;
+    font-weight: 800;
+    font-family: 'Raleway', sans-serif;
+    letter-spacing: -1px;
+}
+
+.magnews-footer-text {
+    color: #cccccc;
+    font-size: 14px;
+    line-height: 1.6;
+    font-family: 'Kantumruy Pro', sans-serif;
+}
+
+.magnews-footer-contact {
+    color: #cccccc;
+    font-size: 14px;
+    font-family: 'Kantumruy Pro', sans-serif;
+}
+
+.magnews-footer-contact i {
+    color: #4CAF50;
+}
+
+.magnews-footer-social {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.magnews-footer-social-icon {
+    color: #ffffff;
+    font-size: 18px;
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+
+.magnews-footer-social-icon:hover {
+    color: #4CAF50;
+}
+
+.magnews-footer-title {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    font-family: 'Kantumruy Pro', sans-serif;
+}
+
+.magnews-footer-post {
+    padding-bottom: 15px;
+    border-bottom: 1px solid #333;
+}
+
+.magnews-footer-post:last-child {
+    border-bottom: none;
+}
+
+.magnews-footer-post-img {
+    width: 100%;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.magnews-footer-post-title {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 5px;
+    line-height: 1.4;
+    transition: color 0.3s ease;
+    font-family: 'Kantumruy Pro', sans-serif;
+}
+
+.magnews-footer-post-title:hover {
+    color: #4CAF50;
+}
+
+.magnews-footer-post-date {
+    color: #999;
+    font-size: 12px;
+    font-family: 'Kantumruy Pro', sans-serif;
+}
+
+.magnews-footer-category-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.magnews-footer-category-item {
+    margin-bottom: 10px;
+}
+
+.magnews-footer-category-link {
+    color: #cccccc;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+    font-family: 'Kantumruy Pro', sans-serif;
+}
+
+.magnews-footer-category-link:hover {
+    color: #4CAF50;
+}
+
+.magnews-footer-category-count {
+    color: #999;
+    font-size: 12px;
+}
+
+.magnews-footer-bottom {
+    background-color: #0f0f0f;
+    padding: 20px 0;
+    margin-top: 30px;
+    border-top: 1px solid #333;
+}
+
+.magnews-footer-bottom p {
+    color: #999;
+    font-size: 14px;
+    text-align: center;
+    margin: 0;
+    font-family: 'Kantumruy Pro', sans-serif;
+}
+
+/* Responsive Design */
+@media (max-width: 991px) {
+    .magnews-header {
+        display: none;
+    }
+
+    .magnews-nav-menu {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .magnews-nav-menu .nav-link {
+        width: 100%;
+        padding: 12px 20px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .magnews-nav-right {
+        flex-direction: column;
+        width: 100%;
+        margin-top: 15px;
+        gap: 10px;
+    }
+
+    .magnews-search-wrapper {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    .magnews-search-input {
+        width: 100%;
+    }
+
+    .magnews-footer-column {
+        margin-bottom: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .magnews-logo {
+        font-size: 28px;
+    }
+
+    .magnews-ad-banner {
+        min-height: 80px;
+        padding: 15px;
+    }
+
+    .magnews-topbar-right {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .magnews-social-icons {
+        border-left: none;
+        padding-left: 0;
+        margin-left: 0;
+    }
+}
+
+/* iPad Pro (1024 x 1366) and similar tablet - mobile header scaling & layout */
+@media (min-width: 1024px) and (max-width: 1199px) {
+    .magnews-mobile-header-content {
+        max-width: 100%;
+    }
+
+    .magnews-mobile-logo {
+        font-size: 30px;
+    }
+
+    .magnews-hamburger-icon {
+        width: 26px;
+        height: 20px;
+    }
+
+    .magnews-hamburger-icon span {
+        height: 2.5px;
+    }
+
+    /* Prevent horizontal overflow on iPad Pro */
+    .magnews-mobile-header .container,
+    .magnews-header .container,
+    .magnews-navbar .container {
+        max-width: 100%;
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+}
+
+@media (max-width: 576px) {
+    .magnews-logo {
+        font-size: 24px;
+    }
+
+    .magnews-date {
+        font-size: 12px;
+    }
+
+    .magnews-topbar-link {
+        font-size: 12px;
+    }
+
+    .magnews-nav-menu .nav-link {
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+}
+
+/* Dark Mode Support */
+body.dark-mode .magnews-topbar {
+    background-color: #0a0a0a;
+    border-bottom-color: #222;
+}
+
+body.dark-mode .magnews-header {
+    background-color: #111;
+    border-bottom-color: #222;
+}
+
+body.dark-mode .magnews-mobile-header {
+    background-color: #111;
+    border-bottom-color: #222;
+}
+
+body.dark-mode .magnews-mobile-logo .magnews-logo-news {
+    color: #ffffff;
+}
+
+body.dark-mode .magnews-hamburger-icon span {
+    background-color: #ffffff;
+}
+
+body.dark-mode .magnews-mobile-ad-banner {
+    background-color: #1a1a1a;
+    border-bottom-color: #333;
+}
+
+body.dark-mode .magnews-mobile-ad-placeholder,
+body.dark-mode .magnews-mobile-ad-placeholder-box {
+    background-color: #2a2a2a;
+}
+
+body.dark-mode .magnews-mobile-ad-placeholder .magnews-ad-text {
+    color: #9ca3af;
+}
+
+body.dark-mode .magnews-navbar {
+    background-color: #111;
+    border-bottom-color: #222;
+}
+
+body.dark-mode .magnews-nav-menu .nav-link {
+    color: #e5e7eb;
+}
+
+body.dark-mode .magnews-nav-menu .nav-link:hover,
+body.dark-mode .magnews-nav-menu .nav-link.active {
+    color: #4CAF50;
+}
+
+body.dark-mode .magnews-search-input {
+    background-color: #1a1a1a;
+    border-color: #333;
+    color: #e5e7eb;
+}
+
+body.dark-mode .magnews-search-input::placeholder {
+    color: #6b7280;
+}
+
+body.dark-mode .magnews-search-input:focus {
+    border-color: #333;
+    background-color: #1a1a1a;
+    box-shadow: none;
+}
+
+body.dark-mode .magnews-search-icon-btn {
+    color: #e5e7eb;
+}
+
+body.dark-mode .magnews-search-icon-btn:hover {
+    color: #9ca3af;
+}
+
+body.dark-mode .magnews-contact-btn {
+    background-color: #2a2a2a;
+}
+
+body.dark-mode .magnews-contact-btn:hover {
+    background-color: #333;
+}
+
+body.dark-mode .magnews-theme-toggle-btn {
+    border-color: #333;
+    color: #e5e7eb;
+}
+
+body.dark-mode .magnews-theme-toggle-btn:hover {
+    background-color: #1a1a1a;
+    border-color: #4CAF50;
+}
+
+body.dark-mode .magnews-footer {
+    background-color: #0a0a0a;
+}
+
+body.dark-mode .magnews-footer-bottom {
+    background-color: #050505;
+}
+
+body.dark-mode .magnews-nav-menu .dropdown-menu {
+    background-color: #1a1a1a;
+    border-color: #333;
+}
+
+body.dark-mode .magnews-nav-menu .dropdown-item {
+    color: #e5e7eb;
+}
+
+body.dark-mode .magnews-nav-menu .dropdown-item:hover,
+body.dark-mode .magnews-nav-menu .dropdown-item.active {
+    background-color: #2a2a2a;
+    color: #4CAF50;
+}
+
+body.dark-mode .magnews-navbar .navbar-toggler {
+    border-color: #333;
+}
+
+body.dark-mode .magnews-navbar .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28229, 231, 235, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Search Modal Close Button */
+.search-modal-close-btn {
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    min-width: 40px;
+    min-height: 40px;
+}
+
+.search-modal-close-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    transform: scale(1.1);
+}
+
+.search-modal-close-btn:focus {
+    outline: 2px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 2px;
+}
+
+.search-modal-close-btn i {
+    font-size: 20px;
+}

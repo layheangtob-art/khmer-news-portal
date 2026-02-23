@@ -80,12 +80,19 @@ Route::middleware(['role:Super Admin'])->group(function () {
         abort(404);
     });
     // Category
+    // Specific routes must come before wildcard routes
+    Route::get('/admin/category/manage', [CategoryController::class, 'manage'])->name('admin.category.manage');
+
     Route::resource('admin/category', CategoryController::class)->names('admin.category')->only([
         'store',
         'update',
         'destroy',
     ]);
-    Route::get('/admin/category/manage', [CategoryController::class, 'manage'])->name('admin.category.manage');
+
+    // Block direct access to /admin/category/{id} (show route) - must be after specific routes
+    Route::get('/admin/category/{category}', function () {
+        return redirect()->route('admin.category.manage');
+    });
     // Banners
     Route::resource('admin/banners', App\Http\Controllers\BannerController::class)->names('admin.banners');
     Route::patch('/admin/banners/{banner}/toggle-status', [App\Http\Controllers\BannerController::class, 'toggleStatus'])->name('admin.banners.toggleStatus');

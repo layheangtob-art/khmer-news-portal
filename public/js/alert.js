@@ -242,6 +242,72 @@ $(document).ready(function() {
         });
     });
 
+    // Delete Form Handler (for category delete forms)
+    $(document).on('submit', '.deleteForm', function(event) {
+        event.preventDefault();
+
+        var form = $(this);
+        var formData = new FormData(form[0]);
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You won\'t be able to revert this!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel',
+            buttonsStyling: false,
+            customClass: {
+                confirmButton: 'btn btn-danger mx-1',
+                cancelButton: 'btn btn-secondary mx-1'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: form.attr('action'),
+                    method: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Deleted',
+                                text: response.message || 'The category was deleted successfully.',
+                                buttonsStyling: false,
+                                customClass: { confirmButton: 'btn btn-success' }
+                            }).then(() => {
+                                if (response.redirect_url) {
+                                    window.location.href = response.redirect_url;
+                                } else {
+                                    // Remove row from DataTable if it exists
+                                    var row = form.closest('tr');
+                                    if ($('#add-row').length && typeof $('#add-row').DataTable !== 'undefined') {
+                                        $('#add-row').DataTable().row(row).remove().draw();
+                                    } else {
+                                        location.reload();
+                                    }
+                                }
+                            });
+                        } else {
+                            showAlert('error', response.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        var errorMessage = xhr.responseJSON && xhr.responseJSON.message ? xhr.responseJSON.message : 'Error deleting category';
+                        showAlert('error', errorMessage);
+                    }
+                });
+            }
+        });
+    });
+
     $('#loginForm').on('submit', function(event) {
         event.preventDefault();
 

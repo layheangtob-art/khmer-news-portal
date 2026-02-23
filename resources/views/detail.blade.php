@@ -3,9 +3,9 @@
 @section('content')
     <!-- Sponsor Banner for Detail Page -->
     @if ($detailBanners->count() > 0)
-        <div class="container-fluid py-2 mb-3 ">
-            <div  class="container">
-                <div class="sponsor-cover p-3 rounded">
+        <div class="container-fluid py-2 mb-3">
+            <div class="container">
+                <div class="p-3 rounded">
                     <div class="row align-items-center">
                         <div class="col-md-12">
                             <div class="sponsor-logos d-flex flex-wrap justify-content-around align-items-center">
@@ -14,8 +14,8 @@
                                         @if ($banner->url)
                                             <a href="{{ $banner->url }}" target="_blank" rel="noopener">
                                                 <img src="{{ asset('storage/banners/' . $banner->image) }}"
-                                                    alt="{{ $banner->title }}" class="img-fluid"
-                                                    style="max-height: 200px; width: auto;">
+                                                    alt="{{ $banner->title }}" 
+                                                    style=" width: auto;">
                                             </a>
                                         @else
                                             <img src="{{ asset('storage/banners/' . $banner->image) }}"
@@ -32,35 +32,49 @@
         </div>
     @endif
 
-    <!-- Single Product Start -->
+    <!-- Blog Detail Page Start -->
     <div class="container-fluid py-4">
         <div class="container">
-            <ol style=" font-family: 'koulen', 'Khmer OS Muol Light', serif;" class="breadcrumb justify-content-start mb-4"
-                style="font-size: 23px;">
-                <li class="breadcrumb-item"><a href="{{ route('index') }}" style="font-size: 23px;">ទំព័រដើម</a></li>
-                <li class="breadcrumb-item active text-dark" style="font-size: 23px;">{{ $news->title }}</li>
-            </ol>
-            <div class="row g-4">
-                <div class="col-12">
+            <!-- Breadcrumbs -->
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb mb-0 magnews-breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('index') }}" class="text-decoration-none">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('news.viewCategory', $news->category->id) }}" class="text-decoration-none">Blog</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ Str::limit($news->title, 50) }}</li>
+                </ol>
+            </nav>
 
-                    <div class="position-relative overflow-hidden mb-4" style="border-radius: 20px; box-shadow: 0 8px 30px rgba(0, 82, 165, 0.15);">
-                        <img src="{{ $news->image ? asset('storage/images/' . $news->image) : asset('img/noimg.jpg') }}"
-                            class="img-zoomin img-fluid w-100" alt="" style="border-radius: 20px;">
-                        <div class="position-absolute text-white px-4 py-2 rounded"
-                            style="top: 20px; right: 20px; background: linear-gradient(135deg, #0052a5 0%, #00a8ff 100%); box-shadow: 0 4px 15px rgba(0, 82, 165, 0.4); font-weight: 600;">
-                            {{ $news->category->name }}
-                        </div>
+            <div class="row">
+                <!-- Main Content Column -->
+                <div class="col-lg-8">
+                    <!-- Category Tag -->
+                    <div class="mb-3">
+                        <span class="magnews-category-tag">{{ strtoupper($news->category->name) }}</span>
                     </div>
 
-                    {{-- Additional Images Gallery --}}
+                    <!-- Article Title -->
+                    <h1 class="magnews-article-title mb-3">{{ $news->title }}</h1>
+
+                    <!-- Meta Information -->
+                    <div class="magnews-meta-info mb-4">
+                        <span>By {{ $news->author->name ?? 'Admin' }}</span>
+                        <span class="mx-2">-</span>
+                        <span>{{ $news->created_at->translatedFormat('M d, Y') }}</span>
+                        <span class="mx-2">-</span>
+                        <span>{{ number_format($news->views) }} Views</span>
+                        <span class="mx-2">-</span>
+                        <span>0 Comment</span>
+                    </div>
+
+                    <!-- Featured Image -->
+                    <div class="magnews-featured-image mb-4">
+                        <img src="{{ $news->image ? asset('storage/images/' . $news->image) : asset('img/noimg.jpg') }}"
+                            alt="{{ $news->title }}" class="img-fluid w-100">
+                    </div>
+
+                    <!-- Additional Images Gallery -->
                     @if ($news->images && count($news->images) > 0)
                         <div class="additional-images-gallery mb-4">
-                            <h5 class="mb-3 fw-bold">
-                                <i class="fas fa-images text-primary me-2"></i>
-                                ({{ count($news->images)  }})
-                            </h5>
-
-                            {{-- Gallery Grid --}}
                             <div class="row g-2">
                                 @foreach ($news->images as $index => $image)
                                     <div class="col-lg-3 col-md-4 col-sm-6 col-6">
@@ -70,115 +84,55 @@
                                                 alt="Additional image {{ $index + 1 }}"
                                                 style="height: 180px; object-fit: cover; cursor: pointer; transition: all 0.3s ease;"
                                                 data-bs-toggle="modal" data-bs-target="#imageGalleryModal"
-                                                data-image="{{ asset('storage/images/' . $image) }}"
-                                                data-index="{{ $index }}"
                                                 onclick="openGallery({{ $index }})">
-
-                                            {{-- Overlay --}}
                                             <div class="gallery-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
                                                 style="background: rgba(0,0,0,0.5); opacity: 0; transition: opacity 0.3s ease;">
                                                 <i class="fas fa-search-plus text-white fs-3"></i>
-                                            </div>
-
-                                            {{-- Image Number Badge --}}
-                                            <div class="position-absolute top-0 end-0 m-2">
-                                                <span class="badge bg-dark bg-opacity-75 rounded-pill px-2 py-1">
-                                                    {{ $index + 1 }}
-                                                </span>
                                             </div>
                                         </div>
                                     </div>
                                 @endforeach
                             </div>
-
-                            {{-- View All Button if more than 8 images --}}
-                            @if (count($news->images) > 8)
-                                <div class="text-center mt-3">
-                                    <button class="btn btn-outline-primary btn-sm" onclick="showAllImages()">
-                                        <i class="fas fa-th-large me-2"></i>View All {{ count($news->images) }} Images
-                                    </button>
-                                </div>
-                            @endif
                         </div>
 
-                        {{-- Enhanced Gallery Modal --}}
+                        <!-- Gallery Modal -->
                         <div class="modal fade" id="imageGalleryModal" tabindex="-1" aria-hidden="true">
                             <div class="modal-dialog modal-xl modal-dialog-centered">
                                 <div class="modal-content bg-dark">
                                     <div class="modal-header border-0 bg-transparent">
                                         <h5 class="modal-title text-white">
                                             <i class="fas fa-images me-2"></i>
-                                            Image Gallery - <span id="modalImageCounter">1 of
-                                                {{ count($news->images) }}</span>
+                                            Image Gallery - <span id="modalImageCounter">1 of {{ count($news->images) }}</span>
                                         </h5>
-                                        <button type="button" class="btn-close btn-close-white"
-                                            data-bs-dismiss="modal"></button>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                                     </div>
                                     <div class="modal-body p-0 text-center position-relative">
-                                        {{-- Main Image Display --}}
                                         <div class="position-relative">
-                                            <img id="modalMainImage" src="" class="img-fluid w-100"
-                                                style="max-height: 70vh; object-fit: contain;">
-
-                                            {{-- Navigation Arrows --}}
-                                            <button
-                                                class="btn btn-dark btn-lg position-absolute top-50 start-0 translate-middle-y ms-3 rounded-circle"
+                                            <img id="modalMainImage" src="" class="img-fluid w-100" style="max-height: 70vh; object-fit: contain;">
+                                            <button class="btn btn-dark btn-lg position-absolute top-50 start-0 translate-middle-y ms-3 rounded-circle"
                                                 onclick="previousImage()" style="width: 50px; height: 50px;">
                                                 <i class="fas fa-chevron-left"></i>
                                             </button>
-                                            <button
-                                                class="btn btn-dark btn-lg position-absolute top-50 end-0 translate-middle-y me-3 rounded-circle"
+                                            <button class="btn btn-dark btn-lg position-absolute top-50 end-0 translate-middle-y me-3 rounded-circle"
                                                 onclick="nextImage()" style="width: 50px; height: 50px;">
                                                 <i class="fas fa-chevron-right"></i>
                                             </button>
                                         </div>
-
-                                        {{-- Thumbnail Strip --}}
                                         <div class="bg-dark bg-opacity-75 p-3">
                                             <div class="d-flex justify-content-center gap-2 flex-wrap" id="thumbnailStrip">
                                                 @foreach ($news->images as $thumbIndex => $thumbImage)
                                                     <img src="{{ asset('storage/images/' . $thumbImage) }}"
                                                         class="thumbnail-img rounded border border-2"
                                                         style="width: 60px; height: 60px; object-fit: cover; cursor: pointer; opacity: 0.7; transition: all 0.3s ease;"
-                                                        onclick="showImage({{ $thumbIndex }})"
-                                                        data-index="{{ $thumbIndex }}">
+                                                        onclick="showImage({{ $thumbIndex }})">
                                                 @endforeach
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer border-0 bg-transparent justify-content-center">
-                                        <div class="text-white-50 small">
-                                            <i class="fas fa-info-circle me-1"></i>
-                                            Use arrow keys or click thumbnails to navigate
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        {{-- Gallery Styles --}}
-                        <style>
-                            .gallery-item:hover .gallery-overlay {
-                                opacity: 1 !important;
-                            }
-
-                            .gallery-item:hover .gallery-image {
-                                transform: scale(1.05);
-                            }
-
-                            .thumbnail-img:hover {
-                                opacity: 1 !important;
-                                border-color: #0d6efd !important;
-                            }
-
-                            .thumbnail-img.active {
-                                opacity: 1 !important;
-                                border-color: #0d6efd !important;
-                                box-shadow: 0 0 10px rgba(13, 110, 253, 0.5);
-                            }
-                        </style>
-
-                        {{-- Gallery JavaScript --}}
                         <script>
                             let currentImageIndex = 0;
                             const images = @json(array_map(function ($img) {
@@ -195,8 +149,6 @@
                                 currentImageIndex = index;
                                 document.getElementById('modalMainImage').src = images[index];
                                 document.getElementById('modalImageCounter').textContent = `${index + 1} of ${totalImages}`;
-
-                                // Update thumbnail active state
                                 document.querySelectorAll('.thumbnail-img').forEach((thumb, i) => {
                                     thumb.classList.toggle('active', i === index);
                                 });
@@ -212,14 +164,6 @@
                                 showImage(currentImageIndex);
                             }
 
-                            function showAllImages() {
-                                // Show all hidden images in the grid
-                                document.querySelectorAll('.gallery-item').forEach(item => {
-                                    item.style.display = 'block';
-                                });
-                            }
-
-                            // Keyboard navigation
                             document.addEventListener('keydown', function(e) {
                                 const modal = document.getElementById('imageGalleryModal');
                                 if (modal.classList.contains('show')) {
@@ -234,77 +178,85 @@
                         </script>
                     @endif
 
-                    <div class="news-content-wrapper my-4">
+                    <!-- Article Content -->
+                    <div class="magnews-article-content mb-4">
                         {!! $news->content !!}
                     </div>
-                    <div class="tab-class">
-                        <div class="d-flex justify-content-between border-bottom mb-4">
-                            <ul class="nav nav-pills d-inline-flex text-center">
-                                <li class="nav-item mb-3">
-                                    <h5 class="mt-2 me-3 mb-0">Tags:</h5>
-                                </li>
-                                <li class="nav-item mb-3">
-                                    <a class="d-flex py-2 bg-light rounded-pill active me-2" data-bs-toggle="pill">
-                                        <span class="text-dark" style="width: 100px;">{{ $news->category->name }}</span>
-                                    </a>
-                                </li>
-                            </ul>
-                            <div class="d-flex align-items-center">
-                                <form action="{{ route('news.like', $news->id) }}" method="POST">
-                                    @csrf
-                                    @if ($news->likes->where('device_id', session('device_id'))->count())
-                                        <button type="submit" class="btn btn-square">
-                                            <i class="fas fa-thumbs-up text-primary"></i>
-                                        </button>
-                                    @else
-                                        <button type="submit" class="btn btn-square">
-                                            <i class="far fa-thumbs-up text-primary"></i>
-                                        </button>
-                                    @endif
-                                </form>
-                                <span class="ms-1">{{ $news->likes->count() }}</span>
-                            </div>
-                        </div>
 
-                        {{-- <div class="tab-content">
-                            <div class="tab-pane fade show active">
-                                <div class="row g-4 align-items-center">
-                                    <div class="col-3">
-                                        <img src="{{ $news->author->image ? asset('storage/images/' . $news->author->image) : asset('img/user.png') }}"
-                                            class="img-fluid w-100 rounded" alt="">
-                                    </div>
-                                    <div class="col-9">
-                                        <h1>{{ $news->author->name }}</h1>
-                                        <p class="mb-0">{{ $news->author->bio }}
-                                        </p>
-                                    </div>
+                    {{-- <!-- Tags Section -->
+                    <div class="magnews-tags-section mb-4">
+                        <span class="magnews-tags-label">Tags:</span>
+                        <a href="{{ route('news.viewCategory', $news->category->id) }}" class="magnews-tag">{{ $news->category->name }}</a>
+                        @if($news->category->name !== 'Technology')
+                            <a href="#" class="magnews-tag">Technology</a>
+                        @endif
+                        <a href="#" class="magnews-tag">Crafts</a>
+                    </div> --}}
+{{-- 
+                    <!-- Share Buttons -->
+                    <div class="magnews-share-section mb-5">
+                        <span class="magnews-share-label">Share:</span>
+                        @php
+                            $shareUrl = url()->current();
+                            $shareTitle = $news->title;
+                        @endphp
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($shareUrl) }}" target="_blank" class="magnews-share-btn magnews-share-facebook">
+                            <i class="fab fa-facebook-f"></i> Facebook
+                        </a>
+                        <a href="https://twitter.com/intent/tweet?url={{ urlencode($shareUrl) }}&text={{ urlencode($shareTitle) }}" target="_blank" class="magnews-share-btn magnews-share-twitter">
+                            <i class="fab fa-twitter"></i> Twitter
+                        </a>
+                        <a href="https://plus.google.com/share?url={{ urlencode($shareUrl) }}" target="_blank" class="magnews-share-btn magnews-share-google">
+                            <i class="fab fa-google-plus-g"></i> Google+
+                        </a>
+                        <a href="https://pinterest.com/pin/create/button/?url={{ urlencode($shareUrl) }}&description={{ urlencode($shareTitle) }}" target="_blank" class="magnews-share-btn magnews-share-pinterest">
+                            <i class="fab fa-pinterest"></i> Pinterest
+                        </a>
+                    </div> --}}
+
+                    {{-- <!-- Leave a Comment Section -->
+                    <div class="magnews-comment-section">
+                        <h3 class="magnews-comment-title mb-3">Leave a Comment</h3>
+                        <p class="magnews-comment-note mb-4">Your email address will not be published. Required fields are marked *</p>
+                        <form class="magnews-comment-form">
+                            <div class="mb-3">
+                                <label for="comment" class="form-label">Comment *</label>
+                                <textarea class="form-control" id="comment" rows="5" required></textarea>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-4">
+                                    <label for="name" class="form-label">Name *</label>
+                                    <input type="text" class="form-control" id="name" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="email" class="form-label">Email *</label>
+                                    <input type="email" class="form-control" id="email" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="website" class="form-label">Website</label>
+                                    <input type="url" class="form-control" id="website">
                                 </div>
                             </div>
-                        </div> --}}
+                            <button type="submit" class="btn magnews-comment-submit-btn">Post Comment</button>
+                        </form>
+                    </div> --}}
 
-                    </div>
-
-                    <div class="bg-light rounded my-4 p-4" style="border-radius: 16px !important; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);">
-                        <h4 class="mb-4" style="font-family: 'Kantumruy Pro', 'Khmer OS Muol Light', serif; font-weight: 700; color: #0052a5;">
-                            <i class="fas fa-newspaper me-2"></i>You Might Also Like
-                        </h4>
+                    <!-- You Might Also Like -->
+                    @if(isset($randomNews) && $randomNews->count() > 0)
+                    <div class="magnews-related-posts mt-5">
+                        <h4 class="magnews-related-title mb-4">You Might Also Like</h4>
                         <div class="row g-4">
-                            @foreach ($randomNews as $news)
+                            @foreach ($randomNews as $relatedNews)
                                 <div class="col-lg-6">
-                                    <div class="d-flex align-items-center p-3 bg-white rounded" style="border-radius: 12px !important; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); transition: all 0.3s ease; border: 1px solid rgba(0, 82, 165, 0.1);"
-                                         onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 6px 20px rgba(0, 82, 165, 0.15)'"
-                                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 10px rgba(0, 0, 0, 0.05)'">
-                                        <img src="{{ $news->image ? asset('storage/images/' . $news->image) : asset('img/noimg.jpg') }}"
-                                            class="img-fluid rounded" alt=""
-                                            style="width: 120px; height: 120px; object-fit: cover; border-radius: 10px;">
-                                        <div class="ms-3">
-                                            <a href="{{ route('news.show', $news->id) }}"
-                                                class="h5 mb-2 text-decoration-none news-title">
-                                                {{ Str::limit($news->title, 60) }}
+                                    <div class="magnews-related-post">
+                                        <img src="{{ $relatedNews->image ? asset('storage/images/' . $relatedNews->image) : asset('img/noimg.jpg') }}"
+                                            alt="{{ $relatedNews->title }}" class="magnews-related-img">
+                                        <div class="magnews-related-content">
+                                            <a href="{{ route('news.show', $relatedNews->id) }}" class="magnews-related-title-link">
+                                                {{ Str::limit($relatedNews->title, 60) }}
                                             </a>
-                                            <p class="text-muted mt-2 mb-0" style="font-size: 13px;">
-                                                <i class="fa fa-calendar-alt me-1 text-primary"></i>
-                                                {{ $news->created_at->translatedFormat('d F Y') }}
+                                            <p class="magnews-related-date mb-0">
+                                                {{ $relatedNews->category->name }} - {{ $relatedNews->created_at->translatedFormat('M d') }}
                                             </p>
                                         </div>
                                     </div>
@@ -312,30 +264,512 @@
                             @endforeach
                         </div>
                     </div>
-
+                    @endif
                 </div>
-                {{-- <div class="col-lg-4">
-                    <div class="row g-4">
-                        <div class="col-12">
-                            <div class="p-3 rounded border">
-                                <div class="input-group w-100 mx-auto d-flex mb-4">
-                                    <input type="search" class="form-control p-3" placeholder="keywords"
-                                        aria-describedby="search-icon-1">
-                                    <span id="search-icon-1" class="btn btn-primary input-group-text p-3"><i
-                                            class="fa fa-search text-white"></i></span>
-                                </div>
 
-                                @component('components.col-2')
-                                @endcomponent
+                <!-- Sidebar Column -->
+                <div class="col-lg-4 mt-5 mt-lg-0">
+                    <div class="magnews-sidebar">
+                        <!-- Category Widget -->
+                        <div class="magnews-sidebar-widget mb-4">
+                            <h5 class="magnews-sidebar-title">Category</h5>
+                            <ul class="magnews-sidebar-list">
+                                @foreach($categories as $category)
+                                    <li>
+                                        <a href="{{ route('news.viewCategory', $category->id) }}" class="magnews-sidebar-link">
+                                            {{ $category->name }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
 
+                        <!-- Archive Widget -->
+                        <div class="magnews-sidebar-widget mb-4">
+                            <h5 class="magnews-sidebar-title">Archive</h5>
+                            <ul class="magnews-sidebar-list">
+                                @foreach($archives as $archive)
+                                    @php
+                                        $monthName = \Carbon\Carbon::create($archive->year, $archive->month, 1)->translatedFormat('F');
+                                    @endphp
+                                    <li>
+                                        <a href="#" class="magnews-sidebar-link">
+                                            {{ $monthName }} {{ $archive->year }} ({{ $archive->count }})
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+
+                        <!-- Popular Post Widget -->
+                        <div class="magnews-sidebar-widget mb-4">
+                            <h5 class="magnews-sidebar-title">Popular Post</h5>
+                            <div class="magnews-popular-posts">
+                                @foreach($popularPosts as $popularPost)
+                                    <div class="magnews-popular-post-item">
+                                        <img src="{{ $popularPost->image ? asset('storage/images/' . $popularPost->image) : asset('img/noimg.jpg') }}"
+                                            alt="{{ $popularPost->title }}" class="magnews-popular-img">
+                                        <div class="magnews-popular-content">
+                                            <a href="{{ route('news.show', $popularPost->id) }}" class="magnews-popular-title">
+                                                {{ Str::limit($popularPost->title, 50) }}
+                                            </a>
+                                            <p class="magnews-popular-date mb-0">
+                                                {{ $popularPost->category->name }} - {{ $popularPost->created_at->translatedFormat('M d') }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        <!-- Tags Widget -->
+                        <div class="magnews-sidebar-widget">
+                            <h5 class="magnews-sidebar-title">Tags</h5>
+                            <div class="magnews-tags-widget">
+                                @foreach($categories->take(10) as $tagCategory)
+                                    <a href="{{ route('news.viewCategory', $tagCategory->id) }}" class="magnews-tag-small">{{ $tagCategory->name }}</a>
+                                @endforeach
                             </div>
                         </div>
                     </div>
-                </div> --}}
+                </div>
             </div>
         </div>
     </div>
-    <!-- Single Product End -->
+    <!-- Blog Detail Page End -->
 
-    <script id="dsq-count-scr" src="//news-center-1.disqus.com/count.js" async></script>
+    <style>
+        /* Blog Detail Page Styles */
+        .magnews-breadcrumb {
+            font-size: 14px;
+            font-family: 'Kantumruy Pro', sans-serif;
+        }
+
+        .magnews-breadcrumb .breadcrumb-item a {
+            color: #666;
+        }
+
+        .magnews-breadcrumb .breadcrumb-item.active {
+            color: #333;
+        }
+
+        .magnews-category-tag {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: #ffffff;
+            padding: 5px 15px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .magnews-article-title {
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1.3;
+            color: #333;
+            font-family: 'Kantumruy Pro', sans-serif;
+        }
+
+        .magnews-meta-info {
+            color: #666;
+            font-size: 14px;
+            font-family: 'Kantumruy Pro', sans-serif;
+        }
+
+        .magnews-featured-image {
+            margin: 30px 0;
+        }
+
+        .magnews-featured-image img {
+            border-radius: 4px;
+        }
+
+        .magnews-article-content {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #333;
+            font-family: 'Kantumruy Pro', sans-serif;
+        }
+
+        .magnews-tags-section {
+            padding: 20px 0;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .magnews-tags-label {
+            font-weight: 600;
+            margin-right: 10px;
+            color: #333;
+        }
+
+        .magnews-tag {
+            display: inline-block;
+            background-color: #f5f5f5;
+            color: #333;
+            padding: 5px 15px;
+            margin-right: 10px;
+            margin-bottom: 5px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .magnews-tag:hover {
+            background-color: #4CAF50;
+            color: #ffffff;
+        }
+
+        .magnews-share-section {
+            padding: 20px 0;
+        }
+
+        .magnews-share-label {
+            font-weight: 600;
+            margin-right: 15px;
+            color: #333;
+        }
+
+        .magnews-share-btn {
+            display: inline-block;
+            padding: 8px 15px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .magnews-share-facebook {
+            background-color: #3b5998;
+        }
+
+        .magnews-share-facebook:hover {
+            background-color: #2d4373;
+        }
+
+        .magnews-share-twitter {
+            background-color: #1da1f2;
+        }
+
+        .magnews-share-twitter:hover {
+            background-color: #0d8bd9;
+        }
+
+        .magnews-share-google {
+            background-color: #dd4b39;
+        }
+
+        .magnews-share-google:hover {
+            background-color: #c23321;
+        }
+
+        .magnews-share-pinterest {
+            background-color: #bd081c;
+        }
+
+        .magnews-share-pinterest:hover {
+            background-color: #8c0615;
+        }
+
+        .magnews-comment-section {
+            padding: 30px 0;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .magnews-comment-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            font-family: 'Kantumruy Pro', sans-serif;
+        }
+
+        .magnews-comment-note {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .magnews-comment-form .form-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .magnews-comment-form .form-control {
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 10px 15px;
+        }
+
+        .magnews-comment-form .form-control:focus {
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+        }
+
+        .magnews-comment-submit-btn {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .magnews-comment-submit-btn:hover {
+            background-color: #333;
+        }
+
+        /* Sidebar Styles */
+        .magnews-sidebar {
+            position: sticky;
+            top: 100px;
+        }
+
+        .magnews-sidebar-widget {
+            background-color: #ffffff;
+            padding: 25px;
+            border: 1px solid #e0e0e0;
+            margin-bottom: 30px;
+        }
+
+        .magnews-sidebar-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #4CAF50;
+            font-family: 'Kantumruy Pro', sans-serif;
+        }
+
+        .magnews-sidebar-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .magnews-sidebar-list li {
+            margin-bottom: 10px;
+        }
+
+        .magnews-sidebar-link {
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+            display: block;
+            padding: 5px 0;
+        }
+
+        .magnews-sidebar-link:hover {
+            color: #4CAF50;
+            padding-left: 5px;
+        }
+
+        .magnews-popular-posts {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .magnews-popular-post-item {
+            display: flex;
+            gap: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .magnews-popular-post-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .magnews-popular-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .magnews-popular-content {
+            flex: 1;
+        }
+
+        .magnews-popular-title {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            text-decoration: none;
+            margin-bottom: 5px;
+            line-height: 1.4;
+            transition: color 0.3s ease;
+        }
+
+        .magnews-popular-title:hover {
+            color: #4CAF50;
+        }
+
+        .magnews-popular-date {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .magnews-tags-widget {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .magnews-tag-small {
+            display: inline-block;
+            background-color: #f5f5f5;
+            color: #333;
+            padding: 5px 12px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .magnews-tag-small:hover {
+            background-color: #4CAF50;
+            color: #ffffff;
+        }
+
+        .magnews-related-posts {
+            padding-top: 30px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .magnews-related-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            font-family: 'Kantumruy Pro', sans-serif;
+        }
+
+        .magnews-related-post {
+            display: flex;
+            gap: 15px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .magnews-related-post:hover {
+            background-color: #f0f0f0;
+        }
+
+        .magnews-related-img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .magnews-related-content {
+            flex: 1;
+        }
+
+        .magnews-related-title-link {
+            display: block;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            text-decoration: none;
+            margin-bottom: 8px;
+            line-height: 1.4;
+            transition: color 0.3s ease;
+        }
+
+        .magnews-related-title-link:hover {
+            color: #4CAF50;
+        }
+
+        .magnews-related-date {
+            font-size: 13px;
+            color: #999;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1 !important;
+        }
+
+        .gallery-item:hover .gallery-image {
+            transform: scale(1.05);
+        }
+
+        .thumbnail-img:hover {
+            opacity: 1 !important;
+            border-color: #4CAF50 !important;
+        }
+
+        .thumbnail-img.active {
+            opacity: 1 !important;
+            border-color: #4CAF50 !important;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+        }
+
+        /* Dark Mode Support */
+        body.dark-mode .magnews-article-title,
+        body.dark-mode .magnews-comment-title,
+        body.dark-mode .magnews-sidebar-title,
+        body.dark-mode .magnews-related-title {
+            color: #e5e7eb;
+        }
+
+        body.dark-mode .magnews-meta-info,
+        body.dark-mode .magnews-comment-note,
+        body.dark-mode .magnews-sidebar-link,
+        body.dark-mode .magnews-popular-date,
+        body.dark-mode .magnews-related-date {
+            color: #9ca3af;
+        }
+
+        body.dark-mode .magnews-sidebar-widget {
+            background-color: #1a1a1a;
+            border-color: #333;
+        }
+
+        body.dark-mode .magnews-sidebar-link {
+            color: #cccccc;
+        }
+
+        body.dark-mode .magnews-popular-title,
+        body.dark-mode .magnews-related-title-link {
+            color: #e5e7eb;
+        }
+
+        body.dark-mode .magnews-tag,
+        body.dark-mode .magnews-tag-small {
+            background-color: #2a2a2a;
+            color: #cccccc;
+        }
+
+        body.dark-mode .magnews-related-post {
+            background-color: #1a1a1a;
+        }
+
+        body.dark-mode .magnews-comment-form .form-control {
+            background-color: #1a1a1a;
+            border-color: #333;
+            color: #e5e7eb;
+        }
+
+        body.dark-mode .magnews-tags-section,
+        body.dark-mode .magnews-comment-section,
+        body.dark-mode .magnews-related-posts {
+            border-color: #333;
+        }
+    </style>
 @endsection

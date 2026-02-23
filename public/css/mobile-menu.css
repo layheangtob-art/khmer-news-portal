@@ -1,11 +1,11 @@
-/* Mobile Menu Styles - Dark Theme */
+/* Mobile Menu Styles - Matching Example Design */
 .mobile-menu-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100vh;
-    background-color: #2a2a2a;
+    background-color: #ffffff;
     z-index: 9999;
     transform: translateX(-100%);
     transition: transform 0.3s ease-in-out;
@@ -18,107 +18,176 @@
     transform: translateX(0);
 }
 
+/* Top White Header with Logo and Close Button */
 .mobile-menu-header {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
-    padding: 15px 20px;
+    padding: 20px;
     flex-shrink: 0;
+    background-color: #ffffff;
+}
+
+.mobile-menu-logo {
+    text-decoration: none;
+    display: inline-block;
+    font-size: 32px;
+    font-weight: 800;
+    font-family: 'Raleway', sans-serif;
+    letter-spacing: -1px;
+}
+
+.mobile-menu-logo .magnews-logo-mag {
+    color: #4CAF50;
+}
+
+.mobile-menu-logo .magnews-logo-news {
+    color: #000000;
 }
 
 .mobile-menu-close {
     background: none;
     border: none;
-    color: white;
-    font-size: 24px;
+    color: #000000;
+    font-size: 28px;
     cursor: pointer;
-    padding: 5px 10px;
+    padding: 8px 12px;
     transition: opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
 }
 
 .mobile-menu-close:hover {
     opacity: 0.7;
 }
 
+/* Dark Grey Info Bar */
+.mobile-menu-info-bar {
+    background-color: #2a2a2a;
+    padding: 15px 20px;
+    flex-shrink: 0;
+}
+
+.mobile-menu-info-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.mobile-menu-location-weather {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.mobile-menu-location {
+    color: #ffffff;
+    font-size: 14px;
+    font-family: 'Kantumruy Pro', sans-serif;
+    font-weight: 500;
+}
+
+.mobile-menu-weather {
+    color: #ffffff;
+    font-size: 14px;
+    font-family: 'Kantumruy Pro', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.mobile-menu-weather i {
+    font-size: 16px;
+}
+
+.mobile-menu-utility-links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.mobile-menu-utility-link {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 13px;
+    font-family: 'Kantumruy Pro', sans-serif;
+    transition: opacity 0.3s ease;
+}
+
+.mobile-menu-utility-link:hover {
+    opacity: 0.8;
+    color: #ffffff;
+}
+
+.mobile-menu-divider {
+    color: #666666;
+    font-size: 13px;
+}
+
+.mobile-menu-social-icons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.mobile-menu-social-icon {
+    color: #ffffff;
+    font-size: 16px;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.mobile-menu-social-icon:hover {
+    opacity: 0.8;
+    color: #ffffff;
+}
+
+/* Main Navigation Menu with Muted Green Background */
 .mobile-menu-list {
     list-style: none;
     padding: 0;
     margin: 0;
     flex-grow: 1;
     overflow-y: auto;
+    background-color: #a8d5ba;
 }
 
 .mobile-menu-item {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .mobile-menu-item:first-child {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: none;
 }
 
 .mobile-menu-link {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 18px 20px;
-    color: white;
+    padding: 20px 25px;
+    color: #ffffff;
     text-decoration: none;
-    font-family: 'Kantumruy Pro', 'Khmer OS Muol Light', serif;
-    font-size: 16px;
+    font-family: 'Kantumruy Pro', sans-serif;
+    font-size: 18px;
     font-weight: 500;
     transition: background-color 0.3s ease;
     width: 100%;
 }
 
 .mobile-menu-link:hover {
-    background-color: rgba(255, 255, 255, 0.05);
-    color: white;
+    background-color: rgba(0, 0, 0, 0.05);
+    color: #ffffff;
 }
 
-.mobile-menu-link .expand-icon {
-    font-size: 18px;
-    opacity: 0.7;
-}
-
-.mobile-menu-search {
-    padding: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    flex-shrink: 0;
-    background-color: #2a2a2a;
-}
-
-.mobile-menu-search-input {
-    width: 100%;
-    padding: 12px 45px 12px 20px;
-    background-color: #3a3a3a;
-    border: none;
-    border-radius: 8px;
-    color: white;
-    font-family: 'Kantumruy Pro', 'Khmer OS Muol Light', serif;
+.mobile-menu-chevron {
     font-size: 14px;
-    box-sizing: border-box;
-}
-
-.mobile-menu-search-input::placeholder {
-    color: rgba(255, 255, 255, 0.6);
-}
-
-.mobile-menu-search-input:focus {
-    outline: none;
-    background-color: #4a4a4a;
-}
-
-.mobile-menu-search-wrapper {
-    position: relative;
-}
-
-.mobile-menu-search-icon {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: rgba(255, 255, 255, 0.6);
-    pointer-events: none;
+    opacity: 0.8;
+    color: #ffffff;
 }
 
 /* Responsive adjustments - Hide mobile menu only on desktop (1200px+) */
@@ -131,34 +200,53 @@
 /* Tablet specific styles - iPad and iPad Pro */
 @media (min-width: 768px) and (max-width: 1199px) {
     .mobile-menu-link {
-        font-size: 18px;
-        padding: 20px 25px;
+        font-size: 20px;
+        padding: 22px 30px;
     }
     
-    .mobile-menu-search-input {
-        font-size: 16px;
-        padding: 14px 50px 14px 25px;
+    .mobile-menu-logo {
+        font-size: 36px;
+    }
+    
+    .mobile-menu-header {
+        padding: 25px 30px;
+    }
+    
+    .mobile-menu-info-bar {
+        padding: 18px 30px;
     }
 }
 
 /* iPad Pro specific adjustments */
 @media (min-width: 1024px) and (max-width: 1199px) {
     .mobile-menu-link {
-        font-size: 19px;
-        padding: 22px 30px;
+        font-size: 22px;
+        padding: 25px 35px;
     }
     
-    .mobile-menu-search-input {
-        font-size: 17px;
-        padding: 15px 55px 15px 30px;
+    .mobile-menu-logo {
+        font-size: 40px;
     }
     
     .mobile-menu-header {
-        padding: 20px 30px;
+        padding: 30px 35px;
     }
     
-    .mobile-menu-search {
-        padding: 25px 30px;
+    .mobile-menu-info-bar {
+        padding: 20px 35px;
+    }
+    
+    .mobile-menu-location,
+    .mobile-menu-weather {
+        font-size: 15px;
+    }
+    
+    .mobile-menu-utility-link {
+        font-size: 14px;
+    }
+    
+    .mobile-menu-social-icon {
+        font-size: 18px;
     }
 }
 
