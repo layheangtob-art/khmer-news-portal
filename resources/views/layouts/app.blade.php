@@ -6,9 +6,9 @@
     <title>KH News - ព័ត៌មានខ្មែរ</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <link href="https://fonts.googleapis.com/css2?family=Koulen&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="{{ asset('img/kh-news.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('img/logo_for_header_2.png') }}">
 
-    <link rel="" type="image/png" href="{{ asset('img/kh-news.png') }}">
+    <link rel="" type="image/png" href="{{ asset('img/logo.png') }}">
 
 
     <!-- Google Web Fonts -->
@@ -52,6 +52,32 @@
     <link rel="stylesheet" href="{{ asset('css/category-nav.css') }}">
     <link rel="stylesheet" href="{{ asset('css/ckeditor-content.css') }}">
     <link rel="stylesheet" href="{{ asset('css/magnews-style.css') }}">
+    <style>
+        body,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .nav-link,
+        .dropdown-item,
+        .card-title,
+        .section-title,
+        .breaking-title,
+        .ticker-item,
+        .magnews-article-title,
+        .magnews-meta-info,
+        .magnews-article-content,
+        .magnews-sidebar-title,
+        .magnews-sidebar-link,
+        .magnews-footer-text,
+        .magnews-footer-title,
+        .magnews-footer-post-title,
+        .magnews-footer-category-link {
+            font-family: 'Kantumruy Pro', sans-serif !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -86,7 +112,7 @@
             <div class="row align-items-center py-3">
                 <div class="col-md-4">
                     <a href="{{ route('index') }}" class="magnews-logo">
-                        <span class="magnews-logo-mag">MAG</span><span class="magnews-logo-news">NEWS</span>
+                        <img src="{{ asset('img/logo.png') }}" alt="KH News Logo" style="max-height: 100px;">
                     </a>
                 </div>
                 <div class="col-md-8 d-none d-md-block">
@@ -124,7 +150,7 @@
         <div class="container">
             <div class="magnews-mobile-header-content">
                 <a href="{{ route('index') }}" class="magnews-mobile-logo">
-                    <span class="magnews-logo-mag">MAG</span><span class="magnews-logo-news">NEWS</span>
+                    <img src="{{ asset('img/logo.png') }}" alt="KH News Logo" style="max-height: 50px;">
                 </a>
                 <button class="magnews-mobile-menu-toggle" type="button" id="mobileMenuToggle" aria-label="Toggle menu">
                     <span class="magnews-hamburger-icon">
@@ -146,7 +172,7 @@
                     <ul class="navbar-nav magnews-nav-menu">
                         <li class="nav-item">
                             <a href="{{ route('index') }}"
-                                class="nav-link {{ request()->routeIs('index') ? 'active' : '' }}">Home</a>
+                                class="nav-link {{ request()->routeIs('index') ? 'active' : '' }}">ទំព័រដើម</a>
                         </li>
                         @php
                             $navCategories = \App\Models\Category::all();
@@ -216,13 +242,44 @@
     </div>
     <!-- Navbar End -->
 
+    <!-- Breaking News Ticker -->
+    <div class="magnews-breaking-news">
+        <div class="container d-flex align-items-center p-0">
+            <div class="breaking-title">
+                ព័ត៌មានថ្មីៗ
+            </div>
+            <div class="breaking-content">
+                <div class="breaking-ticker">
+                    @php
+                        $tickerNews = \App\Models\News::where('status', 'Accept')->latest()->take(10)->get();
+                    @endphp
+                    @foreach($tickerNews as $news)
+                        <a href="{{ route('news.show', $news->id) }}" class="ticker-item">
+                            <span class="ticker-separator">|</span>
+                            {{ $news->title }}
+                        </a>
+                    @endforeach
+                    {{-- Duplicate items for seamless loop --}}
+                    @foreach($tickerNews as $news)
+                        <a href="{{ route('news.show', $news->id) }}" class="ticker-item">
+                            <span class="ticker-separator">|</span>
+                            {{ $news->title }}
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breaking News End -->
+
+
     <!-- Mobile Menu Overlay -->
     <div class="mobile-menu-overlay d-xl-none" id="mobileMenuOverlay">
         <div class="d-flex flex-column" style="min-height: 100vh;">
             <!-- Top White Header with Logo and Close Button -->
             <div class="mobile-menu-header">
                 <a href="{{ route('index') }}" class="mobile-menu-logo">
-                    <span class="magnews-logo-mag">MAG</span><span class="magnews-logo-news">NEWS</span>
+                    <img src="{{ asset('img/logo.png') }}" alt="KH News Logo" style="max-height: 60px;">
                 </a>
                 <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close">
                     <i class="fas fa-times"></i>
@@ -234,7 +291,7 @@
             <ul class="mobile-menu-list flex-grow-1">
                 <li class="mobile-menu-item">
                     <a href="{{ route('index') }}" class="mobile-menu-link">
-                        <span>Home</span>
+                        <span>ទំព័រដើម</span>
                         <i class="fas fa-chevron-right mobile-menu-chevron"></i>
                     </a>
                 </li>
@@ -338,7 +395,7 @@
                 <!-- Left Column - About/Contact -->
                 <div class="col-md-4 magnews-footer-column">
                     <div class="magnews-footer-logo mb-3">
-                        <span class="magnews-logo-mag">MAG</span><span class="magnews-logo-news">NEWS</span>
+                        <img src="{{ asset('img/logo.png') }}" alt="KH News Logo" style="max-height: 80px;">
                     </div>
                     <p class="magnews-footer-text mb-3">ប្រព័ន្ធផ្សព្វផ្សាយ ហ្វេសប៊ុក ទូរស័ព្ទ អ៊ីនធឺណិត
                         និងការផ្សាយពាណិជ្ជកម្ម ក្នុងស្រុក</p>

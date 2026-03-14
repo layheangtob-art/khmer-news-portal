@@ -1,5 +1,9 @@
 /* MagNews Template Styles */
 
+body {
+    font-family: 'Kantumruy Pro', sans-serif;
+}
+
 /* Top Dark Bar */
 .magnews-topbar {
     background-color: #1a1a1a;
@@ -161,15 +165,146 @@
     border-radius: 2px;
 }
 
-/* .magnews-ad-banner {
-    background-color: #f5f5f5;
-    padding: 20px;
-    border-radius: 4px;
-    min-height: 100px;
+/* Breaking News Ticker */
+.magnews-breaking-news {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 0;
+    overflow: hidden;
+    height: 40px;
     display: flex;
     align-items: center;
-    justify-content: center;
-} */
+}
+
+.breaking-title {
+    background-color: #ff0000;
+    color: #ffffff;
+    padding: 0 20px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 14px;
+    white-space: nowrap;
+    position: relative;
+    z-index: 10;
+    font-family: 'Kantumruy Pro', sans-serif;
+}
+
+.breaking-title::after {
+    content: '';
+    position: absolute;
+    right: -15px;
+    top: 0;
+    border-left: 15px solid #ff0000;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+}
+
+.breaking-content {
+    flex: 1;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.breaking-ticker {
+    display: flex;
+    white-space: nowrap;
+    padding-left: 20px;
+    animation: ticker 30s linear infinite;
+}
+
+.breaking-ticker:hover {
+    animation-play-state: paused;
+}
+
+.ticker-item {
+    display: inline-block;
+    padding: 0 20px;
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+    font-family: 'Kantumruy Pro', sans-serif;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+}
+
+.ticker-separator {
+    color: #ccc;
+    margin: 0 10px;
+}
+
+@keyframes ticker {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Dark Mode for Ticker */
+body.dark-mode .magnews-breaking-news {
+    background-color: #1a1a1a;
+    border-bottom-color: #333;
+}
+
+body.dark-mode .ticker-item {
+    color: #e5e7eb;
+}
+
+@media (max-width: 1199px) {
+    .magnews-breaking-news {
+        height: 35px;
+    }
+    
+    .breaking-title {
+        padding: 0 10px;
+        font-size: 12px;
+    }
+    
+    .breaking-title::after {
+        right: -10px;
+        border-left-width: 10px;
+        border-top-width: 17.5px;
+        border-bottom-width: 17.5px;
+    }
+    
+    .ticker-item {
+        padding: 0 10px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .magnews-breaking-news {
+        height: 32px;
+    }
+    
+    .breaking-title {
+        padding: 0 8px;
+        font-size: 11px;
+    }
+    
+    .breaking-title::after {
+        right: -8px;
+        border-left-width: 8px;
+        border-top-width: 16px;
+        border-bottom-width: 16px;
+    }
+    
+    .ticker-item {
+        padding: 0 8px;
+        font-size: 11px;
+    }
+    
+    .breaking-ticker {
+        padding-left: 10px;
+    }
+}
+
 
 .magnews-ad-placeholder {
     display: flex;
@@ -290,7 +425,7 @@
     font-size: 15px;
     font-weight: 500;
     font-family: 'Kantumruy Pro', sans-serif;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, background-color 0.3s ease;
     display: flex;
     align-items: center;
     border-bottom: 3px solid transparent;
@@ -298,8 +433,10 @@
 
 .magnews-nav-menu .nav-link:hover,
 .magnews-nav-menu .nav-link.active {
-    color: #4CAF50;
-    border-bottom-color: #4CAF50;
+    color: #333333;
+    background-color: #F2F2F2; 
+    border-bottom-color: transparent;
+    border-radius: 5px;
 }
 
 .magnews-nav-menu .nav-link i {
@@ -439,13 +576,13 @@
 
 .magnews-theme-toggle-btn:hover {
     background-color: #f5f5f5;
-    border-color: #4CAF50;
-    color: #4CAF50;
+    /* border-color: #4CAF50;
+    color: #4CAF50; */
 }
 
 /* Footer Styles */
 .magnews-footer {
-    background-color: #1a1a1a;
+    background-color: #071c37;
     color: #ffffff;
     padding: 50px 0 0;
     margin-top: 50px;
@@ -492,9 +629,9 @@
     text-decoration: none;
 }
 
-.magnews-footer-social-icon:hover {
+/* .magnews-footer-social-icon:hover {
     color: #4CAF50;
-}
+} */
 
 .magnews-footer-title {
     color: #ffffff;
@@ -534,6 +671,7 @@
 
 .magnews-footer-post-title:hover {
     color: #4CAF50;
+    
 }
 
 .magnews-footer-post-date {

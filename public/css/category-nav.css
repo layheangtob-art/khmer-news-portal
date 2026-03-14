@@ -4,9 +4,9 @@
 }
 
 /* Category dropdown in main nav – dark blue panel, white text, red active */
-.category-dropdown .category-dropdown-toggle {
-    font-family: 'Koulen', 'Khmer OS Battambang', sans-serif !important;
-}
+/* .category-dropdown .category-dropdown-toggle {
+    font-family: 'Kantumruy Pro', sans-serif !important;
+} */
 .category-dropdown .category-dropdown-toggle:hover,
 .category-dropdown .category-dropdown-toggle:focus {
     color: #fff !important;
@@ -33,7 +33,7 @@
 .category-dropdown-menu .category-dropdown-item:visited,
 .category-dropdown .dropdown-menu .dropdown-item.category-dropdown-item {
     color: #212529 !important;
-    font-family: 'Koulen', 'Khmer OS Battambang', sans-serif;
+    font-family: 'Kantumruy Pro', sans-serif;
     font-weight: 600;
     font-size: 16px;
     padding: 0.6rem 1rem;
