@@ -49,3 +49,4 @@ class CreateRolesSeeder extends Seeder
         $superAdmin2->assignRole($superAdminRole);
     }
 }
+
