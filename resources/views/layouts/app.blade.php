@@ -118,23 +118,23 @@
                 <div class="col-md-8 d-none d-md-block">
                     <div class="magnews-ad-banner">
                         @if (isset($homeBanners) && $homeBanners->count() > 0)
-                            @foreach ($homeBanners->take(1) as $banner)
-                                @if ($banner->url)
-                                    <a href="{{ $banner->url }}" target="_blank" rel="noopener">
-                                        <img src="{{ asset('storage/banners/' . $banner->image) }}"
-                                            alt="{{ $banner->title }}" class="img-fluid w-100"
-                                            style="max-height: 100px; object-fit: cover;"
-                                            onerror="this.style.display='none';">
-                                    </a>
-                                @else
-                                    <img src="{{ asset('storage/banners/' . $banner->image) }}"
-                                        alt="{{ $banner->title }}" class="img-fluid w-100"
-                                        style="max-height: 100px; object-fit: cover;"
-                                        onerror="this.style.display='none';">
-                                @endif
-                            @endforeach
+                        @foreach ($homeBanners->take(1) as $banner)
+                        @if ($banner->url)
+                        <a href="{{ $banner->url }}" target="_blank" rel="noopener">
+                            <img src="{{ asset('storage/banners/' . $banner->image) }}"
+                                alt="{{ $banner->title }}" class="img-fluid w-100"
+                                style="max-height: 100px; object-fit: cover;"
+                                onerror="this.style.display='none';">
+                        </a>
                         @else
-                            {{-- <div class="magnews-ad-placeholder">
+                        <img src="{{ asset('storage/banners/' . $banner->image) }}"
+                            alt="{{ $banner->title }}" class="img-fluid w-100"
+                            style="max-height: 100px; object-fit: cover;"
+                            onerror="this.style.display='none';">
+                        @endif
+                        @endforeach
+                        @else
+                        {{-- <div class="magnews-ad-placeholder">
                                 <span class="magnews-ad-text">THIS IS AN ADVERTISEMENT</span>
                                 <button class="magnews-ad-btn">DOWNLOAD</button>
                             </div> --}}
@@ -175,48 +175,48 @@
                                 class="nav-link {{ request()->routeIs('index') ? 'active' : '' }}">ទំព័រដើម</a>
                         </li>
                         @php
-                            $navCategories = \App\Models\Category::all();
-                            $catParam =
-                                request()->route() && request()->route()->getName() === 'news.viewCategory'
-                                    ? request()->route()->parameter('categories')
-                                    : null;
-                            $currentCategoryId =
-                                $catParam instanceof \App\Models\Category
-                                    ? $catParam->id
-                                    : (is_numeric($catParam)
-                                        ? (int) $catParam
-                                        : null);
+                        $navCategories = \App\Models\Category::all();
+                        $catParam =
+                        request()->route() && request()->route()->getName() === 'news.viewCategory'
+                        ? request()->route()->parameter('categories')
+                        : null;
+                        $currentCategoryId =
+                        $catParam instanceof \App\Models\Category
+                        ? $catParam->id
+                        : (is_numeric($catParam)
+                        ? (int) $catParam
+                        : null);
                         @endphp
 
                         @php
-                            $displayCategories = $navCategories->take(7);
-                            $remainingCategories = $navCategories->slice(7);
+                        $displayCategories = $navCategories->take(7);
+                        $remainingCategories = $navCategories->slice(7);
                         @endphp
                         @foreach ($displayCategories as $cat)
-                            <li
-                                class="nav-item {{ $loop->last && $remainingCategories->isNotEmpty() ? 'dropdown' : '' }}">
-                                <a href="{{ route('news.viewCategory', $cat->id) }}"
-                                    class="nav-link {{ $currentCategoryId === $cat->id ? 'active' : '' }}"
-                                    @if ($loop->last && $remainingCategories->isNotEmpty()) data-bs-toggle="dropdown" 
-                                       aria-expanded="false" @endif>
-                                    {{ $cat->name }}
-                                    @if ($loop->last && $remainingCategories->isNotEmpty())
-                                        <i class="fas fa-chevron-down ms-1" style="font-size: 10px;"></i>
-                                    @endif
-                                </a>
+                        <li
+                            class="nav-item {{ $loop->last && $remainingCategories->isNotEmpty() ? 'dropdown' : '' }}">
+                            <a href="{{ route('news.viewCategory', $cat->id) }}"
+                                class="nav-link {{ $currentCategoryId === $cat->id ? 'active' : '' }}"
+                                @if ($loop->last && $remainingCategories->isNotEmpty()) data-bs-toggle="dropdown"
+                                aria-expanded="false" @endif>
+                                {{ $cat->name }}
                                 @if ($loop->last && $remainingCategories->isNotEmpty())
-                                    <ul class="dropdown-menu">
-                                        @foreach ($remainingCategories as $subCat)
-                                            <li>
-                                                <a class="dropdown-item {{ $currentCategoryId === $subCat->id ? 'active' : '' }}"
-                                                    href="{{ route('news.viewCategory', $subCat->id) }}">
-                                                    {{ $subCat->name }}
-                                                </a>
-                                            </li>
-                                        @endforeach
-                                    </ul>
+                                <i class="fas fa-chevron-down ms-1" style="font-size: 10px;"></i>
                                 @endif
-                            </li>
+                            </a>
+                            @if ($loop->last && $remainingCategories->isNotEmpty())
+                            <ul class="dropdown-menu">
+                                @foreach ($remainingCategories as $subCat)
+                                <li>
+                                    <a class="dropdown-item {{ $currentCategoryId === $subCat->id ? 'active' : '' }}"
+                                        href="{{ route('news.viewCategory', $subCat->id) }}">
+                                        {{ $subCat->name }}
+                                    </a>
+                                </li>
+                                @endforeach
+                            </ul>
+                            @endif
+                        </li>
                         @endforeach
                     </ul>
                     <div class="magnews-nav-right d-flex align-items-center gap-2 ms-auto">
@@ -251,20 +251,20 @@
             <div class="breaking-content">
                 <div class="breaking-ticker">
                     @php
-                        $tickerNews = \App\Models\News::where('status', 'Accept')->latest()->take(10)->get();
+                    $tickerNews = \App\Models\News::where('status', 'Accept')->latest()->take(10)->get();
                     @endphp
                     @foreach($tickerNews as $news)
-                        <a href="{{ route('news.show', $news->id) }}" class="ticker-item">
-                            <span class="ticker-separator">|</span>
-                            {{ $news->title }}
-                        </a>
+                    <a href="{{ route('news.show', $news->id) }}" class="ticker-item">
+                        <span class="ticker-separator">|</span>
+                        {{ $news->title }}
+                    </a>
                     @endforeach
                     {{-- Duplicate items for seamless loop --}}
                     @foreach($tickerNews as $news)
-                        <a href="{{ route('news.show', $news->id) }}" class="ticker-item">
-                            <span class="ticker-separator">|</span>
-                            {{ $news->title }}
-                        </a>
+                    <a href="{{ route('news.show', $news->id) }}" class="ticker-item">
+                        <span class="ticker-separator">|</span>
+                        {{ $news->title }}
+                    </a>
                     @endforeach
                 </div>
             </div>
@@ -296,14 +296,14 @@
                     </a>
                 </li>
                 @foreach (\App\Models\Category::all() as $categories)
-                    <li class="mobile-menu-item">
-                        <a href="{{ route('news.viewCategory', $categories->id) }}" class="mobile-menu-link">
-                            <span>{{ $categories->name }}</span>
-                            @if ($loop->last)
-                                <i class="fas fa-chevron-right mobile-menu-chevron"></i>
-                            @endif
-                        </a>
-                    </li>
+                <li class="mobile-menu-item">
+                    <a href="{{ route('news.viewCategory', $categories->id) }}" class="mobile-menu-link">
+                        <span>{{ $categories->name }}</span>
+                        @if ($loop->last)
+                        <i class="fas fa-chevron-right mobile-menu-chevron"></i>
+                        @endif
+                    </a>
+                </li>
                 @endforeach
             </ul>
         </div>
@@ -397,7 +397,8 @@
                     <div class="magnews-footer-logo mb-3">
                         <img src="{{ asset('img/logo.png') }}" alt="KH News Logo" style="max-height: 80px;">
                     </div>
-                    <p class="magnews-footer-text mb-3">ប្រព័ន្ធផ្សព្វផ្សាយ test CI/CD</p>
+                    <p class="magnews-footer-text mb-3">ប្រព័ន្ធផ្សព្វផ្សាយ ហ្វេសប៊ុក ទូរស័ព្ទ អ៊ីនធឺណិត
+                    </p>
                     <p class="magnews-footer-contact mb-2"><i class="fas fa-phone me-2"></i>Phone: +855 855 481 01</p>
                     <p class="magnews-footer-contact mb-2"><i class="fas fa-envelope me-2"></i>Email:
                         sela168@gmail.com</p>
@@ -418,29 +419,30 @@
                 <div class="col-md-4 magnews-footer-column">
                     <h5 class="magnews-footer-title mb-3">Popular Posts</h5>
                     @php
-                        $popularPosts = \App\Models\News::where('status', 'Accept')
-                            ->withCount('likes')
-                            ->orderBy('likes_count', 'desc')
-                            ->orderBy('views', 'desc')
-                            ->take(3)
-                            ->get();
+                    $popularPosts = \App\Models\News::where('status', 'Accept')
+                    ->withCount('likes')
+                    ->orderBy('likes_count', 'desc')
+                    ->orderBy('views', 'desc')
+                    ->take(3)
+                    ->get();
                     @endphp
                     @foreach ($popularPosts as $post)
-                        <div class="magnews-footer-post mb-3">
-                            <div class="row g-2">
-                                <div class="col-4">
-                                    <img src="{{ $post->image ? asset('storage/images/' . $post->image) : asset('img/noimg.jpg') }}"
-                                        alt="{{ $post->title }}" class="magnews-footer-post-img">
-                                </div>
-                                <div class="col-8">
-                                    <a href="{{ route('news.show', $post->id) }}" class="magnews-footer-post-title">
-                                        {{ Str::limit($post->title, 50) }}
-                                    </a>
-                                    <p class="magnews-footer-post-date mb-0">
-                                        {{ $post->created_at->translatedFormat('M d, Y') }}</p>
-                                </div>
+                    <div class="magnews-footer-post mb-3">
+                        <div class="row g-2">
+                            <div class="col-4">
+                                <img src="{{ $post->image ? asset('storage/images/' . $post->image) : asset('img/noimg.jpg') }}"
+                                    alt="{{ $post->title }}" class="magnews-footer-post-img">
+                            </div>
+                            <div class="col-8">
+                                <a href="{{ route('news.show', $post->id) }}" class="magnews-footer-post-title">
+                                    {{ Str::limit($post->title, 50) }}
+                                </a>
+                                <p class="magnews-footer-post-date mb-0">
+                                    {{ $post->created_at->translatedFormat('M d, Y') }}
+                                </p>
                             </div>
                         </div>
+                    </div>
                     @endforeach
                 </div>
                 <!-- Right Column - Categories -->
@@ -448,13 +450,13 @@
                     <h5 class="magnews-footer-title mb-3">Category</h5>
                     <ul class="magnews-footer-category-list">
                         @foreach (\App\Models\Category::orderBy('views', 'desc')->take(10)->get() as $category)
-                            <li class="magnews-footer-category-item">
-                                <a href="{{ route('news.viewCategory', $category->id) }}"
-                                    class="magnews-footer-category-link">
-                                    {{ $category->name }} <span
-                                        class="magnews-footer-category-count">({{ $category->news()->where('status', 'Accept')->count() }})</span>
-                                </a>
-                            </li>
+                        <li class="magnews-footer-category-item">
+                            <a href="{{ route('news.viewCategory', $category->id) }}"
+                                class="magnews-footer-category-link">
+                                {{ $category->name }} <span
+                                    class="magnews-footer-category-count">({{ $category->news()->where('status', 'Accept')->count() }})</span>
+                            </a>
+                        </li>
                         @endforeach
                     </ul>
                 </div>
@@ -633,7 +635,7 @@
                     if (themeToggleButtonMobile) {
                         themeToggleButtonMobile.classList.add('theme-toggle-active');
                         themeToggleButtonMobile.innerHTML =
-                        '<i class="fas fa-sun me-2"></i><span>Light mode</span>';
+                            '<i class="fas fa-sun me-2"></i><span>Light mode</span>';
                     }
                 } else {
                     body.classList.remove('dark-mode');
@@ -644,7 +646,7 @@
                     if (themeToggleButtonMobile) {
                         themeToggleButtonMobile.classList.remove('theme-toggle-active');
                         themeToggleButtonMobile.innerHTML =
-                        '<i class="fas fa-moon me-2"></i><span>Dark mode</span>';
+                            '<i class="fas fa-moon me-2"></i><span>Dark mode</span>';
                     }
                 }
             }
