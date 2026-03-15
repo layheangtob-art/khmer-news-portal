@@ -152,13 +152,20 @@
                 <a href="{{ route('index') }}" class="magnews-mobile-logo">
                     <img src="{{ asset('img/logo.png') }}" alt="KH News Logo" style="max-height: 50px;">
                 </a>
-                <button class="magnews-mobile-menu-toggle" type="button" id="mobileMenuToggle" aria-label="Toggle menu">
-                    <span class="magnews-hamburger-icon">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </span>
-                </button>
+                <div class="d-flex align-items-center gap-2">
+                    <button class="magnews-theme-toggle-btn" type="button" id="themeToggleButtonMobile"
+                        style="margin-left: 0;">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="magnews-mobile-menu-toggle" type="button" id="mobileMenuToggle"
+                        aria-label="Toggle menu">
+                        <span class="magnews-hamburger-icon">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -316,7 +323,7 @@
             <div class="modal-content rounded-0 bg-transparent border-0">
                 <div class="modal-body p-0">
                     <!-- Search bar in header style -->
-                    <div class="w-100" style="background-color: #0052A5; padding: 15px 0;">
+                    <div class="magnews-search-modal-header w-100" style="padding: 15px 0;">
                         <div class="container">
                             <div class="row align-items-center">
                                 <div class="col-12">
@@ -634,8 +641,7 @@
                     }
                     if (themeToggleButtonMobile) {
                         themeToggleButtonMobile.classList.add('theme-toggle-active');
-                        themeToggleButtonMobile.innerHTML =
-                            '<i class="fas fa-sun me-2"></i><span>Light mode</span>';
+                        themeToggleButtonMobile.innerHTML = '<i class="fas fa-sun"></i>';
                     }
                 } else {
                     body.classList.remove('dark-mode');
@@ -645,8 +651,7 @@
                     }
                     if (themeToggleButtonMobile) {
                         themeToggleButtonMobile.classList.remove('theme-toggle-active');
-                        themeToggleButtonMobile.innerHTML =
-                            '<i class="fas fa-moon me-2"></i><span>Dark mode</span>';
+                        themeToggleButtonMobile.innerHTML = '<i class="fas fa-moon"></i>';
                     }
                 }
             }

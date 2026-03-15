@@ -201,6 +201,22 @@ body.dark-mode .modal-content {
     color: #e5e7eb;
 }
 
+body.dark-mode .form-control {
+    background-color: #111827;
+    border-color: #1f2937;
+    color: #e5e7eb;
+}
+
+body.dark-mode .form-control:focus {
+    background-color: #1e293b;
+    border-color: #38bdf8;
+    color: #ffffff;
+}
+
+body.dark-mode .form-control::placeholder {
+    color: #6b7280;
+}
+
 body.dark-mode #searchModal .modal-content {
     background: rgba(15, 23, 42, 0.98);
 }

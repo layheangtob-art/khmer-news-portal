@@ -198,6 +198,53 @@
 }
 
 /* Tablet specific styles - iPad and iPad Pro */
+
+/* Dark Mode Support for Mobile Menu */
+body.dark-mode .mobile-menu-overlay {
+    background-color: #020617;
+}
+
+body.dark-mode .mobile-menu-header {
+    background-color: #020617;
+    border-bottom: 1px solid #1f2937;
+}
+
+body.dark-mode .mobile-menu-logo .magnews-logo-news {
+    color: #e5e7eb;
+}
+
+body.dark-mode .mobile-menu-close {
+    color: #e5e7eb;
+}
+
+body.dark-mode .mobile-menu-list {
+    background-color: #0f172a;
+}
+
+body.dark-mode .mobile-menu-item {
+    border-bottom: 1px solid #1f2937;
+}
+
+body.dark-mode .mobile-menu-link {
+    color: #e5e7eb;
+}
+
+body.dark-mode .mobile-menu-link:hover {
+    background-color: #1e293b;
+}
+
+body.dark-mode .mobile-menu-chevron {
+    color: #9ca3af;
+}
+
+body.dark-mode .magnews-mobile-header {
+    background-color: #020617;
+    border-bottom: 1px solid #1f2937;
+}
+
+body.dark-mode .magnews-hamburger-icon span {
+    background-color: #e5e7eb;
+}
 @media (min-width: 768px) and (max-width: 1199px) {
     .mobile-menu-link {
         font-size: 20px;
