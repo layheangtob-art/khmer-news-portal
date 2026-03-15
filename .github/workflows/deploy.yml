@@ -33,3 +33,4 @@ jobs:
           php artisan up
           sudo systemctl restart php8.3-fpm
           sudo systemctl restart nginx
+          
