@@ -397,7 +397,7 @@
                     <div class="magnews-footer-logo mb-3">
                         <img src="{{ asset('img/logo.png') }}" alt="KH News Logo" style="max-height: 80px;">
                     </div>
-                    <p class="magnews-footer-text mb-3">ប្រព័ន្ធផ្សព្វផ្សាយ testfdfg</p>
+                    <p class="magnews-footer-text mb-3">ប្រព័ន្ធផ្សព្វផ្សាយ test CI/CD</p>
                     <p class="magnews-footer-contact mb-2"><i class="fas fa-phone me-2"></i>Phone: +855 855 481 01</p>
                     <p class="magnews-footer-contact mb-2"><i class="fas fa-envelope me-2"></i>Email:
                         sela168@gmail.com</p>

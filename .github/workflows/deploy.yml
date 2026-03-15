@@ -3,7 +3,10 @@ name: Deploy Laravel
 on:
   push:
     branches:
-      - main  # deploy on main branch
+      - main
+
+env:
+  COMPOSER_ALLOW_SUPERUSER: 1
 
 jobs:
   deploy:
@@ -21,16 +24,20 @@ jobs:
         key: ${{ secrets.SERVER_SSH_KEY }}
         port: 22
         script: |
+          git config --global --add safe.directory /var/www/laravel
           cd /var/www/laravel
           git reset --hard
           git pull origin main
           composer install --no-dev --optimize-autoloader
           php artisan migrate --force
+          php artisan config:clear
+          php artisan cache:clear
+          php artisan route:clear
+          php artisan view:clear
           php artisan config:cache
           php artisan route:cache
           php artisan view:cache
           php artisan down || true
           php artisan up
           sudo systemctl restart php8.3-fpm
-          sudo systemctl restart nginx
-          
+          sudo systemctl reload nginx
