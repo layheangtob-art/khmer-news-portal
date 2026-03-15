@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Koulen&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="{{ asset('img/logo_for_header_2.png') }}">
 
-    <link rel="" type="image/png" href="{{ asset('img/logo.png') }}">
+    <!-- <link rel="" type="image/png" href="{{ asset('img/logo.png') }}"> -->
 
 
     <!-- Google Web Fonts -->
