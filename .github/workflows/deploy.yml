@@ -1,0 +1,32 @@
+name: Deploy Laravel
+
+on:
+  push:
+    branches:
+      - main   # deploy when main branch is pushed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Deploy to server via SSH
+      uses: appleboy/ssh-action@v0.1.6
+      with:
+        host: ${{ secrets.SERVER_IP }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        script: |
+          cd /var/www/laravel
+          git reset --hard
+          git pull origin main
+          composer install --no-dev --optimize-autoloader
+          php artisan migrate --force
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
+          sudo systemctl restart php8.3-fpm
+          sudo systemctl restart nginx
