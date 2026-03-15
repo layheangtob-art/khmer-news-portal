@@ -397,8 +397,7 @@
                     <div class="magnews-footer-logo mb-3">
                         <img src="{{ asset('img/logo.png') }}" alt="KH News Logo" style="max-height: 80px;">
                     </div>
-                    <p class="magnews-footer-text mb-3">ប្រព័ន្ធផ្សព្វផ្សាយ ហ្វេសប៊ុក ទូរស័ព្ទ អ៊ីនធឺណិត
-                        និងការផ្សាយពាណិជ្ជកម្ម ក្នុងស្រុក</p>
+                    <p class="magnews-footer-text mb-3">ប្រព័ន្ធផ្សព្វផ្សាយ testfdfg</p>
                     <p class="magnews-footer-contact mb-2"><i class="fas fa-phone me-2"></i>Phone: +855 855 481 01</p>
                     <p class="magnews-footer-contact mb-2"><i class="fas fa-envelope me-2"></i>Email:
                         sela168@gmail.com</p>
@@ -478,7 +477,7 @@
     </a>
 
     <!-- JavaScript Libraries -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4 /jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('th/lib/easing/easing.min.js') }}"></script>
     <script src="{{ asset('th/lib/waypoints/waypoints.min.js') }}"></script>
