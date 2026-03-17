@@ -1,29 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <!-- Banner Section -->
-    @if(isset($categoryBanners) && $categoryBanners->count() > 0)
-    <div class="container py-2 mb-3">
-        @foreach($categoryBanners->take(1) as $banner)
-            @if($banner->url)
-                <a href="{{ $banner->url }}" target="_blank" rel="noopener">
-                    <img src="{{ asset('storage/banners/' . $banner->image) }}"
-                         alt="{{ $banner->title }}"
-                         class="img-fluid w-100 rounded"
-                         style="max-height: 200px; object-fit: cover;"
-                         onerror="this.style.display='none';">
-                </a>
-            @else
-                <img src="{{ asset('storage/banners/' . $banner->image) }}"
-                     alt="{{ $banner->title }}"
-                     class="img-fluid w-100 rounded"
-                     style="max-height: 200px; object-fit: cover;"
-                     onerror="this.style.display='none';">
-            @endif
-        @endforeach
-    </div>
-    @endif
-
     <!-- Category News Section Start -->
     <div class="container-fluid py-5">
         <div class="container">
@@ -40,7 +17,7 @@
                     <div class="position-relative mb-5">
                         <div class="news-featured-image">
                             <img src="{{ $news->image ? asset('storage/images/' . $news->image) : asset('img/noimg.jpg') }}"
-                                class="img-fluid w-100" alt="{{ $news->title }}" style="max-height: 500px; object-fit: cover;" />
+                                class="img-fluid w-100 featured-news-img" alt="{{ $news->title }}" />
                             <!-- Additional images indicator for featured news -->
                             @if($news->images && count($news->images) > 0)
                                 <div class="position-absolute image-indicator text-white"

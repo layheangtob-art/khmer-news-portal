@@ -82,7 +82,7 @@
 
 <body>
     <!-- Top Dark Bar -->
-    <div class="magnews-topbar d-none d-xl-block">
+    <div class="magnews-topbar d-none d-md-block">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center py-2">
                 <div class="magnews-topbar-left">
@@ -107,7 +107,7 @@
     </div>
 
     <!-- Header Section with Logo and Ad -->
-    <div class="magnews-header d-none d-xl-block">
+    <div class="magnews-header d-none d-md-block">
         <div class="container">
             <div class="row align-items-center py-3">
                 <div class="col-md-4">
@@ -117,8 +117,11 @@
                 </div>
                 <div class="col-md-8 d-none d-md-block">
                     <div class="magnews-ad-banner">
-                        @if (isset($homeBanners) && $homeBanners->count() > 0)
-                        @foreach ($homeBanners->take(1) as $banner)
+                        @php
+                        $headerBanner = $homeBanners ?? $categoryBanners ?? $detailBanners ?? null;
+                        @endphp
+                        @if (isset($headerBanner) && $headerBanner->count() > 0)
+                        @foreach ($headerBanner->take(1) as $banner)
                         @if ($banner->url)
                         <a href="{{ $banner->url }}" target="_blank" rel="noopener">
                             <img src="{{ asset('storage/banners/' . $banner->image) }}"
@@ -133,11 +136,6 @@
                             onerror="this.style.display='none';">
                         @endif
                         @endforeach
-                        @else
-                        {{-- <div class="magnews-ad-placeholder">
-                                <span class="magnews-ad-text">THIS IS AN ADVERTISEMENT</span>
-                                <button class="magnews-ad-btn">DOWNLOAD</button>
-                            </div> --}}
                         @endif
                     </div>
                 </div>
@@ -146,7 +144,7 @@
     </div>
 
     <!-- Mobile Header Bar (Responsive) -->
-    <div class="magnews-mobile-header d-xl-none">
+    <div class="magnews-mobile-header d-md-none">
         <div class="container">
             <div class="magnews-mobile-header-content">
                 <a href="{{ route('index') }}" class="magnews-mobile-logo">
@@ -170,10 +168,30 @@
         </div>
     </div>
 
-    <!-- Main Navigation Bar -->
-    <div class="magnews-navbar sticky-top d-none d-xl-block">
+    <!-- Mobile Ad Banner (Responsive) -->
+    @php
+    $mobileHeaderBanner = $homeBanners ?? $categoryBanners ?? $detailBanners ?? null;
+    @endphp
+    @if (isset($mobileHeaderBanner) && $mobileHeaderBanner->count() > 0)
+    <div class="magnews-mobile-ad-banner d-md-none">
         <div class="container">
-            <nav class="navbar navbar-expand-lg px-0">
+            <div class="magnews-mobile-ad-inner">
+                @foreach ($mobileHeaderBanner->take(1) as $banner)
+                <a href="{{ $banner->url ?? '#' }}" class="magnews-mobile-ad-link" @if($banner->url) target="_blank" rel="noopener" @endif>
+                    <img src="{{ asset('storage/banners/' . $banner->image) }}"
+                        alt="{{ $banner->title }}" class="magnews-mobile-ad-img"
+                        onerror="this.style.display='none';">
+                </a>
+                @endforeach
+            </div>
+        </div>
+    </div>
+    @endif
+
+    <!-- Main Navigation Bar -->
+    <div class="magnews-navbar sticky-top d-none d-md-block">
+        <div class="container">
+            <nav class="navbar navbar-expand-md px-0">
 
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav magnews-nav-menu">
@@ -195,34 +213,12 @@
                         : null);
                         @endphp
 
-                        @php
-                        $displayCategories = $navCategories->take(7);
-                        $remainingCategories = $navCategories->slice(7);
-                        @endphp
-                        @foreach ($displayCategories as $cat)
-                        <li
-                            class="nav-item {{ $loop->last && $remainingCategories->isNotEmpty() ? 'dropdown' : '' }}">
+                        @foreach ($navCategories as $cat)
+                        <li class="nav-item">
                             <a href="{{ route('news.viewCategory', $cat->id) }}"
-                                class="nav-link {{ $currentCategoryId === $cat->id ? 'active' : '' }}"
-                                @if ($loop->last && $remainingCategories->isNotEmpty()) data-bs-toggle="dropdown"
-                                aria-expanded="false" @endif>
+                                class="nav-link {{ $currentCategoryId === $cat->id ? 'active' : '' }}">
                                 {{ $cat->name }}
-                                @if ($loop->last && $remainingCategories->isNotEmpty())
-                                <i class="fas fa-chevron-down ms-1" style="font-size: 10px;"></i>
-                                @endif
                             </a>
-                            @if ($loop->last && $remainingCategories->isNotEmpty())
-                            <ul class="dropdown-menu">
-                                @foreach ($remainingCategories as $subCat)
-                                <li>
-                                    <a class="dropdown-item {{ $currentCategoryId === $subCat->id ? 'active' : '' }}"
-                                        href="{{ route('news.viewCategory', $subCat->id) }}">
-                                        {{ $subCat->name }}
-                                    </a>
-                                </li>
-                                @endforeach
-                            </ul>
-                            @endif
                         </li>
                         @endforeach
                     </ul>
@@ -281,7 +277,7 @@
 
 
     <!-- Mobile Menu Overlay -->
-    <div class="mobile-menu-overlay d-xl-none" id="mobileMenuOverlay">
+    <div class="mobile-menu-overlay d-md-none" id="mobileMenuOverlay">
         <div class="d-flex flex-column" style="min-height: 100vh;">
             <!-- Top White Header with Logo and Close Button -->
             <div class="mobile-menu-header">

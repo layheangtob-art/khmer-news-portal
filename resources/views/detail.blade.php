@@ -1,38 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<!-- Sponsor Banner for Detail Page -->
-@if ($detailBanners->count() > 0)
-<div class="container-fluid py-2 mb-3">
-    <div class="container">
-        <div class="p-3 rounded">
-            <div class="row align-items-center">
-                <div class="col-md-12">
-                    <div class="sponsor-logos d-flex flex-wrap justify-content-around align-items-center">
-                        @foreach ($detailBanners as $banner)
-                        <div class="sponsor-logo mx-2 my-2">
-                            @if ($banner->url)
-                            <a href="{{ $banner->url }}" target="_blank" rel="noopener">
-                                <img src="{{ asset('storage/banners/' . $banner->image) }}"
-                                    alt="{{ $banner->title }}"
-                                    class="img-fluid"
-                                    style="max-height: 200px; width: auto;">
-                            </a>
-                            @else
-                            <img src="{{ asset('storage/banners/' . $banner->image) }}"
-                                alt="{{ $banner->title }}" class="img-fluid"
-                                style="max-height: 200px; width: auto;">
-                            @endif
-                        </div>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endif
-
 <!-- Blog Detail Page Start -->
 <div class="container-fluid py-4">
     <div class="container">

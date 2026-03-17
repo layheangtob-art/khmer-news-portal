@@ -174,6 +174,7 @@ body {
     height: 40px;
     display: flex;
     align-items: center;
+    margin-bottom: 20px;
 }
 
 .breaking-title {
@@ -281,6 +282,7 @@ body.dark-mode .ticker-item {
 @media (max-width: 768px) {
     .magnews-breaking-news {
         height: 32px;
+        margin-bottom: 15px;
     }
     
     .breaking-title {
@@ -305,6 +307,25 @@ body.dark-mode .ticker-item {
     }
 }
 
+
+.magnews-ad-banner {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    min-height: 100px;
+    width: 100%;
+}
+
+.magnews-ad-banner img {
+    max-width: 728px;
+    height: auto;
+}
+
+@media (max-width: 1440px) {
+    .magnews-ad-banner img {
+        max-width: 100%;
+    }
+}
 
 .magnews-ad-placeholder {
     display: flex;
@@ -331,7 +352,7 @@ body.dark-mode .ticker-item {
 }
 
 .magnews-ad-btn:hover {
-    background-color: #1976D2;
+    background-color: #e2162d;
 }
 
 /* Mobile/Tablet Ad Banner (iPad & Phone) */
@@ -377,8 +398,8 @@ body.dark-mode .ticker-item {
     min-height: 70px;
 }
 
-/* Slightly larger ad on iPad */
-@media (min-width: 768px) and (max-width: 1199px) {
+/* Slightly larger ad on Tablets */
+@media (min-width: 768px) and (max-width: 991px) {
     .magnews-mobile-ad-banner {
         padding: 14px 0;
     }
@@ -405,6 +426,13 @@ body.dark-mode .ticker-item {
     z-index: 1000;
 }
 
+.magnews-navbar .navbar-collapse {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: hidden; /* Prevent outer scroll */
+    width: 100%;
+}
+
 .magnews-nav-menu {
     display: flex;
     align-items: center;
@@ -412,6 +440,19 @@ body.dark-mode .ticker-item {
     margin: 0;
     padding: 0;
     gap: 0;
+    /* Horizontal Scroll */
+    overflow-x: auto;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE 10+ */
+    flex-grow: 1; /* Take available space */
+    margin-right: 10px; /* Space before search bar */
+}
+
+.magnews-nav-menu::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
 }
 
 .magnews-nav-menu .nav-item {
@@ -465,7 +506,7 @@ body.dark-mode .ticker-item {
 .magnews-nav-menu .dropdown-item:hover,
 .magnews-nav-menu .dropdown-item.active {
     background-color: #f5f5f5;
-    color: #4CAF50;
+    color: #0c35a4;
 }
 
 .magnews-navbar .navbar-toggler {
@@ -475,7 +516,7 @@ body.dark-mode .ticker-item {
 
 .magnews-navbar .navbar-toggler:focus {
     box-shadow: none;
-    outline: 2px solid #4CAF50;
+    outline: 2px solid #ff0000;
     outline-offset: 2px;
 }
 
@@ -486,6 +527,11 @@ body.dark-mode .ticker-item {
 .magnews-nav-right {
     display: flex;
     align-items: center;
+    flex-shrink: 0; /* Prevent shrinking */
+    margin-left: auto; /* Push to right */
+    background-color: #ffffff; /* Ensure background covers scrolling content if needed */
+    z-index: 2; /* Keep above scrolling content */
+    padding-left: 10px; /* Space from scrolling content */
 }
 
 .magnews-search-form {
@@ -723,7 +769,7 @@ body.dark-mode .ticker-item {
 }
 
 /* Responsive Design */
-@media (max-width: 991px) {
+@media (max-width: 767px) {
     .magnews-header {
         display: none;
     }
@@ -760,58 +806,71 @@ body.dark-mode .ticker-item {
     }
 }
 
-@media (max-width: 768px) {
-    .magnews-logo {
-        font-size: 28px;
+/* Laptop Screen Optimizations (1200px to 1440px) */
+@media (min-width: 1200px) and (max-width: 1440px) {
+    .magnews-nav-menu .nav-link {
+        padding: 15px 12px;
+        font-size: 14px;
     }
 
-    .magnews-ad-banner {
-        min-height: 80px;
-        padding: 15px;
+    .magnews-logo img {
+        max-height: 80px !important;
     }
 
-    .magnews-topbar-right {
-        flex-wrap: wrap;
-        gap: 10px;
+    .magnews-search-input {
+        width: 160px;
     }
 
-    .magnews-social-icons {
-        border-left: none;
-        padding-left: 0;
-        margin-left: 0;
+    .container {
+        max-width: 95%;
     }
 }
 
-/* iPad Pro (1024 x 1366) and similar tablet - mobile header scaling & layout */
-@media (min-width: 1024px) and (max-width: 1199px) {
-    .magnews-mobile-header-content {
+/* Tablet Optimizations (768px to 1199px) - Desktop Menu on Tablets */
+@media (min-width: 768px) and (max-width: 1199px) {
+    .magnews-logo img {
+        max-height: 70px !important;
+    }
+
+    .magnews-nav-menu .nav-link {
+        padding: 15px 8px;
+        font-size: 12px;
+    }
+
+    .magnews-search-input {
+        width: 120px;
+    }
+
+    .magnews-nav-right {
+        gap: 0.5rem !important;
+    }
+
+    .magnews-ad-banner img {
+        max-height: 80px;
+    }
+
+    /* Prevent horizontal overflow on Tablets */
+    .container {
         max-width: 100%;
-    }
-
-    .magnews-mobile-logo {
-        font-size: 30px;
-    }
-
-    .magnews-hamburger-icon {
-        width: 26px;
-        height: 20px;
-    }
-
-    .magnews-hamburger-icon span {
-        height: 2.5px;
-    }
-
-    /* Prevent horizontal overflow on iPad Pro */
-    .magnews-mobile-header .container,
-    .magnews-header .container,
-    .magnews-navbar .container {
-        max-width: 100%;
-        padding-left: 24px;
-        padding-right: 24px;
+        padding-left: 15px;
+        padding-right: 15px;
     }
 }
 
 @media (max-width: 576px) {
+    .magnews-mobile-header {
+        padding: 10px 0;
+    }
+
+    .magnews-mobile-logo img {
+        max-height: 40px !important;
+    }
+
+    .magnews-theme-toggle-btn,
+    .magnews-mobile-menu-toggle {
+        padding: 6px;
+    }
+
     .magnews-logo {
         font-size: 24px;
     }

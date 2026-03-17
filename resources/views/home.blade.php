@@ -101,14 +101,14 @@
 
     @if(isset($homeBanners) && $homeBanners->count() > 1)
     <div class="container mt-4">
-        <div class=" rounded mb-3">
+        <div class="rounded mb-3 overflow-hidden">
             @foreach($homeBanners->slice(1, 1) as $banner)
                 @if($banner->url)
                     <a href="{{ $banner->url }}" target="_blank" rel="noopener">
-                        <img src="{{ asset('storage/banners/' . $banner->image) }}" alt="{{ $banner->title }}" class="img-fluid w-100" style="max-height: 300px; object-fit: cover;">
+                        <img src="{{ asset('storage/banners/' . $banner->image) }}" alt="{{ $banner->title }}" class="img-fluid w-100 responsive-home-banner">
                     </a>
                 @else
-                    <img src="{{ asset('storage/banners/' . $banner->image) }}" alt="{{ $banner->title }}" class="img-fluid w-100" style="max-height: 400px; object-fit: cover;">
+                    <img src="{{ asset('storage/banners/' . $banner->image) }}" alt="{{ $banner->title }}" class="img-fluid w-100 responsive-home-banner">
                 @endif
             @endforeach
         </div>
@@ -224,6 +224,37 @@
     </div>
 
     <style>
+        .responsive-home-banner {
+            max-height: 400px;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .responsive-home-banner:hover {
+            transform: scale(1.01);
+        }
+
+        @media (max-width: 991px) {
+            .responsive-home-banner {
+                max-height: 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .responsive-home-banner {
+                max-height: 250px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .responsive-home-banner {
+                max-height: 180px;
+            }
+        }
+
+
         .hover-shadow:hover {
             box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
         }
