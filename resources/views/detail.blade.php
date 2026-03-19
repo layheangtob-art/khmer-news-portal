@@ -213,7 +213,7 @@
         <!-- You Might Also Like -->
         @if(isset($randomNews) && $randomNews->count() > 0)
         <div class="magnews-related-posts mt-5">
-            <h4 class="magnews-related-title mb-4">You Might Also Like</h4>
+            <h4 class="magnews-related-title mb-4">ព័ត៌មានផ្សេងទៀត</h4>
             <div class="row g-4">
                 @foreach ($randomNews as $relatedNews)
                 <div class="col-lg-6">
@@ -694,8 +694,24 @@
     body.dark-mode .magnews-article-title,
     body.dark-mode .magnews-comment-title,
     body.dark-mode .magnews-sidebar-title,
-    body.dark-mode .magnews-related-title {
-        color: #e5e7eb;
+    body.dark-mode .magnews-related-title,
+    body.dark-mode .magnews-article-content,
+    body.dark-mode .magnews-article-content p,
+    body.dark-mode .magnews-article-content span,
+    body.dark-mode .magnews-article-content li,
+    body.dark-mode .magnews-article-content strong,
+    body.dark-mode .magnews-article-content b,
+    body.dark-mode .magnews-article-content i,
+    body.dark-mode .magnews-article-content em {
+        color: #e5e7eb !important;
+    }
+
+    body.dark-mode .magnews-article-content a {
+        color: #38bdf8 !important;
+    }
+
+    body.dark-mode .magnews-article-content a:hover {
+        color: #7dd3fc !important;
     }
 
     body.dark-mode .magnews-meta-info,

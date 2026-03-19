@@ -10,6 +10,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&family=Koulen&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@hotwired/turbo@8.0.0/dist/turbo.es2017-umd.js"></script>
+    <script>
+        document.addEventListener('turbo:load', function() {
+            if (typeof jQuery !== 'undefined') {
+                jQuery(document).trigger('ready');
+            }
+        });
+    </script>
 
     @include('components.admin-header')
 </head>

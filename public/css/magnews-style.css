@@ -932,6 +932,10 @@ body.dark-mode .magnews-navbar {
     border-bottom-color: #222;
 }
 
+body.dark-mode .magnews-nav-right {
+    background-color: #111 !important;
+}
+
 body.dark-mode .magnews-nav-menu .nav-link {
     color: #e5e7eb;
 }

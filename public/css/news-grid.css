@@ -93,3 +93,40 @@
         margin-bottom: 15px;
     }
 }
+
+/* Dark Mode Support */
+body.dark-mode .news-card,
+body.dark-mode .sidebar-section {
+    background-color: #020617;
+    border-color: #1f2937;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .news-card:hover {
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+    border-color: #38bdf8;
+}
+
+body.dark-mode .news-title,
+body.dark-mode .sidebar-news-title {
+    color: #e5e7eb;
+}
+
+body.dark-mode .news-title:hover,
+body.dark-mode .sidebar-news-title:hover {
+    color: #38bdf8;
+}
+
+body.dark-mode .news-excerpt {
+    color: #9ca3af;
+}
+
+body.dark-mode .sidebar-title {
+    color: #e5e7eb;
+    border-bottom-color: #38bdf8;
+}
+
+body.dark-mode .app-download-btn {
+    background-color: #111827;
+    border-color: #1f2937;
+}

@@ -52,6 +52,14 @@
     <link rel="stylesheet" href="{{ asset('css/category-nav.css') }}">
     <link rel="stylesheet" href="{{ asset('css/ckeditor-content.css') }}">
     <link rel="stylesheet" href="{{ asset('css/magnews-style.css') }}">
+    <script src="https://unpkg.com/@hotwired/turbo@8.0.0/dist/turbo.es2017-umd.js"></script>
+    <script>
+        document.addEventListener('turbo:load', function() {
+            if (typeof jQuery !== 'undefined') {
+                jQuery(document).trigger('ready');
+            }
+        });
+    </script>
     <style>
         body,
         h1,
@@ -89,8 +97,8 @@
                     <span class="magnews-date">{{ now()->translatedFormat('l F d, Y') }}</span>
                 </div>
                 <div class="magnews-topbar-right d-flex align-items-center gap-3">
-                    <a href="#" class="magnews-topbar-link">Login</a>
-                    <a href="#" class="magnews-topbar-link">Register</a>
+                    <!-- <a href="#" class="magnews-topbar-link">Login</a>
+                    <a href="#" class="magnews-topbar-link">Register</a> -->
                     <div class="magnews-social-icons d-flex align-items-center gap-2">
                         <a href="#" class="magnews-social-icon" title="Facebook"><i
                                 class="fab fa-facebook-f"></i></a>
@@ -498,7 +506,7 @@
 
     {{-- Navbar Search Functionality --}}
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('turbo:load', function() {
             const navbarSearchInput = document.getElementById('navbarSearchInput');
             const navbarSearchForm = document.getElementById('navbarSearchForm');
             const navbarSearchIcon = document.getElementById('navbarSearchIcon');
@@ -569,7 +577,7 @@
 
     {{-- Mobile Menu JS --}}
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('turbo:load', function() {
             const mobileMenuToggle = document.getElementById('mobileMenuToggle');
             const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
             const mobileMenuClose = document.getElementById('mobileMenuClose');
@@ -622,7 +630,7 @@
         });
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('turbo:load', function() {
             const body = document.body;
             const themeToggleButton = document.getElementById('themeToggleButton');
             const themeToggleButtonMobile = document.getElementById('themeToggleButtonMobile');

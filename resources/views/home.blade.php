@@ -15,15 +15,15 @@
                 @if($latestNews->count() > 0)
                     <!-- Big Hero Card -->
                     <div class="card border-0 shadow-sm overflow-hidden mb-4">
-                        <div class="position-relative" style="height: 400px;">
+                        <div class="position-relative hero-card-container">
                             <img src="{{ $latestNews->first()->image ? asset('storage/images/' . $latestNews->first()->image) : asset('img/noimg.jpg') }}"
                                  class="w-100 h-100"
                                  style="object-fit: cover;"
                                  alt="{{ $latestNews->first()->title }}">
-                            <div class="position-absolute bottom-0 start-0 w-100 p-4" style="background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);">
+                            <div class="position-absolute bottom-0 start-0 w-100 hero-card-content p-4" style="background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);">
                                 <span class="badge bg-primary mb-2">{{ $latestNews->first()->category->name ?? 'News' }}</span>
                                 <a href="{{ route('news.show', $latestNews->first()->id) }}" class="text-decoration-none">
-                                    <h2 class="text-white fw-bold mb-2">{{ $latestNews->first()->title }}</h2>
+                                    <h2 class="text-white fw-bold mb-2 hero-card-title">{{ $latestNews->first()->title }}</h2>
                                 </a>
                                 <div class="text-white-50 small">
                                     <i class="far fa-calendar-alt me-2"></i>{{ $latestNews->first()->created_at->translatedFormat('d/m/Y') }}

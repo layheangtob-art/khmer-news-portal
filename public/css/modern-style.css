@@ -309,6 +309,77 @@ body.dark-mode .section-header {
     border-bottom-color: #1d4ed8;
 }
 
+body.dark-mode .section-title,
+body.dark-mode .section-title.text-primary,
+body.dark-mode .section-title.text-danger,
+body.dark-mode .section-title.text-success,
+body.dark-mode .section-title.text-info,
+body.dark-mode .section-title.text-warning {
+    color: #e5e7eb !important;
+}
+
+body.dark-mode .magnews-article-title,
+body.dark-mode .magnews-sidebar-title,
+body.dark-mode .magnews-popular-title,
+body.dark-mode .magnews-related-title,
+body.dark-mode .magnews-related-title-link,
+body.dark-mode .magnews-footer-title,
+body.dark-mode .magnews-footer-post-title {
+    color: #ffffff !important;
+}
+
+body.dark-mode .magnews-sidebar-link,
+body.dark-mode .magnews-footer-category-link {
+    color: #9ca3af !important;
+}
+
+body.dark-mode .magnews-sidebar-link:hover,
+body.dark-mode .magnews-footer-category-link:hover {
+    color: #38bdf8 !important;
+}
+
+body.dark-mode .magnews-meta-info {
+    color: #9ca3af !important;
+}
+
+body.dark-mode .magnews-meta-info span {
+    color: #9ca3af !important;
+}
+
+body.dark-mode .magnews-article-content {
+    color: #e5e7eb !important;
+}
+
+body.dark-mode .breadcrumb-item a {
+    color: #38bdf8 !important;
+}
+
+body.dark-mode .breadcrumb-item.active {
+    color: #9ca3af !important;
+}
+
+body.dark-mode .breadcrumb-item + .breadcrumb-item::before {
+    color: #4b5563 !important;
+}
+
+body.dark-mode .magnews-popular-post-item {
+    border-bottom-color: #1f2937 !important;
+}
+
+body.dark-mode .magnews-sidebar-list li {
+    border-bottom-color: #1f2937 !important;
+}
+
+body.dark-mode .magnews-popular-date,
+body.dark-mode .magnews-related-date {
+    color: #6b7280 !important;
+}
+
+body.dark-mode .magnews-popular-title:hover,
+body.dark-mode .magnews-related-title-link:hover {
+    color: #38bdf8 !important;
+}
+
 body.dark-mode .section-title {
     color: #e5e7eb;
 }
@@ -431,4 +502,69 @@ body.dark-mode .ck-content pre {
 body.dark-mode .news-content-wrapper hr,
 body.dark-mode .ck-content hr {
     border-top-color: #1f2937;
+}
+
+/* Hero Card Responsive Styles */
+.hero-card-container {
+    height: 400px;
+    transition: height 0.3s ease;
+}
+
+.hero-card-title {
+    font-size: 1.75rem;
+    line-height: 1.3;
+}
+
+@media (max-width: 991px) {
+    .hero-card-container {
+        height: 350px;
+    }
+    
+    .hero-card-title {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-card-container {
+        height: 300px;
+    }
+    
+    .hero-card-title {
+        font-size: 1.3rem;
+    }
+    
+    .hero-card-content {
+        padding: 1.25rem !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-card-container {
+        height: 250px;
+    }
+    
+    .hero-card-title {
+        font-size: 1.1rem;
+        margin-bottom: 0.4rem !important;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    
+    .hero-card-content {
+        padding: 0.8rem !important;
+        background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 50%, transparent 100%) !important;
+    }
+    
+    .hero-card-content .badge {
+        font-size: 0.7rem;
+        padding: 0.3rem 0.5rem;
+        margin-bottom: 0.3rem !important;
+    }
+    
+    .hero-card-content .text-white-50 {
+        font-size: 0.75rem !important;
+    }
 }
