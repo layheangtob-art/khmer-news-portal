@@ -37,17 +37,17 @@ class News extends Model
     public function getAllImages()
     {
         $allImages = [];
-        
+
         // Add main image if exists
         if ($this->image) {
             $allImages[] = $this->image;
         }
-        
+
         // Add additional images if exists
         if ($this->images && is_array($this->images)) {
             $allImages = array_merge($allImages, $this->images);
         }
-        
+
         return $allImages;
     }
 }

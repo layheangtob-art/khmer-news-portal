@@ -994,11 +994,11 @@
 
 @section('custom-footer')
     <script>
-        var usersPerMonth = @json($usersPerMonth);
-        var newsPerMonth = @json($newsPerMonth);
-        var totalUsersCurrentMonth = @json($totalUsersCurrentMonth);
-        var totalNewsCurrentMonth = @json($totalNewsCurrentMonth);
-        var currentMonth = @json($currentMonth);
+        var usersPerMonth = {!! json_encode($usersPerMonth) !!};
+        var newsPerMonth = {!! json_encode($newsPerMonth) !!};
+        var totalUsersCurrentMonth = {!! json_encode($totalUsersCurrentMonth) !!};
+        var totalNewsCurrentMonth = {!! json_encode($totalNewsCurrentMonth) !!};
+        var currentMonth = {!! json_encode($currentMonth) !!};
     </script>
     <script src="{{ asset('js/charts.js') }}"></script>
 @endsection

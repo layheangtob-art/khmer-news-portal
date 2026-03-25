@@ -262,12 +262,12 @@ body.dark-mode .btn-outline-primary:hover {
     border-color: transparent;
 }
 
-body.dark-mode .back-to-top-square {
+body.dark-mode #back-to-top {
     background-color: #111827;
-    border-color: #1f2937;
+    border: 1px solid #1f2937;
 }
 
-body.dark-mode .back-to-top-square i {
+body.dark-mode #back-to-top i {
     color: #e5e7eb;
 }
 
@@ -549,6 +549,7 @@ body.dark-mode .ck-content hr {
         margin-bottom: 0.4rem !important;
         display: -webkit-box;
         -webkit-line-clamp: 3;
+        line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow: hidden;
     }

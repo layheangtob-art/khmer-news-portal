@@ -224,7 +224,7 @@
             buttonsStyling: false,
             customClass: { confirmButton: 'btn btn-success' }
           });
-          const redirectUrl = (data && data.redirect_url) ? data.redirect_url : '{{ route('dashboard')}}';
+          const redirectUrl = (data && data.redirect_url) ? data.redirect_url : "{{ route('dashboard') }}";
           window.location.href = redirectUrl;
         } else {
           Swal.fire({

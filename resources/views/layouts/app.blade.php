@@ -488,10 +488,8 @@
     <!-- Footer End -->
 
     <!-- Back to Top -->
-    <a href="#" class="back-to-top" id="back-to-top">
-        <div class="back-to-top-square">
-            <i class="fa fa-arrow-up"></i>
-        </div>
+    <a href="#" id="back-to-top">
+        <i class="fa fa-arrow-up"></i>
     </a>
 
     <!-- JavaScript Libraries -->

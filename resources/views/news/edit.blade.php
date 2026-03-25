@@ -104,7 +104,11 @@
                                             <img id="imagePreview"
                                                 src="{{ $news->image ? asset('storage/images/' . $news->image) : '#' }}"
                                                 alt="Preview"
-                                                style="display: {{ $news->image ? 'block' : 'none' }}; max-width: 200px;"
+                                                @if($news->image)
+                                                style="display: block; max-width: 200px;"
+                                                @else
+                                                style="display: none; max-width: 200px;"
+                                                @endif
                                                 class="img-fluid mt-4">
                                         </div>
                                         <div class="form-group col-md-6">

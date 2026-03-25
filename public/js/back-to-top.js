@@ -1,19 +1,30 @@
-document.addEventListener('DOMContentLoaded', function() {
+function handleBackToTopVisibility() {
     const backToTop = document.getElementById('back-to-top');
-    
-    // Show/hide button based on scroll position
-    window.addEventListener('scroll', function() {
+    if (backToTop) {
         if (window.scrollY > 300) {
-            backToTop.style.display = 'block';
+            backToTop.classList.add('show');
         } else {
-            backToTop.style.display = 'none';
+            backToTop.classList.remove('show');
         }
-    });
-    
-    // Instant scroll to top with no delay
-    backToTop.addEventListener('click', function(e) {
+    }
+}
+
+// Handle scroll event globally to avoid adding multiple listeners
+window.addEventListener('scroll', handleBackToTopVisibility);
+
+// Check visibility on load or turbo navigation
+document.addEventListener('DOMContentLoaded', handleBackToTopVisibility);
+document.addEventListener('turbo:load', handleBackToTopVisibility);
+
+// Use event delegation for the click to handle Turbo replacements smoothly
+document.addEventListener('click', function(e) {
+    const backToTop = e.target.closest('#back-to-top');
+    if (backToTop) {
         e.preventDefault();
-        // Use scrollTo with no smooth behavior for instant scrolling
-        window.scrollTo(0, 0);
-    });
+        e.stopPropagation(); // Stop the event from reaching jQuery handlers if any
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
 });

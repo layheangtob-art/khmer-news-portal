@@ -25,14 +25,24 @@
                 <h1 class="magnews-article-title mb-3">{{ $news->title }}</h1>
 
                 <!-- Meta Information -->
-                <div class="magnews-meta-info mb-4">
+                <div class="magnews-meta-info mb-4 d-flex align-items-center flex-wrap gap-2">
                     <span>By {{ $news->author->name ?? 'Admin' }}</span>
-                    <span class="mx-2">-</span>
+                    <span class="d-none d-sm-inline text-muted">-</span>
                     <span>{{ $news->created_at->translatedFormat('M d, Y') }}</span>
-                    <span class="mx-2">-</span>
+                    <span class="d-none d-sm-inline text-muted">-</span>
                     <span>{{ number_format($news->views) }} Views</span>
-                    <span class="mx-2">-</span>
-                    {{-- <span>0 Comment</span> --}}
+                    <span class="d-none d-sm-inline text-muted">-</span>
+                    
+                    @php
+                        $deviceId = session('device_id');
+                        $hasLiked = $deviceId ? $news->likes()->where('device_id', $deviceId)->exists() : false;
+                    @endphp
+                    <form action="{{ route('news.like', $news->id) }}" method="POST" class="d-inline m-0 p-0" id="like-form-{{ $news->id }}">
+                        @csrf
+                        <button type="button" class="btn btn-sm {{ $hasLiked ? 'btn-primary text-white' : 'btn-outline-primary' }} rounded-pill px-3 py-1 d-flex align-items-center like-btn" data-form-id="like-form-{{ $news->id }}" style="font-size: 13px; font-weight: 500; transition: all 0.2s ease;">
+                            <i class="{{ $hasLiked ? 'fas' : 'far' }} fa-thumbs-up me-1 like-icon"></i> <span class="like-count">{{ $news->likes()->count() }}</span>
+                        </button>
+                    </form>
                 </div>
 
                 <!-- Featured Image -->
@@ -53,7 +63,7 @@
                                     alt="Additional image {{ $index + 1 }}"
                                     style="height: 180px; object-fit: cover; cursor: pointer; transition: all 0.3s ease;"
                                     data-bs-toggle="modal" data-bs-target="#imageGalleryModal"
-                                    onclick="openGallery({{ $index }})">
+                                    onclick="openGallery('{{ $index }}')">
                                 <div class="gallery-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
                                     style="background: rgba(0,0,0,0.5); opacity: 0; transition: opacity 0.3s ease;">
                                     <i class="fas fa-search-plus text-white fs-3"></i>
@@ -93,7 +103,7 @@
                                         <img src="{{ asset('storage/images/' . $thumbImage) }}"
                                             class="thumbnail-img rounded border border-2"
                                             style="width: 60px; height: 60px; object-fit: cover; cursor: pointer; opacity: 0.7; transition: all 0.3s ease;"
-                                            onclick="showImage({{ $thumbIndex }})">
+                                            onclick="showImage('{{ $thumbIndex }}')">
                                         @endforeach
                                     </div>
                                 </div>
@@ -102,24 +112,25 @@
                     </div>
                 </div>
 
+                <script id="news-images-data" type="application/json">
+                    @json(array_map(function($img) { return asset('storage/images/'.$img); }, $news->images))
+                </script>
                 <script>
                     let currentImageIndex = 0;
-                    const images = @json(array_map(function($img) {
-                        return asset('storage/images/'.$img);
-                    }, $news->images));
+                    const images = JSON.parse(document.getElementById('news-images-data').textContent);
                     const totalImages = images.length;
 
                     function openGallery(index) {
-                        currentImageIndex = index;
-                        showImage(index);
+                        currentImageIndex = Number(index);
+                        showImage(currentImageIndex);
                     }
 
                     function showImage(index) {
-                        currentImageIndex = index;
-                        document.getElementById('modalMainImage').src = images[index];
-                        document.getElementById('modalImageCounter').textContent = `${index + 1} of ${totalImages}`;
+                        currentImageIndex = Number(index);
+                        document.getElementById('modalMainImage').src = images[currentImageIndex];
+                        document.getElementById('modalImageCounter').textContent = `${currentImageIndex + 1} of ${totalImages}`;
                         document.querySelectorAll('.thumbnail-img').forEach((thumb, i) => {
-                            thumb.classList.toggle('active', i === index);
+                            thumb.classList.toggle('active', i === currentImageIndex);
                         });
                     }
 
@@ -773,4 +784,59 @@
         border-color: #333;
     }
 </style>
+
+<script>
+document.addEventListener('turbo:load', function() {
+    const likeBtns = document.querySelectorAll('.like-btn');
+    
+    likeBtns.forEach(btn => {
+        // Remove previous event listeners if turbo caches the page
+        const newBtn = btn.cloneNode(true);
+        btn.parentNode.replaceChild(newBtn, btn);
+        
+        newBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const formId = this.getAttribute('data-form-id');
+            const form = document.getElementById(formId);
+            const url = form.action;
+            const token = form.querySelector('input[name="_token"]').value;
+            
+            const icon = this.querySelector('.like-icon');
+            const countSpan = this.querySelector('.like-count');
+            
+            // Simple click animation
+            this.style.transform = 'scale(0.9)';
+            setTimeout(() => this.style.transform = 'scale(1)', 150);
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': token,
+                    'Accept': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success) {
+                    countSpan.textContent = data.likes;
+                    if(data.has_liked) {
+                        this.classList.remove('btn-outline-primary');
+                        this.classList.add('btn-primary', 'text-white');
+                        icon.classList.remove('far');
+                        icon.classList.add('fas');
+                    } else {
+                        this.classList.remove('btn-primary', 'text-white');
+                        this.classList.add('btn-outline-primary');
+                        icon.classList.remove('fas');
+                        icon.classList.add('far');
+                    }
+                }
+            })
+            .catch(err => console.error('Error:', err));
+        });
+    });
+});
+</script>
 @endsection

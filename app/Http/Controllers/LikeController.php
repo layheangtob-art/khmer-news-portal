@@ -22,10 +22,20 @@ class LikeController extends Controller
 
         if ($like) {
             $like->delete();
+            $hasLiked = false;
         } else {
             Like::create([
                 'device_id' => $deviceId,
                 'news_id' => $news->id,
+            ]);
+            $hasLiked = true;
+        }
+
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'likes' => $news->likes()->count(),
+                'has_liked' => $hasLiked,
             ]);
         }
 
