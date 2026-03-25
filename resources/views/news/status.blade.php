@@ -92,8 +92,10 @@
 
 @section('custom-footer')
     <script>
-        $(document).on('turbo:load', function() {
-            $("#basic-datatables").DataTable({});
+        $(document).ready(function() {
+            $("#basic-datatables").DataTable({
+                destroy: true
+            });
         });
     </script>
 @endsection

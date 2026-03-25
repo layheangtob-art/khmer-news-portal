@@ -38,13 +38,13 @@ class NewsController extends Controller
         $categoriesWithNews = Category::whereHas('news', function ($query) {
             $query->where('status', 'Accept');
         })
-        ->with(['news' => function ($query) {
-            $query->where('status', 'Accept')->latest();
-        }])
-        ->get();
+            ->with(['news' => function ($query) {
+                $query->where('status', 'Accept')->latest();
+            }])
+            ->get();
 
         // Limit news per category manually to avoid SQL issues with limit in eager load
-        $categoriesWithNews->each(function($category) {
+        $categoriesWithNews->each(function ($category) {
             $category->setRelation('news', $category->news->take(6));
         });
 
@@ -322,13 +322,27 @@ class NewsController extends Controller
 
             event(new NewsCreated($news));
 
-            // Redirect based on user role
-            if (Auth::user()->hasRole('Super Admin')) {
-                return redirect()->route('admin.news.manage')->with('success', 'News updated successfully.');
-            } else {
-                return redirect()->route('news.draft')->with('success', 'News updated successfully.');
+            $redirectUrl = Auth::user()->hasRole('Super Admin')
+                ? route('admin.news.manage')
+                : route('news.draft');
+
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'News updated successfully.',
+                    'redirect_url' => $redirectUrl
+                ]);
             }
+
+            return redirect($redirectUrl)->with('success', 'News updated successfully.');
         } catch (\Exception $e) {
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Failed to update news: ' . $e->getMessage()
+                ], 400);
+            }
+
             return redirect()->back()
                 ->with('error', 'Failed to update news: ' . $e->getMessage())
                 ->withInput();
@@ -428,14 +442,14 @@ class NewsController extends Controller
             ]);
         }
 
-         // Trim and clean the query
+        // Trim and clean the query
         $query = trim($query);
 
         // Search strategy: Prioritize title matches, then content matches
         $titleMatches = News::where('status', 'Accept')
-            ->where(function($q) use ($query) {
+            ->where(function ($q) use ($query) {
                 $q->where('title', 'LIKE', '%' . $query . '%')
-                  ->orWhereRaw('BINARY title LIKE ?', ['%' . $query . '%']);
+                    ->orWhereRaw('BINARY title LIKE ?', ['%' . $query . '%']);
             })
             ->with(['category', 'author'])
             ->orderBy('created_at', 'desc')
@@ -445,9 +459,9 @@ class NewsController extends Controller
         $contentMatches = collect();
         if ($titleMatches->isEmpty()) {
             $contentMatches = News::where('status', 'Accept')
-                ->where(function($q) use ($query) {
+                ->where(function ($q) use ($query) {
                     $q->where('content', 'LIKE', '%' . $query . '%')
-                      ->orWhereRaw('BINARY content LIKE ?', ['%' . $query . '%']);
+                        ->orWhereRaw('BINARY content LIKE ?', ['%' . $query . '%']);
                 })
                 ->with(['category', 'author'])
                 ->orderBy('created_at', 'desc')
@@ -458,7 +472,7 @@ class NewsController extends Controller
         // Combine results (title matches first)
         $news = $titleMatches->merge($contentMatches)->unique('id')->take(20);
 
-        $results = $news->map(function($item) use ($query, $titleMatches) {
+        $results = $news->map(function ($item) use ($query, $titleMatches) {
             // Highlight the search term in title for better UX
             $highlightedTitle = $this->highlightSearchTerm($item->title, $query);
 

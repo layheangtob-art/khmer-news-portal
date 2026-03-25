@@ -45,19 +45,6 @@
             background: #fff;
         }
 
-        #toolbar-container {
-            border: 1px solid #e0e0e0;
-            border-radius: 4px 4px 0 0;
-            background: #fafafa;
-        }
-
-        .editor-container {
-            border: 1px solid #e0e0e0;
-            border-top: none;
-            border-radius: 0 0 4px 4px;
-            background: #fff;
-        }
-
         #word-count {
             background: #f8f9fa;
             padding: 8px 15px;
@@ -116,15 +103,12 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="editor" class="editor-label">News Body</label>
-                                                <div id="toolbar-container"></div>
-                                                <div class="editor-container">
-                                                    <textarea
-                                                        class="form-control col-12"
-                                                        id="editor"
-                                                        name="content"
-                                                        style="border: none; outline: none;">
-                                                    </textarea>
-                                                </div>
+                                                <textarea
+                                                    class="form-control col-12"
+                                                    id="editor"
+                                                    name="content"
+                                                    style="border: none; outline: none;">
+                                                </textarea>
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label>Main Image</label>
@@ -240,7 +224,7 @@
             buttonsStyling: false,
             customClass: { confirmButton: 'btn btn-success' }
           });
-          const redirectUrl = (data && data.redirect_url) ? data.redirect_url : '{{ route('dashboard') }}';
+          const redirectUrl = (data && data.redirect_url) ? data.redirect_url : '{{ route('dashboard')}}';
           window.location.href = redirectUrl;
         } else {
           Swal.fire({

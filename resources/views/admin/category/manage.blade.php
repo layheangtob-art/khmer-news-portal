@@ -209,6 +209,7 @@
     <script>
         $("#add-row").DataTable({
             pageLength: 5,
+            destroy: true
         });
     </script>
 @endsection

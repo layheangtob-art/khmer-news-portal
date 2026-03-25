@@ -17,7 +17,7 @@
                     <div class="position-relative mb-5">
                         <div class="news-featured-image">
                             <img src="{{ $news->image ? asset('storage/images/' . $news->image) : asset('img/noimg.jpg') }}"
-                                class="img-fluid w-100 featured-news-img" alt="{{ $news->title }}" />
+                                class="img-fluid w-100 featured-news-img" alt="{{ $news->title }}" onerror="this.src='{{ asset('img/noimg.jpg') }}'" />
                             <!-- Additional images indicator for featured news -->
                             @if($news->images && count($news->images) > 0)
                                 <div class="position-absolute image-indicator text-white"
@@ -49,7 +49,7 @@
                                     <div class="col-md-4">
                                         <div class="position-relative h-100" style="min-height: 250px;">
                                             <img src="{{ $news->image ? asset('storage/images/' . $news->image) : asset('img/noimg.jpg') }}"
-                                                class="img-fluid w-100 h-100" alt="{{ $news->title }}" style="object-fit: cover;" />
+                                                class="img-fluid w-100 h-100" alt="{{ $news->title }}" style="object-fit: cover;" onerror="this.src='{{ asset('img/noimg.jpg') }}'" />
                                             <div class="position-absolute" style="top: 15px; left: 15px;">
                                                 <div class="d-flex">
                                                     <div class="flag-corner-blue"></div>
@@ -112,7 +112,7 @@
                             <div class="d-flex align-items-start mb-3 pb-3 border-bottom {{ $loop->last ? 'border-0 mb-0 pb-0' : '' }}">
                                 <div class="me-3">
                                    <img src="{{ $news->image ? asset('storage/images/' . $news->image) : asset('img/noimg.jpg') }}"
-                                        class="rounded" style="width: 80px; height: 60px; object-fit: cover;" alt="{{ $news->title }}">
+                                        class="rounded" style="width: 80px; height: 60px; object-fit: cover;" alt="{{ $news->title }}" onerror="this.src='{{ asset('img/noimg.jpg') }}'">
                                 </div>
                                 <div class="flex-grow-1">
                                     <a href="{{ route('news.show', $news->id) }}" class="text-decoration-none">

@@ -8,6 +8,7 @@
     <link href="{{ asset('loginForm/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('loginForm/css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('loginForm/css/style.css') }}" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ asset('img/logo_for_header_2.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">

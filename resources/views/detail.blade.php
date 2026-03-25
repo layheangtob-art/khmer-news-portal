@@ -362,6 +362,21 @@
         font-family: 'Kantumruy Pro', sans-serif;
     }
 
+    .magnews-article-content img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+    .magnews-article-content figure.image {
+        max-width: 100%;
+        margin: 1em auto;
+    }
+
+    .magnews-article-content figure.media, 
+    .magnews-article-content iframe {
+        max-width: 100%;
+    }
+
     .magnews-tags-section {
         padding: 20px 0;
         border-top: 1px solid #e0e0e0;

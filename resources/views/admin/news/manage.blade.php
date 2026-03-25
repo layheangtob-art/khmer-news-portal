@@ -116,7 +116,9 @@
 @section('custom-footer')
 <script>
     $(document).ready(function() {
-        const table = $("#basic-datatables").DataTable({});
+        const table = $("#basic-datatables").DataTable({
+            destroy: true
+        });
 
         // Delete handler with SweetAlert confirmation and AJAX
         $(document).on('click', '.delete-news-btn', async function (e) {

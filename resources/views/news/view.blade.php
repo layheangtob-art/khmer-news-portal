@@ -66,6 +66,22 @@
                                     </div>
                                 </div>
                                 <div class="news-content-wrapper my-2">
+                                    <style>
+                                        .news-content-wrapper img {
+                                            max-width: 100% !important;
+                                            height: auto !important;
+                                        }
+                                        .news-content-wrapper figure.image {
+                                            max-width: 100%;
+                                            margin: 1em auto;
+                                        }
+                                        .news-content-wrapper figure.media {
+                                            max-width: 100%;
+                                        }
+                                        .news-content-wrapper iframe {
+                                            max-width: 100%;
+                                        }
+                                    </style>
                                     {!! $news->content !!}
                                 </div>
                                 <div class="card-footer">

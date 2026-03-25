@@ -164,7 +164,9 @@
 @section('custom-footer')
     <script>
         $(document).ready(function() {
-            $("#basic-datatables").DataTable({});
+            $("#basic-datatables").DataTable({
+                destroy: true
+            });
         });
     </script>
 @endsection

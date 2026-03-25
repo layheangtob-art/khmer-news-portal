@@ -50,9 +50,13 @@
     <link rel="stylesheet" href="{{ asset('css/mobile-menu.css') }}">
     <link rel="stylesheet" href="{{ asset('css/modern-style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/category-nav.css') }}">
+
     <link rel="stylesheet" href="{{ asset('css/ckeditor-content.css') }}">
+    
     <link rel="stylesheet" href="{{ asset('css/magnews-style.css') }}">
     <script src="https://unpkg.com/@hotwired/turbo@8.0.0/dist/turbo.es2017-umd.js"></script>
+
+    <!-- it make for not relaod page -->
     <script>
         document.addEventListener('turbo:load', function() {
             if (typeof jQuery !== 'undefined') {
@@ -60,6 +64,7 @@
             }
         });
     </script>
+
     <style>
         body,
         h1,

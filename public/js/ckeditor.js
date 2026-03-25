@@ -1,5 +1,5 @@
 import {
-    DecoupledEditor,
+    ClassicEditor,
     Essentials,
     Bold,
     Italic,
@@ -31,39 +31,35 @@ import {
 let editor;
 let previousEditorContent;
 
-document.addEventListener('DOMContentLoaded', () => {
-    const initialContent = document.querySelector('#contentInput')?.value ?? '';
+function initCKEditor() {
     const editorElement = document.querySelector('#editor');
     if (!editorElement) return;
 
-DecoupledEditor
+    if (editorElement.dataset.ckeditorInitialized === 'true') return;
+    editorElement.dataset.ckeditorInitialized = 'true';
+
+    // Use the textarea's own value as the initial content
+    const initialContent = editorElement.value || '';
+
+ClassicEditor
     .create(editorElement, {
         plugins: [
             Essentials,
-            // Text styles
             Bold, Italic, Underline, Strikethrough, Code, Subscript, Superscript,
-            // Fonts
             Font,
-            // Structure
             Paragraph, Heading, List, Indent, IndentBlock, HorizontalLine, BlockQuote,
-            // Links & media
             Link,
             Table, TableToolbar,
             Image, ImageToolbar, ImageCaption, ImageStyle, ImageUpload,
             MediaEmbed,
-            // Utilities
             FindAndReplace
         ],
         toolbar: {
             items: [
                 'heading', '|',
-                'bold', 'italic', 'underline', 'strikethrough', 'code', 'subscript', 'superscript', '|',
-                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', '|',
-                'bulletedList', 'numberedList', '|', 'outdent', 'indent', '|',
-                'horizontalLine', 'blockQuote', '|',
-                'link', 'insertTable', 'imageUpload', 'mediaEmbed', '|',
-                'findAndReplace', '|',
-                'undo', 'redo'
+                'bold', 'italic', 'strikethrough', '|',
+                'bulletedList', 'numberedList', '|',
+                'imageUpload', 'link', 'blockQuote'
             ]
         },
         image: {
@@ -87,10 +83,7 @@ DecoupledEditor
             return new CustomUploadAdapter(loader);
         };
         
-        const toolbarContainer = document.querySelector('#toolbar-container');
-        if (toolbarContainer) {
-            toolbarContainer.appendChild(editor.ui.view.toolbar.element);
-        }
+        // Wait, nothing to do for ClassicEditor toolbar
         editor.setData(initialContent);
         previousEditorContent = editor.getData();
 
@@ -162,7 +155,15 @@ DecoupledEditor
     .catch(error => {
         console.error('Error initializing CKEditor:', error);
     });
-});
+}
+
+document.addEventListener('DOMContentLoaded', initCKEditor);
+document.addEventListener('turbo:load', initCKEditor);
+document.addEventListener('turbo:render', initCKEditor);
+
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    setTimeout(initCKEditor, 10);
+}
 
 function showDiscardConfirmation(form) {
     Swal.fire({

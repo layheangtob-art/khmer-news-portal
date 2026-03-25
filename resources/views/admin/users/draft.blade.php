@@ -179,11 +179,11 @@
 @section('custom-footer')
     <script>
         $(document).ready(function() {
-            $("#basic-datatables").DataTable({});
+            $("#basic-datatables").DataTable({ destroy: true });
         });
 
         $(document).ready(function() {
-            $("#basic-datatables2").DataTable({});
+            $("#basic-datatables2").DataTable({ destroy: true });
         });
     </script>
 @endsection
