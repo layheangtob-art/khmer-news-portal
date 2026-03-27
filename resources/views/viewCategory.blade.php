@@ -80,9 +80,18 @@
                                                 <i class="fa fa-eye"></i>
                                                 <span>{{ $news->views }}</span>
                                             </div>
-                                            <div>
-                                                <i class="fa fa-thumbs-up"></i>
-                                                <span>{{ $news->likes->count() }}</span>
+                                            @php
+                                                $deviceId = session('device_id');
+                                                $hasLiked = $deviceId ? $news->likes()->where('device_id', $deviceId)->exists() : false;
+                                            @endphp
+                                            <div class="d-flex">
+                                                <form action="{{ route('news.like', $news->id) }}" method="POST" class="d-inline m-0 p-0" id="list-like-form-{{ $news->id }}">
+                                                    @csrf
+                                                    <button type="button" class="btn btn-link p-0 text-decoration-none like-btn d-flex align-items-center" data-form-id="list-like-form-{{ $news->id }}" style="color: inherit;">
+                                                        <i class="{{ $hasLiked ? 'fas text-primary' : 'far text-muted' }} fa-thumbs-up me-1 like-icon"></i>
+                                                        <span class="like-count">{{ $news->likes()->count() }}</span>
+                                                    </button>
+                                                </form>
                                             </div>
                                             @if($news->images && count($news->images) > 0)
                                             <div>

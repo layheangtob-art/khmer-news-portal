@@ -785,58 +785,5 @@
     }
 </style>
 
-<script>
-document.addEventListener('turbo:load', function() {
-    const likeBtns = document.querySelectorAll('.like-btn');
-    
-    likeBtns.forEach(btn => {
-        // Remove previous event listeners if turbo caches the page
-        const newBtn = btn.cloneNode(true);
-        btn.parentNode.replaceChild(newBtn, btn);
-        
-        newBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            const formId = this.getAttribute('data-form-id');
-            const form = document.getElementById(formId);
-            const url = form.action;
-            const token = form.querySelector('input[name="_token"]').value;
-            
-            const icon = this.querySelector('.like-icon');
-            const countSpan = this.querySelector('.like-count');
-            
-            // Simple click animation
-            this.style.transform = 'scale(0.9)';
-            setTimeout(() => this.style.transform = 'scale(1)', 150);
 
-            fetch(url, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': token,
-                    'Accept': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if(data.success) {
-                    countSpan.textContent = data.likes;
-                    if(data.has_liked) {
-                        this.classList.remove('btn-outline-primary');
-                        this.classList.add('btn-primary', 'text-white');
-                        icon.classList.remove('far');
-                        icon.classList.add('fas');
-                    } else {
-                        this.classList.remove('btn-primary', 'text-white');
-                        this.classList.add('btn-outline-primary');
-                        icon.classList.remove('fas');
-                        icon.classList.add('far');
-                    }
-                }
-            })
-            .catch(err => console.error('Error:', err));
-        });
-    });
-});
-</script>
 @endsection

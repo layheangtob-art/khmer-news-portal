@@ -52,7 +52,7 @@
     <link rel="stylesheet" href="{{ asset('css/category-nav.css') }}">
 
     <link rel="stylesheet" href="{{ asset('css/ckeditor-content.css') }}">
-    
+
     <link rel="stylesheet" href="{{ asset('css/magnews-style.css') }}">
     <script src="https://unpkg.com/@hotwired/turbo@8.0.0/dist/turbo.es2017-umd.js"></script>
 
@@ -240,8 +240,7 @@
                             id="navbarSearchForm">
                             <div class="magnews-search-wrapper">
                                 <input type="text" class="magnews-search-input" name="q"
-                                    id="navbarSearchInput" placeholder="Search" autocomplete="off"
-                                    data-bs-target="#searchModal">
+                                    id="navbarSearchInput" placeholder="Search" autocomplete="off">
                                 <button type="button" class="magnews-search-icon-btn" id="navbarSearchIcon">
                                     <i class="fas fa-search magnews-search-icon"></i>
                                 </button>
@@ -326,81 +325,7 @@
     </div>
     <!-- Mobile Menu End -->
 
-    <!-- Modal Search Start -->
-    <div class="modal fade" id="searchModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen m-0">
-            <div class="modal-content rounded-0 bg-transparent border-0">
-                <div class="modal-body p-0">
-                    <!-- Search bar in header style -->
-                    <div class="magnews-search-modal-header w-100" style="padding: 15px 0;">
-                        <div class="container">
-                            <div class="row align-items-center">
-                                <div class="col-12">
-                                    <div class="d-flex align-items-center gap-3">
-                                        <!-- Logo/Brand -->
-                                        <div class="text-white fw-bold">ព័ត៏មាន</div>
-
-                                        <!-- Search Input -->
-                                        <div class="flex-grow-1 position-relative">
-                                            <input type="search" id="searchInput"
-                                                class="form-control border-0 ps-4 pe-5 py-2"
-                                                placeholder="ស្វែងរកព័ត៌មាន..." style="border-radius: 25px;"
-                                                autofocus />
-                                            <span class="position-absolute end-0 top-50 translate-middle-y pe-3">
-                                                <i class="fa fa-search text-muted"></i>
-                                            </span>
-                                        </div>
-
-                                        <!-- Close Button -->
-                                        <button type="button" class="search-modal-close-btn" data-bs-dismiss="modal"
-                                            aria-label="Close">
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Search Results Area -->
-                    <div class="bg-white" style="min-height: calc(100vh - 80px);">
-                        <div class="container py-4">
-                            <!-- Loading indicator -->
-                            <div id="searchLoading" class="text-center d-none">
-                                <div class="spinner-border text-primary" role="status">
-                                    <span class="visually-hidden">Loading...</span>
-                                </div>
-                                <p class="mt-2 text-muted">កំពុងស្វែងរក...</p>
-                            </div>
-
-                            <!-- Default message -->
-                            <div id="searchDefault" class="text-center">
-                                <i class="fas fa-search fa-3x text-muted mb-3"></i>
-                                <p class="text-muted">បញ្ចូលពាក្យគន្លឹះដើម្បីស្វែងរកព័ត៌មាន...</p>
-                            </div>
-
-                            <!-- Search results -->
-                            <div id="searchResults" class="d-none">
-                                <div id="searchResultsHeader" class="mb-4">
-                                    <h5 class="text-primary">លទ្ធផលស្វែងរក</h5>
-                                    <p id="searchResultsCount" class="text-muted mb-0"></p>
-                                </div>
-                                <div id="searchResultsList" class="row g-4"></div>
-                            </div>
-
-                            <!-- No results message -->
-                            <div id="noResults" class="text-center d-none">
-                                <i class="fas fa-search fa-3x text-muted mb-3"></i>
-                                <p class="text-muted">រកមិនឃើញព័ត៌មានដែលត្រូវនឹងការស្វែងរករបស់អ្នក</p>
-                                <p class="text-muted">សូមព្យាយាមប្រើពាក្យគន្លឹះផ្សេង</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modal Search End -->
+    <!-- Modal Search Removed -->
 
     @yield('content')
 
@@ -505,7 +430,8 @@
     {{-- Custom JS --}}
     <script src="{{ asset('js/shortcut.js') }}"></script>
     <script src="{{ asset('js/back-to-top.js') }}"></script>
-    <script src="{{ asset('js/search.js') }}"></script>
+    <script src="{{ asset('js/like.js') }}"></script>
+
 
     {{-- Navbar Search Functionality --}}
     <script>
@@ -513,7 +439,6 @@
             const navbarSearchInput = document.getElementById('navbarSearchInput');
             const navbarSearchForm = document.getElementById('navbarSearchForm');
             const navbarSearchIcon = document.getElementById('navbarSearchIcon');
-            let isModalOpening = false;
 
             // Handle Enter key press
             if (navbarSearchInput) {
@@ -527,23 +452,6 @@
                         }
                     }
                 });
-
-                // Handle click on input - open modal if empty, otherwise allow typing
-                navbarSearchInput.addEventListener('click', function(e) {
-                    const query = this.value.trim();
-                    if (query === '') {
-                        // If empty, open modal
-                        isModalOpening = true;
-                        setTimeout(function() {
-                            isModalOpening = false;
-                        }, 300);
-                    }
-                });
-
-                // Handle focus - allow typing
-                navbarSearchInput.addEventListener('focus', function() {
-                    this.removeAttribute('readonly');
-                });
             }
 
             // Handle search icon click
@@ -556,25 +464,13 @@
                         // Submit form if there's a query
                         navbarSearchForm.submit();
                     } else {
-                        // Open modal if empty
-                        const modal = new bootstrap.Modal(document.getElementById('searchModal'));
-                        modal.show();
+                        // Focus the input if empty
+                        navbarSearchInput.focus();
                     }
                 });
             }
-
-            // Prevent form submission when clicking input (to allow modal opening)
-            if (navbarSearchForm) {
-                navbarSearchForm.addEventListener('submit', function(e) {
-                    const query = navbarSearchInput.value.trim();
-                    if (query === '' && !isModalOpening) {
-                        e.preventDefault();
-                        // Open modal if empty
-                        const modal = new bootstrap.Modal(document.getElementById('searchModal'));
-                        modal.show();
-                    }
-                });
-            }
+            
+            // Allow native form submission if users press enter or use mobile keypad enter
         });
     </script>
 
@@ -584,7 +480,6 @@
             const mobileMenuToggle = document.getElementById('mobileMenuToggle');
             const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
             const mobileMenuClose = document.getElementById('mobileMenuClose');
-            const mobileSearchInput = document.getElementById('mobileSearchInput');
 
             // Open mobile menu
             if (mobileMenuToggle) {
@@ -610,19 +505,6 @@
                     closeMobileMenu();
                 }
             });
-
-            // Mobile search functionality - open search modal
-            if (mobileSearchInput) {
-                mobileSearchInput.addEventListener('focus', function() {
-                    closeMobileMenu();
-                    setTimeout(function() {
-                        const searchModal = new bootstrap.Modal(document.getElementById(
-                            'searchModal'));
-                        searchModal.show();
-                        document.getElementById('searchInput').focus();
-                    }, 300);
-                });
-            }
 
             // Close menu on escape key
             document.addEventListener('keydown', function(e) {
