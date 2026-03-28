@@ -4,6 +4,47 @@ body {
     font-family: 'Kantumruy Pro', sans-serif;
 }
 
+body.dark-mode .shadow-sm {
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,0.5) !important;
+}
+
+/* Pagination Dark Mode Support */
+body.dark-mode .pagination .page-link {
+    background-color: #1a1a1a !important;
+    border-color: #333 !important;
+    color: #e5e7eb !important;
+}
+
+body.dark-mode .pagination .page-link:hover {
+    background-color: #2a2a2a !important;
+    border-color: #444 !important;
+    color: #4CAF50 !important;
+}
+
+body.dark-mode .pagination .page-item.active .page-link {
+    background-color: #e2162d !important;
+    border-color: #ff0000 !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode .pagination .page-item.disabled .page-link {
+    background-color: #0a0a0a !important;
+    border-color: #222 !important;
+    color: #666 !important;
+}
+
+/* Pagination Info Text (Showing X to Y of Z) */
+body.dark-mode .pagination-info,
+body.dark-mode .text-muted,
+body.dark-mode p.text-muted,
+body.dark-mode div.text-muted,
+body.dark-mode .small.text-muted,
+body.dark-mode p.text-sm.text-gray-700,
+body.dark-mode span.font-medium,
+body.dark-mode span.fw-semibold {
+    color: #9ca3af !important;
+}
+
 /* Top Dark Bar */
 .magnews-topbar {
     background-color: #1a1a1a;
@@ -36,7 +77,7 @@ body {
 }
 
 .magnews-topbar-link:hover {
-    color: #4CAF50;
+    color: #e2162d;
 }
 
 .magnews-social-icons {
@@ -89,9 +130,9 @@ body {
     letter-spacing: -1px;
 }
 
-.magnews-logo-mag {
+/* .magnews-logo-mag {
     color: #4CAF50;
-}
+} */
 
 .magnews-logo-news {
     color: #000000;
