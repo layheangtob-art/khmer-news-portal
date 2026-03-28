@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,5 +27,6 @@ class AppServiceProvider extends ServiceProvider
         if (class_exists(\Barryvdh\Debugbar\Facades\Debugbar::class)) {
             Debugbar::disable();
         }
+        Paginator::useBootstrapFive();
     }
 }

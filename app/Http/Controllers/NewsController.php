@@ -11,7 +11,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
-
+use Google\Cloud\TextToSpeech\V1\Client\TextToSpeechClient;
+use Google\Cloud\TextToSpeech\V1\SynthesisInput;
+use Google\Cloud\TextToSpeech\V1\VoiceSelectionParams;
+use Google\Cloud\TextToSpeech\V1\AudioConfig;
+use Google\Cloud\TextToSpeech\V1\AudioEncoding;
+use Google\Cloud\TextToSpeech\V1\SynthesizeSpeechRequest;
 class NewsController extends Controller
 {
     /**
@@ -189,14 +194,57 @@ class NewsController extends Controller
                 }
             }
 
+            $audioFileName = null;
+            try {
+                $credentialsPath = storage_path('app/google-credentials.json');
+                
+                if (!file_exists($credentialsPath)) {
+                    throw new \Exception('Google Cloud credentials file not found. Please place your service account JSON file at: ' . $credentialsPath);
+                }
+
+                $textToSpeechContent = $request->title . ".\n\n" . strip_tags($request->input('content'));
+                $textToSpeechContent = Str::limit($textToSpeechContent, 4000, '');
+
+                $textToSpeechClient = new TextToSpeechClient([
+                    'credentials' => $credentialsPath
+                ]);
+                
+                $input = (new SynthesisInput())
+                    ->setText($textToSpeechContent);
+                
+                $voice = (new VoiceSelectionParams())
+                    ->setLanguageCode('km-KH')
+                    ->setName('km-KH-Standard-A');
+                
+                $audioConfig = (new AudioConfig())
+                    ->setAudioEncoding(AudioEncoding::MP3);
+                
+                $synthRequest = new SynthesizeSpeechRequest([
+                    'input' => $input,
+                    'voice' => $voice,
+                    'audio_config' => $audioConfig
+                ]);
+
+                $response = $textToSpeechClient->synthesizeSpeech($synthRequest);
+                $audioContent = $response->getAudioContent();
+                
+                $audioFileName = 'audio_' . time() . '_' . uniqid() . '.mp3';
+                Storage::put('public/audio/' . $audioFileName, $audioContent);
+                
+                $textToSpeechClient->close();
+            } catch (\Exception $e) {
+                \Illuminate\Support\Facades\Log::error('TTS Error: ' . $e->getMessage());
+            }
+
             $news = News::create([
                 'title' => $request->title,
-                'content' => $request->content,
+                'content' => $request->input('content'),
                 'user_id' => Auth::id(),
                 'category_id' => $request->category_id,
                 'image' => $imageHashName,
                 'images' => !empty($additionalImages) ? $additionalImages : null,
                 'is_pinned' => $request->has('is_pinned') ? true : false,
+                'audio' => $audioFileName,
             ]);
 
             event(new NewsCreated($news));
@@ -278,7 +326,7 @@ class NewsController extends Controller
 
             $data = [
                 'title' => $request->title,
-                'content' => $request->content,
+                'content' => $request->input('content'),
                 'user_id' => Auth::id(),
                 'category_id' => $request->category_id,
                 'is_pinned' => $request->has('is_pinned') ? true : false,
@@ -316,6 +364,53 @@ class NewsController extends Controller
                 }
 
                 $data['images'] = !empty($additionalImages) ? $additionalImages : null;
+            }
+
+            try {
+                $credentialsPath = storage_path('app/google-credentials.json');
+                
+                if (!file_exists($credentialsPath)) {
+                    throw new \Exception('Google Cloud credentials file not found. Please place your service account JSON file at: ' . $credentialsPath);
+                }
+
+                $textToSpeechContent = $request->title . ".\n\n" . strip_tags($request->input('content'));
+                $textToSpeechContent = Str::limit($textToSpeechContent, 4000, '');
+
+                $textToSpeechClient = new TextToSpeechClient([
+                    'credentials' => $credentialsPath
+                ]);
+                
+                $input = (new SynthesisInput())
+                    ->setText($textToSpeechContent);
+                
+                $voice = (new VoiceSelectionParams())
+                    ->setLanguageCode('km-KH')
+                    ->setName('km-KH-Standard-A');
+                
+                $audioConfig = (new AudioConfig())
+                    ->setAudioEncoding(AudioEncoding::MP3);
+                
+                $synthRequest = new SynthesizeSpeechRequest([
+                    'input' => $input,
+                    'voice' => $voice,
+                    'audio_config' => $audioConfig
+                ]);
+
+                $response = $textToSpeechClient->synthesizeSpeech($synthRequest);
+                $audioContent = $response->getAudioContent();
+                
+                // Delete old audio if it exists
+                if ($news->audio) {
+                    Storage::delete('public/audio/' . $news->audio);
+                }
+
+                $audioFileName = 'audio_' . time() . '_' . uniqid() . '.mp3';
+                Storage::put('public/audio/' . $audioFileName, $audioContent);
+                $data['audio'] = $audioFileName;
+                
+                $textToSpeechClient->close();
+            } catch (\Exception $e) {
+                \Illuminate\Support\Facades\Log::error('TTS Error during update: ' . $e->getMessage());
             }
 
             $news->update($data);

@@ -65,6 +65,20 @@
                                         {{ $news->category->name }}
                                     </div>
                                 </div>
+                                @if($news->audio)
+                                <div class="magnews-audio-player my-4 d-flex align-items-center bg-light p-3 rounded shadow-sm border">
+                                    <div class="me-3 text-danger">
+                                        <i class="fas fa-volume-up fs-4"></i>
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <p class="mb-1 fw-bold" style="font-size: 14px; color: #333; font-family: 'Kantumruy Pro', sans-serif;">ស្តាប់អត្ថបទព័ត៌មាននេះ</p>
+                                        <audio controls class="w-100 mt-1" style="height: 36px; border-radius: 4px;">
+                                            <source src="{{ asset('storage/audio/' . $news->audio) }}" type="audio/mpeg">
+                                            Your browser does not support the audio element.
+                                        </audio>
+                                    </div>
+                                </div>
+                                @endif
                                 <div class="news-content-wrapper my-2">
                                     <style>
                                         .news-content-wrapper img {
