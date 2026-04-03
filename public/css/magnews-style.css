@@ -5,7 +5,7 @@ body {
 }
 
 body.dark-mode .shadow-sm {
-    box-shadow: 0 .125rem .25rem rgba(0,0,0,0.5) !important;
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, 0.5) !important;
 }
 
 /* Pagination Dark Mode Support */
@@ -282,6 +282,7 @@ body.dark-mode span.fw-semibold {
     0% {
         transform: translateX(0);
     }
+
     100% {
         transform: translateX(-50%);
     }
@@ -301,19 +302,19 @@ body.dark-mode .ticker-item {
     .magnews-breaking-news {
         height: 35px;
     }
-    
+
     .breaking-title {
         padding: 0 10px;
         font-size: 12px;
     }
-    
+
     .breaking-title::after {
         right: -10px;
         border-left-width: 10px;
         border-top-width: 17.5px;
         border-bottom-width: 17.5px;
     }
-    
+
     .ticker-item {
         padding: 0 10px;
         font-size: 12px;
@@ -325,24 +326,24 @@ body.dark-mode .ticker-item {
         height: 32px;
         margin-bottom: 15px;
     }
-    
+
     .breaking-title {
         padding: 0 8px;
         font-size: 11px;
     }
-    
+
     .breaking-title::after {
         right: -8px;
         border-left-width: 8px;
         border-top-width: 16px;
         border-bottom-width: 16px;
     }
-    
+
     .ticker-item {
         padding: 0 8px;
         font-size: 11px;
     }
-    
+
     .breaking-ticker {
         padding-left: 10px;
     }
@@ -351,21 +352,42 @@ body.dark-mode .ticker-item {
 
 .magnews-ad-banner {
     display: flex;
-    justify-content: flex-end;
+    flex-direction: column;
     align-items: center;
-    min-height: 100px;
+    gap: 15px;
     width: 100%;
 }
 
 .magnews-ad-banner img {
-    max-width: 728px;
+    max-width: 100%;
+    width: auto;
     height: auto;
+    max-height: 120px;
+    object-fit: contain;
+    border-radius: 4px;
+    transition: transform 0.3s ease;
 }
 
-@media (max-width: 1440px) {
+.magnews-ad-banner img:hover {
+    transform: scale(1.02);
+}
+
+@media (max-width: 1200px) {
     .magnews-ad-banner img {
-        max-width: 100%;
+        max-height: 100px;
     }
+}
+
+@media (max-width: 991px) {
+    .magnews-ad-banner img {
+        max-height: 80px;
+    }
+}
+
+.magnews-ad-link {
+    display: block;
+    width: 100%;
+    text-align: center;
 }
 
 .magnews-ad-placeholder {
@@ -405,8 +427,9 @@ body.dark-mode .ticker-item {
 
 .magnews-mobile-ad-inner {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    gap: 10px;
     min-height: 60px;
 }
 
@@ -417,10 +440,13 @@ body.dark-mode .ticker-item {
 }
 
 .magnews-mobile-ad-img {
-    width: 100%;
+    max-width: 100%;
+    width: auto;
+    height: auto;
     max-height: 80px;
     object-fit: contain;
-    display: block;
+    display: inline-block;
+    border-radius: 4px;
 }
 
 .magnews-mobile-ad-placeholder {
@@ -463,14 +489,15 @@ body.dark-mode .ticker-item {
 .magnews-navbar {
     background-color: #ffffff;
     border-bottom: 1px solid #e0e0e0;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     z-index: 1000;
 }
 
 .magnews-navbar .navbar-collapse {
     display: flex;
     flex-wrap: nowrap;
-    overflow: hidden; /* Prevent outer scroll */
+    overflow: hidden;
+    /* Prevent outer scroll */
     width: 100%;
 }
 
@@ -486,14 +513,19 @@ body.dark-mode .ticker-item {
     white-space: nowrap;
     flex-wrap: nowrap;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none;  /* IE 10+ */
-    flex-grow: 1; /* Take available space */
-    margin-right: 10px; /* Space before search bar */
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE 10+ */
+    flex-grow: 1;
+    /* Take available space */
+    margin-right: 10px;
+    /* Space before search bar */
 }
 
 .magnews-nav-menu::-webkit-scrollbar {
-    display: none; /* Chrome/Safari */
+    display: none;
+    /* Chrome/Safari */
 }
 
 .magnews-nav-menu .nav-item {
@@ -516,7 +548,7 @@ body.dark-mode .ticker-item {
 .magnews-nav-menu .nav-link:hover,
 .magnews-nav-menu .nav-link.active {
     color: #ff0000 !important;
-    background-color: #F2F2F2; 
+    background-color: #F2F2F2;
     border-bottom-color: transparent;
     border-radius: 5px;
 }
@@ -530,7 +562,7 @@ body.dark-mode .ticker-item {
     background-color: #ffffff;
     border: 1px solid #e0e0e0;
     border-radius: 4px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 10px 0;
     margin-top: 0;
     min-width: 200px;
@@ -568,11 +600,16 @@ body.dark-mode .ticker-item {
 .magnews-nav-right {
     display: flex;
     align-items: center;
-    flex-shrink: 0; /* Prevent shrinking */
-    margin-left: auto; /* Push to right */
-    background-color: #ffffff; /* Ensure background covers scrolling content if needed */
-    z-index: 2; /* Keep above scrolling content */
-    padding-left: 10px; /* Space from scrolling content */
+    flex-shrink: 0;
+    /* Prevent shrinking */
+    margin-left: auto;
+    /* Push to right */
+    background-color: #ffffff;
+    /* Ensure background covers scrolling content if needed */
+    z-index: 2;
+    /* Keep above scrolling content */
+    padding-left: 10px;
+    /* Space from scrolling content */
 }
 
 .magnews-search-form {
@@ -758,7 +795,7 @@ body.dark-mode .ticker-item {
 
 .magnews-footer-post-title:hover {
     color: #4CAF50;
-    
+
 }
 
 .magnews-footer-post-date {

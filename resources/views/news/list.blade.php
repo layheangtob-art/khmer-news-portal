@@ -1,26 +1,55 @@
 @extends('layouts.app')
 
 @section('content')
-    <!-- Banner Section -->
+    <!-- Banner Carousel Section -->
     @if(isset($listBanners) && $listBanners->count() > 0)
     <div class="container py-2 mb-3">
-        @foreach($listBanners->take(1) as $banner)
-            @if($banner->url)
-                <a href="{{ $banner->url }}" target="_blank" rel="noopener">
+        <div id="listBannerCarousel" class="carousel slide rounded overflow-hidden shadow-sm" data-bs-ride="carousel" data-bs-interval="2000">
+            {{-- Indicators --}}
+            @if($listBanners->count() > 1)
+            <div class="carousel-indicators">
+                @foreach($listBanners as $i => $banner)
+                <button type="button" data-bs-target="#listBannerCarousel" data-bs-slide-to="{{ $i }}"
+                    class="{{ $i === 0 ? 'active' : '' }}" aria-label="Banner {{ $i + 1 }}"></button>
+                @endforeach
+            </div>
+            @endif
+
+            {{-- Slides --}}
+            <div class="carousel-inner">
+                @foreach($listBanners as $i => $banner)
+                <div class="carousel-item {{ $i === 0 ? 'active' : '' }}">
+                    @if($banner->url)
+                    <a href="{{ $banner->url }}" target="_blank" rel="noopener">
+                        <img src="{{ asset('storage/banners/' . $banner->image) }}"
+                             alt="{{ $banner->title }}"
+                             class="d-block w-100 rounded"
+                             style="max-height: 200px; object-fit: cover;"
+                             onerror="this.closest('.carousel-item').style.display='none';">
+                    </a>
+                    @else
                     <img src="{{ asset('storage/banners/' . $banner->image) }}"
                          alt="{{ $banner->title }}"
-                         class="img-fluid w-100 rounded"
+                         class="d-block w-100 rounded"
                          style="max-height: 200px; object-fit: cover;"
-                         onerror="this.style.display='none';">
-                </a>
-            @else
-                <img src="{{ asset('storage/banners/' . $banner->image) }}"
-                     alt="{{ $banner->title }}"
-                     class="img-fluid w-100 rounded"
-                     style="max-height: 200px; object-fit: cover;"
-                     onerror="this.style.display='none';">
+                         onerror="this.closest('.carousel-item').style.display='none';">
+                    @endif
+                </div>
+                @endforeach
+            </div>
+
+            {{-- Prev/Next controls --}}
+            @if($listBanners->count() > 1)
+            <button class="carousel-control-prev" type="button" data-bs-target="#listBannerCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#listBannerCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
             @endif
-        @endforeach
+        </div>
     </div>
     @endif
 

@@ -97,20 +97,53 @@
     </div>
 </div>
 
-<!-- Middle Banner -->
+<!-- Middle Banner Carousel -->
 
-@if(isset($homeBanners) && $homeBanners->count() > 1)
-<div class="container mt-4">
-    <div class="rounded mb-3 overflow-hidden">
-        @foreach($homeBanners->slice(1, 1) as $banner)
-        @if($banner->url)
-        <a href="{{ $banner->url }}" target="_blank" rel="noopener">
-            <img src="{{ asset('storage/banners/' . $banner->image) }}" alt="{{ $banner->title }}" class="img-fluid w-100 responsive-home-banner">
-        </a>
-        @else
-        <img src="{{ asset('storage/banners/' . $banner->image) }}" alt="{{ $banner->title }}" class="img-fluid w-100 responsive-home-banner">
+@if(isset($homeBanners) && $homeBanners->count() > 0)
+<div class="container mt-4 mb-2">
+    <div id="homeBannerCarousel" class="carousel slide rounded overflow-hidden shadow-sm" data-bs-ride="carousel" data-bs-interval="2000">
+        {{-- Indicators --}}
+        @if($homeBanners->count() > 1)
+        <div class="carousel-indicators">
+            @foreach($homeBanners as $i => $banner)
+            <button type="button" data-bs-target="#homeBannerCarousel" data-bs-slide-to="{{ $i }}"
+                class="{{ $i === 0 ? 'active' : '' }}" aria-label="Banner {{ $i + 1 }}"></button>
+            @endforeach
+        </div>
         @endif
-        @endforeach
+
+        {{-- Slides --}}
+        <div class="carousel-inner">
+            @foreach($homeBanners as $i => $banner)
+            <div class="carousel-item {{ $i === 0 ? 'active' : '' }}">
+                @if($banner->url)
+                <a href="{{ $banner->url }}" target="_blank" rel="noopener">
+                    <img src="{{ asset('storage/banners/' . $banner->image) }}"
+                        alt="{{ $banner->title }}"
+                        class="d-block w-100 responsive-home-banner"
+                        onerror="this.closest('.carousel-item').style.display='none';">
+                </a>
+                @else
+                <img src="{{ asset('storage/banners/' . $banner->image) }}"
+                    alt="{{ $banner->title }}"
+                    class="d-block w-100 responsive-home-banner"
+                    onerror="this.closest('.carousel-item').style.display='none';">
+                @endif
+            </div>
+            @endforeach
+        </div>
+
+        {{-- Prev/Next controls --}}
+        @if($homeBanners->count() > 1)
+        <button class="carousel-control-prev" type="button" data-bs-target="#homeBannerCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#homeBannerCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+        @endif
     </div>
 </div>
 @endif

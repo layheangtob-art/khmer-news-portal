@@ -122,35 +122,11 @@
     <!-- Header Section with Logo and Ad -->
     <div class="magnews-header d-none d-md-block">
         <div class="container">
-            <div class="row align-items-center py-3">
-                <div class="col-md-4">
-                    <a href="{{ route('index') }}" class="magnews-logo">
+            <div class="row align-items-center">
+                <div class="col-12 text-center">
+                    <a href="{{ route('index') }}" class="magnews-logo ">
                         <img src="{{ asset('img/logo.png') }}" alt="KH News Logo" style="max-height: 100px;">
                     </a>
-                </div>
-                <div class="col-md-8 d-none d-md-block">
-                    <div class="magnews-ad-banner">
-                        @php
-                        $headerBanner = $homeBanners ?? $categoryBanners ?? $detailBanners ?? null;
-                        @endphp
-                        @if (isset($headerBanner) && $headerBanner->count() > 0)
-                        @foreach ($headerBanner->take(1) as $banner)
-                        @if ($banner->url)
-                        <a href="{{ $banner->url }}" target="_blank" rel="noopener">
-                            <img src="{{ asset('storage/banners/' . $banner->image) }}"
-                                alt="{{ $banner->title }}" class="img-fluid w-100"
-                                style="max-height: 100px; object-fit: cover;"
-                                onerror="this.style.display='none';">
-                        </a>
-                        @else
-                        <img src="{{ asset('storage/banners/' . $banner->image) }}"
-                            alt="{{ $banner->title }}" class="img-fluid w-100"
-                            style="max-height: 100px; object-fit: cover;"
-                            onerror="this.style.display='none';">
-                        @endif
-                        @endforeach
-                        @endif
-                    </div>
                 </div>
             </div>
         </div>
@@ -159,15 +135,9 @@
     <!-- Mobile Header Bar (Responsive) -->
     <div class="magnews-mobile-header d-md-none">
         <div class="container">
-            <div class="magnews-mobile-header-content">
-                <a href="{{ route('index') }}" class="magnews-mobile-logo">
-                    <img src="{{ asset('img/logo.png') }}" alt="KH News Logo" style="max-height: 50px;">
-                </a>
-                <div class="d-flex align-items-center gap-2">
-                    <button class="magnews-theme-toggle-btn" type="button" id="themeToggleButtonMobile"
-                        style="margin-left: 0;">
-                        <i class="fas fa-moon"></i>
-                    </button>
+            <div class="magnews-mobile-header-content d-flex align-items-center justify-content-between">
+                <!-- Hamburger Menu on Left -->
+                <div class="flex-grow-1 d-flex align-items-center">
                     <button class="magnews-mobile-menu-toggle" type="button" id="mobileMenuToggle"
                         aria-label="Toggle menu">
                         <span class="magnews-hamburger-icon">
@@ -175,6 +145,21 @@
                             <span></span>
                             <span></span>
                         </span>
+                    </button>
+                </div>
+
+                <!-- Logo in Middle -->
+                <div class="text-center">
+                    <a href="{{ route('index') }}" class="magnews-mobile-logo">
+                        <img src="{{ asset('img/logo.png') }}" alt="KH News Logo" style="max-height: 50px;">
+                    </a>
+                </div>
+
+                <!-- Theme Toggle on Right -->
+                <div class="flex-grow-1 d-flex align-items-center justify-content-end">
+                    <button class="magnews-theme-toggle-btn" type="button" id="themeToggleButtonMobile"
+                        style="margin-left: 0;">
+                        <i class="fas fa-moon"></i>
                     </button>
                 </div>
             </div>
@@ -188,11 +173,12 @@
     @if (isset($mobileHeaderBanner) && $mobileHeaderBanner->count() > 0)
     <div class="magnews-mobile-ad-banner d-md-none">
         <div class="container">
-            <div class="magnews-mobile-ad-inner">
-                @foreach ($mobileHeaderBanner->take(1) as $banner)
+            <div class="magnews-mobile-ad-inner d-flex flex-column gap-2">
+                @foreach($mobileHeaderBanner as $banner)
                 <a href="{{ $banner->url ?? '#' }}" class="magnews-mobile-ad-link" @if($banner->url) target="_blank" rel="noopener" @endif>
                     <img src="{{ asset('storage/banners/' . $banner->image) }}"
-                        alt="{{ $banner->title }}" class="magnews-mobile-ad-img"
+                        alt="{{ $banner->title }}" class="magnews-mobile-ad-img w-100"
+                        style="object-fit: contain; max-height: 80px;"
                         onerror="this.style.display='none';">
                 </a>
                 @endforeach
@@ -200,6 +186,7 @@
         </div>
     </div>
     @endif
+
 
     <!-- Main Navigation Bar -->
     <div class="magnews-navbar sticky-top d-none d-md-block">
@@ -286,6 +273,34 @@
         </div>
     </div>
     <!-- Breaking News End -->
+
+    <!-- Banner -->
+    <!-- <div class="col-12 d-none d-md-block mt-3">
+        <div class=" magnews-ad-banner d-flex flex-column align-items-center gap-3">
+            @php
+            $headerBanner = $homeBanners ?? $categoryBanners ?? $detailBanners ?? null;
+            @endphp
+            @if (isset($headerBanner) && $headerBanner->count() > 0)
+            @foreach($headerBanner as $banner)
+            @if($banner->url)
+            <a href="{{ $banner->url }}" target="_blank" rel="noopener" class="w-100 text-center">
+                <img src="{{ asset('storage/banners/' . $banner->image) }}"
+                    alt="{{ $banner->title }}" class="img-fluid"
+                    style="max-height: 100px; width: auto; object-fit: contain;"
+                    onerror="this.style.display='none';">
+            </a>
+            @else
+            <div class="w-100 text-center">
+                <img src="{{ asset('storage/banners/' . $banner->image) }}"
+                    alt="{{ $banner->title }}" class="img-fluid"
+                    style="max-height: 100px; width: auto; object-fit: contain;"
+                    onerror="this.style.display='none';">
+            </div>
+            @endif
+            @endforeach
+            @endif
+        </div>
+    </div> -->
 
 
     <!-- Mobile Menu Overlay -->
@@ -469,7 +484,7 @@
                     }
                 });
             }
-            
+
             // Allow native form submission if users press enter or use mobile keypad enter
         });
     </script>
