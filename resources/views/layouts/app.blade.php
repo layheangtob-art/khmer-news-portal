@@ -167,7 +167,7 @@
     </div>
 
     <!-- Mobile Ad Banner (Responsive) -->
-    @php
+    <!-- @php
     $mobileHeaderBanner = $homeBanners ?? $categoryBanners ?? $detailBanners ?? null;
     @endphp
     @if (isset($mobileHeaderBanner) && $mobileHeaderBanner->count() > 0)
@@ -185,7 +185,7 @@
             </div>
         </div>
     </div>
-    @endif
+    @endif -->
 
 
     <!-- Main Navigation Bar -->
@@ -420,8 +420,7 @@
         </div>
         <div class="magnews-footer-bottom">
             <div class="container">
-                <p class="mb-0">Copyright © {{ date('Y') }} All rights reserved | This template is made with
-                    love by Colorlib</p>
+                <p class="mb-0">Copyright © {{ date('Y') }} រក្សាសិទ្ធិដោយ ខ្មែរNews Cambodia</p>
             </div>
         </div>
     </footer>

@@ -13,9 +13,8 @@
     <script src="https://unpkg.com/@hotwired/turbo@8.0.0/dist/turbo.es2017-umd.js"></script>
     <script>
         document.addEventListener('turbo:load', function() {
-            if (typeof jQuery !== 'undefined') {
-                jQuery(document).trigger('ready');
-            }
+            // No need to trigger ready manually, jQuery 3+ will handle it 
+            // if the script is loaded in the body after a Turbo navigation.
         });
     </script>
 

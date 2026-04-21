@@ -161,7 +161,13 @@
 @section('custom-footer')
 <script>
     $(document).ready(function() {
-        $("#basic-datatables").DataTable({});
+        if ($.fn.DataTable.isDataTable('#basic-datatables')) {
+            $('#basic-datatables').DataTable().destroy();
+        }
+        $("#basic-datatables").DataTable({
+            destroy: true,
+            pageLength: 10,
+        });
 
         // Handle delete button click
         $('.delete-banner-btn').on('click', function() {

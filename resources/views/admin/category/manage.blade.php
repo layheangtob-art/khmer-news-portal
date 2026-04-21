@@ -207,9 +207,14 @@
 
 @section('custom-footer')
     <script>
-        $("#add-row").DataTable({
-            pageLength: 5,
-            destroy: true
+        $(document).ready(function() {
+            if ($.fn.DataTable.isDataTable('#add-row')) {
+                $('#add-row').DataTable().destroy();
+            }
+            $("#add-row").DataTable({
+                pageLength: 5,
+                destroy: true
+            });
         });
     </script>
 @endsection

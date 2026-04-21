@@ -54,7 +54,7 @@
     @endif
 
     <!-- All News Section Start -->
-    <div class="container-fluid py-5">
+    <div class="container-fluid ">
         <div class="container">
             <div class="row">
                 <!-- Main Content Column -->

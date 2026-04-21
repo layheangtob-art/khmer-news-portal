@@ -116,8 +116,14 @@
 @section('custom-footer')
 <script>
     $(document).ready(function() {
+        // Prevent multiple initializations
+        if ($.fn.DataTable.isDataTable('#basic-datatables')) {
+            $('#basic-datatables').DataTable().destroy();
+        }
+
         const table = $("#basic-datatables").DataTable({
-            destroy: true
+            destroy: true,
+            pageLength: 10,
         });
 
         // Delete handler with SweetAlert confirmation and AJAX

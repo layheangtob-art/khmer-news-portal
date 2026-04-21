@@ -179,11 +179,21 @@
 @section('custom-footer')
     <script>
         $(document).ready(function() {
-            $("#basic-datatables").DataTable({ destroy: true });
-        });
+            if ($.fn.DataTable.isDataTable('#basic-datatables')) {
+                $('#basic-datatables').DataTable().destroy();
+            }
+            $("#basic-datatables").DataTable({
+                destroy: true,
+                pageLength: 10,
+            });
 
-        $(document).ready(function() {
-            $("#basic-datatables2").DataTable({ destroy: true });
+            if ($.fn.DataTable.isDataTable('#basic-datatables2')) {
+                $('#basic-datatables2').DataTable().destroy();
+            }
+            $("#basic-datatables2").DataTable({
+                destroy: true,
+                pageLength: 10,
+            });
         });
     </script>
 @endsection

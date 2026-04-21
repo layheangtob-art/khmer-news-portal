@@ -93,8 +93,13 @@
 @section('custom-footer')
     <script>
         $(document).ready(function() {
+            if ($.fn.DataTable.isDataTable('#basic-datatables')) {
+                $('#basic-datatables').DataTable().destroy();
+            }
+
             $("#basic-datatables").DataTable({
-                destroy: true
+                destroy: true,
+                pageLength: 10,
             });
         });
     </script>
