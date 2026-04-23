@@ -420,7 +420,7 @@
         </div>
         <div class="magnews-footer-bottom">
             <div class="container">
-                <p class="mb-0">Copyright © {{ date('Y') }} រក្សាសិទ្ធិដោយ ខ្មែរNews Cambodia</p>
+                <p class="mb-0">© {{ date('Y') }} - រក្សាសិទ្ធិគ្រប់យ៉ាងដោយ KH News </p>
             </div>
         </div>
     </footer>

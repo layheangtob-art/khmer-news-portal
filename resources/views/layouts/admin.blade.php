@@ -19,21 +19,21 @@
     </script>
 
     @include('components.admin-header')
+    <style>
+        .main-header {
+            position: relative !important;
+            width: 100% !important;
+        }
+
+        .main-panel>.container,
+        .main-panel>.container-full {
+            margin-top: 0 !important;
+        }
+    </style>
 </head>
 
 <body>
     <div class="wrapper">
-        <!-- Sponsor Banner Header -->
-        <div class="container-fluid leaderboard-banner py-2">
-            <div class="container">
-                <div class="d-flex justify-content-center">
-                    <div class="leaderboard-ad">
-                        <a href="#"><img src="{{ asset('img/sponsor-banner.svg') }}" alt="Sponsor Banner" class="img-fluid"></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- Sidebar -->
         <div class="sidebar" data-background-color="dark">
             <div class="sidebar-logo">
@@ -41,7 +41,7 @@
                 <div class="logo-header" data-background-color="dark">
                     <a href="{{ route('index') }}" class="logo">
                         {{-- <img src="{{ asset('admin/img/kaiadmin/logo_light.svg') }}" alt="navbar brand"
-                            class="navbar-brand" height="20" /> --}}
+                        class="navbar-brand" height="20" /> --}}
                     </a>
                     <div class="nav-toggle">
                         <button class="btn btn-toggle toggle-sidebar">
@@ -83,94 +83,94 @@
                                 id="news">
                                 <ul class="nav nav-collapse">
                                     @if (auth()->user()->hasRole('Super Admin'))
-                                        <li>
-                                            <a href="{{ route('admin.news.manage') }}">
-                                                <span class="sub-item">Manage</span>
-                                            </a>
-                                        </li>
+                                    <li>
+                                        <a href="{{ route('admin.news.manage') }}">
+                                            <span class="sub-item">Manage</span>
+                                        </a>
+                                    </li>
                                     @endif
                                     @if (auth()->user()->hasRole('Editor') || auth()->user()->hasRole('Super Admin'))
-                                        <li>
-                                            <a href="{{ route('news.status') }}">
-                                                <span class="sub-item">Status</span>
-                                            </a>
-                                        </li>
+                                    <li>
+                                        <a href="{{ route('news.status') }}">
+                                            <span class="sub-item">Status</span>
+                                        </a>
+                                    </li>
                                     @endif
                                     @if (auth()->user()->hasRole('Writer') || auth()->user()->hasRole('Super Admin'))
-                                        <li>
-                                            <a href="{{ route('news.create') }}">
-                                                <span class="sub-item">Create</span>
-                                            </a>
-                                        </li>
+                                    <li>
+                                        <a href="{{ route('news.create') }}">
+                                            <span class="sub-item">Create</span>
+                                        </a>
+                                    </li>
                                     @endif
                                 </ul>
                             </div>
                         </li>
                         @if (auth()->user()->hasRole('Super Admin'))
-                            <li class="nav-item {{ Route::is('admin.category.*') ? 'active' : '' }}">
-                                <a data-bs-toggle="collapse" href="#category">
-                                    <i class="fas fa-list"></i>
-                                    <p>Category</p>
-                                    <span class="caret"></span>
-                                </a>
-                                <div class="collapse {{ Route::is('admin.category.*') ? 'show' : '' }}" id="category">
-                                    <ul class="nav nav-collapse">
-                                        <li>
-                                            <a href="{{ route('admin.category.manage') }}">
-                                                <span class="sub-item">Manage</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="nav-item {{ Route::is('admin.banners.*') ? 'active' : '' }}">
-                                <a data-bs-toggle="collapse" href="#banners">
-                                    <i class="fas fa-images"></i>
-                                    <p>Sponsor Banners</p>
-                                    <span class="caret"></span>
-                                </a>
-                                <div class="collapse {{ Route::is('admin.banners.*') ? 'show' : '' }}" id="banners">
-                                    <ul class="nav nav-collapse">
-                                        <li>
-                                            <a href="{{ route('admin.banners.index') }}">
-                                                <span class="sub-item">Manage Banners</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ route('admin.banners.create') }}">
-                                                <span class="sub-item">Add New Banner</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
+                        <li class="nav-item {{ Route::is('admin.category.*') ? 'active' : '' }}">
+                            <a data-bs-toggle="collapse" href="#category">
+                                <i class="fas fa-list"></i>
+                                <p>Category</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse {{ Route::is('admin.category.*') ? 'show' : '' }}" id="category">
+                                <ul class="nav nav-collapse">
+                                    <li>
+                                        <a href="{{ route('admin.category.manage') }}">
+                                            <span class="sub-item">Manage</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item {{ Route::is('admin.banners.*') ? 'active' : '' }}">
+                            <a data-bs-toggle="collapse" href="#banners">
+                                <i class="fas fa-images"></i>
+                                <p>Sponsor Banners</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse {{ Route::is('admin.banners.*') ? 'show' : '' }}" id="banners">
+                                <ul class="nav nav-collapse">
+                                    <li>
+                                        <a href="{{ route('admin.banners.index') }}">
+                                            <span class="sub-item">Manage Banners</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('admin.banners.create') }}">
+                                            <span class="sub-item">Add New Banner</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
                         @endif
                         @if (auth()->user()->hasRole('Writer') || auth()->user()->hasRole('Super Admin'))
-                            <li
-                                class="nav-item {{ Route::is('admin.users.*') || Route::is('news.draft') ? 'active' : '' }}">
-                                <a data-bs-toggle="collapse" href="#users">
-                                    <i class="fas fa-users-cog"></i>
-                                    <p>Users</p>
-                                    <span class="caret"></span>
-                                </a>
-                                <div class="collapse {{ Route::is('admin.users.*') || Route::is('news.draft') ? 'show' : '' }}"
-                                    id="users">
-                                    <ul class="nav nav-collapse">
-                                        @if (auth()->user()->hasRole('Super Admin'))
-                                            <li>
-                                                <a href="{{ route('admin.users.manage') }}">
-                                                    <span class="sub-item">Manage</span>
-                                                </a>
-                                            </li>
-                                        @endif
-                                        <li>
-                                            <a href="{{ route('news.draft') }}">
-                                                <span class="sub-item">Draft</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
+                        <li
+                            class="nav-item {{ Route::is('admin.users.*') || Route::is('news.draft') ? 'active' : '' }}">
+                            <a data-bs-toggle="collapse" href="#users">
+                                <i class="fas fa-users-cog"></i>
+                                <p>Users</p>
+                                <span class="caret"></span>
+                            </a>
+                            <div class="collapse {{ Route::is('admin.users.*') || Route::is('news.draft') ? 'show' : '' }}"
+                                id="users">
+                                <ul class="nav nav-collapse">
+                                    @if (auth()->user()->hasRole('Super Admin'))
+                                    <li>
+                                        <a href="{{ route('admin.users.manage') }}">
+                                            <span class="sub-item">Manage</span>
+                                        </a>
+                                    </li>
+                                    @endif
+                                    <li>
+                                        <a href="{{ route('news.draft') }}">
+                                            <span class="sub-item">Draft</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
                         @endif
                     </ul>
                 </div>
@@ -277,7 +277,7 @@
             @yield('content')
 
             <!-- Footer -->
-            <footer class="admin-footer">
+            <!-- <footer class="admin-footer">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-4 footer-column">
@@ -320,10 +320,10 @@
                         </div>
                     </div>
                 </div>
-            </footer>
+            </footer> -->
             <div class="copyright">
                 <div class="container">
-                    <p class="mb-0">© 2020 - រក្សាសិទ្ធិគ្រប់យ៉ាងដោយ ក្រុមហ៊ុនយើង</p>
+                    <p class="mb-0">© {{ date('Y') }} - រក្សាសិទ្ធិគ្រប់យ៉ាងដោយ KH News </p>
                 </div>
             </div>
         </div>

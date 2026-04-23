@@ -83,6 +83,40 @@ ClassicEditor
             return new CustomUploadAdapter(loader);
         };
         
+        // Initial setup for image preview
+        const imagePreview = document.getElementById('imagePreview');
+        const imageInput = document.getElementById('imageInput');
+        if (imagePreview && !imagePreview.dataset.originalSrc) {
+            imagePreview.dataset.originalSrc = imagePreview.src;
+        }
+
+        // Listen for editor data changes to auto-preview first image
+        editor.model.document.on('change:data', () => {
+            const data = editor.getData();
+            const firstImageMatch = data.match(/<img[^>]+src="([^">]+)"/);
+
+            // If an image is found in content and no file is manually selected
+            if (firstImageMatch && firstImageMatch[1] && imageInput && !imageInput.files.length) {
+                const imageUrl = firstImageMatch[1];
+                if (imagePreview) {
+                    imagePreview.src = imageUrl;
+                    imagePreview.style.display = 'block';
+                }
+            } else if (!firstImageMatch && imageInput && !imageInput.files.length) {
+                // Restore original if available (for edit mode) or hide
+                if (imagePreview) {
+                    const originalSrc = imagePreview.dataset.originalSrc;
+                    if (originalSrc && originalSrc !== window.location.href && !originalSrc.endsWith('#')) {
+                        imagePreview.src = originalSrc;
+                        imagePreview.style.display = 'block';
+                    } else {
+                        imagePreview.src = '#';
+                        imagePreview.style.display = 'none';
+                    }
+                }
+            }
+        });
+        
         // Wait, nothing to do for ClassicEditor toolbar
         editor.setData(initialContent);
         previousEditorContent = editor.getData();

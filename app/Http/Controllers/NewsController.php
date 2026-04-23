@@ -183,6 +183,16 @@ class NewsController extends Controller
                 $image = $request->file('image');
                 $imageHashName = $image->hashName();
                 $image->storeAs('public/images', $imageHashName);
+            } else {
+                // If no main image is uploaded, check if there's an image in the news body content
+                $content = $request->input('content');
+                if (preg_match('/<img[^>]+src="([^">]+)"/', $content, $matches)) {
+                    $imageUrl = $matches[1];
+                    // Check if it's a local storage image
+                    if (strpos($imageUrl, asset('storage/images/')) !== false) {
+                        $imageHashName = basename(parse_url($imageUrl, PHP_URL_PATH));
+                    }
+                }
             }
 
             // Handle additional images
@@ -343,6 +353,21 @@ class NewsController extends Controller
                 }
 
                 $data['image'] = $image->hashName();
+            } else {
+                // If no main image is uploaded, check if there's an image in the news body content
+                $content = $request->input('content');
+                if (preg_match('/<img[^>]+src="([^">]+)"/', $content, $matches)) {
+                    $imageUrl = $matches[1];
+                    // Check if it's a local storage image
+                    if (strpos($imageUrl, asset('storage/images/')) !== false) {
+                        $imageHashName = basename(parse_url($imageUrl, PHP_URL_PATH));
+                        
+                        // If it's a different image than current, update it
+                        if ($news->image != $imageHashName) {
+                            $data['image'] = $imageHashName;
+                        }
+                    }
+                }
             }
 
             // Handle additional images update
