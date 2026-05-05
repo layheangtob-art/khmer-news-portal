@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\News;
-use App\Models\Category;
 use App\Events\NewsCreated;
-use Illuminate\Http\Request;
 use App\Events\NewsStatusUpdated;
+use App\Models\Banner;
+use App\Models\Category;
+use App\Models\News;
+use App\Services\CambTextToSpeechService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Illuminate\Validation\ValidationException;
-use Google\Cloud\TextToSpeech\V1\Client\TextToSpeechClient;
-use Google\Cloud\TextToSpeech\V1\SynthesisInput;
-use Google\Cloud\TextToSpeech\V1\VoiceSelectionParams;
-use Google\Cloud\TextToSpeech\V1\AudioConfig;
-use Google\Cloud\TextToSpeech\V1\AudioEncoding;
-use Google\Cloud\TextToSpeech\V1\SynthesizeSpeechRequest;
+
 class NewsController extends Controller
 {
+    public function __construct(
+        protected CambTextToSpeechService $cambTts
+    ) {}
+
     /**
      * Display a listing of the resource.
      */
@@ -54,7 +54,7 @@ class NewsController extends Controller
         });
 
         // Get active banners for home page
-        $homeBanners = \App\Models\Banner::active()
+        $homeBanners = Banner::active()
             ->forHome()
             ->ordered()
             ->get();
@@ -89,7 +89,7 @@ class NewsController extends Controller
             ->get();
 
         // Get banners for list page
-        $listBanners = \App\Models\Banner::active()
+        $listBanners = Banner::active()
             ->forDetail()
             ->ordered()
             ->get();
@@ -109,10 +109,10 @@ class NewsController extends Controller
                 $imageName = $image->hashName();
                 $image->storeAs('public/images', $imageName);
 
-                $url = asset('storage/images/' . $imageName);
+                $url = asset('storage/images/'.$imageName);
 
                 return response()->json([
-                    'url' => $url
+                    'url' => $url,
                 ]);
             }
 
@@ -125,6 +125,7 @@ class NewsController extends Controller
     public function manage()
     {
         $allNews = News::with(['category', 'author'])->get();
+
         return view('admin.news.manage', compact('allNews'));
     }
 
@@ -142,7 +143,7 @@ class NewsController extends Controller
         $globalLatestNews = News::where('status', 'Accept')->latest()->take(6)->get();
 
         // Get banners for category page
-        $categoryBanners = \App\Models\Banner::active()
+        $categoryBanners = Banner::active()
             ->forDetail()
             ->ordered()
             ->get();
@@ -158,6 +159,7 @@ class NewsController extends Controller
     public function create()
     {
         $allCategory = Category::all();
+
         return view('news.create', compact('allCategory'));
     }
 
@@ -171,7 +173,7 @@ class NewsController extends Controller
                 'title' => 'required|string|min:1|max:1000',
                 'content' => 'required|string|min:1',
                 'image' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
-                'additional_images.*' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
+                'audio_file' => 'nullable|mimes:mp3,wav,ogg,mpeg|max:2048',
                 'category_id' => 'required|exists:category,id',
             ]);
 
@@ -205,45 +207,11 @@ class NewsController extends Controller
             }
 
             $audioFileName = null;
-            try {
-                $credentialsPath = storage_path('app/google-credentials.json');
-                
-                if (!file_exists($credentialsPath)) {
-                    throw new \Exception('Google Cloud credentials file not found. Please place your service account JSON file at: ' . $credentialsPath);
-                }
 
-                $textToSpeechContent = $request->title . ".\n\n" . strip_tags($request->input('content'));
-                $textToSpeechContent = Str::limit($textToSpeechContent, 4000, '');
-
-                $textToSpeechClient = new TextToSpeechClient([
-                    'credentials' => $credentialsPath
-                ]);
-                
-                $input = (new SynthesisInput())
-                    ->setText($textToSpeechContent);
-                
-                $voice = (new VoiceSelectionParams())
-                    ->setLanguageCode('km-KH')
-                    ->setName('km-KH-Standard-A');
-                
-                $audioConfig = (new AudioConfig())
-                    ->setAudioEncoding(AudioEncoding::MP3);
-                
-                $synthRequest = new SynthesizeSpeechRequest([
-                    'input' => $input,
-                    'voice' => $voice,
-                    'audio_config' => $audioConfig
-                ]);
-
-                $response = $textToSpeechClient->synthesizeSpeech($synthRequest);
-                $audioContent = $response->getAudioContent();
-                
-                $audioFileName = 'audio_' . time() . '_' . uniqid() . '.mp3';
-                Storage::put('public/audio/' . $audioFileName, $audioContent);
-                
-                $textToSpeechClient->close();
-            } catch (\Exception $e) {
-                \Illuminate\Support\Facades\Log::error('TTS Error: ' . $e->getMessage());
+            if ($request->hasFile('audio_file')) {
+                $audioFile = $request->file('audio_file');
+                $audioFileName = 'audio_'.time().'_'.uniqid().'.'.$audioFile->getClientOriginalExtension();
+                $audioFile->storeAs('public/audio', $audioFileName);
             }
 
             $news = News::create([
@@ -252,22 +220,29 @@ class NewsController extends Controller
                 'user_id' => Auth::id(),
                 'category_id' => $request->category_id,
                 'image' => $imageHashName,
-                'images' => !empty($additionalImages) ? $additionalImages : null,
+                'images' => ! empty($additionalImages) ? $additionalImages : null,
                 'is_pinned' => $request->has('is_pinned') ? true : false,
                 'audio' => $audioFileName,
             ]);
+
+            if ($this->cambTts->isConfigured()) {
+                $titleAudio = $this->cambTts->synthesizeTitleToFile($request->title);
+                if ($titleAudio) {
+                    $news->update(['title_audio' => $titleAudio]);
+                }
+            }
 
             event(new NewsCreated($news));
 
             return response()->json([
                 'success' => true,
                 'message' => 'Successfully saved the data.',
-                'redirect_url' => route('dashboard')
+                'redirect_url' => route('dashboard'),
             ]);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             return response()->json([
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ]);
         }
     }
@@ -281,7 +256,7 @@ class NewsController extends Controller
         $news->increment('views');
 
         // Get active banners for detail page
-        $detailBanners = \App\Models\Banner::active()
+        $detailBanners = Banner::active()
             ->forDetail()
             ->ordered()
             ->get();
@@ -325,13 +300,15 @@ class NewsController extends Controller
      */
     public function update(Request $request, News $news)
     {
+        $titleBefore = $news->title;
+
         try {
             $request->validate([
                 'title' => 'required|string|max:1000',
                 'content' => 'required|string',
                 'image' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
-                'additional_images.*' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
-                'category_id' => 'required|exists:category,id'
+                'audio_file' => 'nullable|mimes:mp3,wav,ogg,mpeg|max:2048',
+                'category_id' => 'required|exists:category,id',
             ]);
 
             $data = [
@@ -349,7 +326,7 @@ class NewsController extends Controller
 
                 // Delete old main image
                 if ($news->image) {
-                    Storage::delete('public/images/' . $news->image);
+                    Storage::delete('public/images/'.$news->image);
                 }
 
                 $data['image'] = $image->hashName();
@@ -361,7 +338,7 @@ class NewsController extends Controller
                     // Check if it's a local storage image
                     if (strpos($imageUrl, asset('storage/images/')) !== false) {
                         $imageHashName = basename(parse_url($imageUrl, PHP_URL_PATH));
-                        
+
                         // If it's a different image than current, update it
                         if ($news->image != $imageHashName) {
                             $data['image'] = $imageHashName;
@@ -377,7 +354,7 @@ class NewsController extends Controller
                 // Delete old additional images
                 if ($news->images && is_array($news->images)) {
                     foreach ($news->images as $oldImage) {
-                        Storage::delete('public/images/' . $oldImage);
+                        Storage::delete('public/images/'.$oldImage);
                     }
                 }
 
@@ -388,57 +365,37 @@ class NewsController extends Controller
                     $additionalImages[] = $additionalImageName;
                 }
 
-                $data['images'] = !empty($additionalImages) ? $additionalImages : null;
+                $data['images'] = ! empty($additionalImages) ? $additionalImages : null;
             }
 
-            try {
-                $credentialsPath = storage_path('app/google-credentials.json');
-                
-                if (!file_exists($credentialsPath)) {
-                    throw new \Exception('Google Cloud credentials file not found. Please place your service account JSON file at: ' . $credentialsPath);
-                }
+            // Handle audio voice update
+            if ($request->hasFile('audio_file')) {
+                $audioFile = $request->file('audio_file');
+                $audioFileName = 'audio_'.time().'_'.uniqid().'.'.$audioFile->getClientOriginalExtension();
+                $audioFile->storeAs('public/audio', $audioFileName);
 
-                $textToSpeechContent = $request->title . ".\n\n" . strip_tags($request->input('content'));
-                $textToSpeechContent = Str::limit($textToSpeechContent, 4000, '');
-
-                $textToSpeechClient = new TextToSpeechClient([
-                    'credentials' => $credentialsPath
-                ]);
-                
-                $input = (new SynthesisInput())
-                    ->setText($textToSpeechContent);
-                
-                $voice = (new VoiceSelectionParams())
-                    ->setLanguageCode('km-KH')
-                    ->setName('km-KH-Standard-A');
-                
-                $audioConfig = (new AudioConfig())
-                    ->setAudioEncoding(AudioEncoding::MP3);
-                
-                $synthRequest = new SynthesizeSpeechRequest([
-                    'input' => $input,
-                    'voice' => $voice,
-                    'audio_config' => $audioConfig
-                ]);
-
-                $response = $textToSpeechClient->synthesizeSpeech($synthRequest);
-                $audioContent = $response->getAudioContent();
-                
-                // Delete old audio if it exists
+                // Delete old audio
                 if ($news->audio) {
-                    Storage::delete('public/audio/' . $news->audio);
+                    Storage::delete('public/audio/'.$news->audio);
                 }
 
-                $audioFileName = 'audio_' . time() . '_' . uniqid() . '.mp3';
-                Storage::put('public/audio/' . $audioFileName, $audioContent);
                 $data['audio'] = $audioFileName;
-                
-                $textToSpeechClient->close();
-            } catch (\Exception $e) {
-                \Illuminate\Support\Facades\Log::error('TTS Error during update: ' . $e->getMessage());
+            }
+
+            if ($request->title !== $news->title && $news->title_audio) {
+                Storage::delete('public/audio/'.$news->title_audio);
+                $data['title_audio'] = null;
             }
 
             $news->update($data);
+            $news->refresh();
+
+            if ($this->cambTts->isConfigured() && $titleBefore !== $request->title) {
+                $titleAudio = $this->cambTts->synthesizeTitleToFile($news->title);
+                if ($titleAudio) {
+                    $news->update(['title_audio' => $titleAudio]);
+                }
+            }
 
             event(new NewsCreated($news));
 
@@ -450,21 +407,21 @@ class NewsController extends Controller
                 return response()->json([
                     'success' => true,
                     'message' => 'News updated successfully.',
-                    'redirect_url' => $redirectUrl
+                    'redirect_url' => $redirectUrl,
                 ]);
             }
 
             return redirect($redirectUrl)->with('success', 'News updated successfully.');
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             if ($request->ajax() || $request->wantsJson()) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Failed to update news: ' . $e->getMessage()
+                    'message' => 'Failed to update news: '.$e->getMessage(),
                 ], 400);
             }
 
             return redirect()->back()
-                ->with('error', 'Failed to update news: ' . $e->getMessage())
+                ->with('error', 'Failed to update news: '.$e->getMessage())
                 ->withInput();
         }
     }
@@ -475,18 +432,26 @@ class NewsController extends Controller
     public function destroy(News $news)
     {
         try {
-            Storage::delete('public/images/' . $news->image);
+            if ($news->image) {
+                Storage::delete('public/images/'.$news->image);
+            }
+            if ($news->audio) {
+                Storage::delete('public/audio/'.$news->audio);
+            }
+            if ($news->title_audio) {
+                Storage::delete('public/audio/'.$news->title_audio);
+            }
             $news->delete();
 
             return response()->json([
                 'success' => true,
                 'message' => 'Successfully delete the data.',
-                'redirect_url' => route('admin.news.manage')
+                'redirect_url' => route('admin.news.manage'),
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ]);
         }
     }
@@ -509,7 +474,7 @@ class NewsController extends Controller
     {
         try {
             $request->validate([
-                'status' => 'required'
+                'status' => 'required',
             ]);
 
             $news->status = $request->status;
@@ -520,12 +485,12 @@ class NewsController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Successfully updated status the news.',
-                'redirect_url' => route('news.status')
+                'redirect_url' => route('news.status'),
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ]);
         }
     }
@@ -558,7 +523,7 @@ class NewsController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'ពាក្យគន្លឹះស្វែងរកទទេ',
-                'data' => []
+                'data' => [],
             ]);
         }
 
@@ -568,8 +533,8 @@ class NewsController extends Controller
         // Search strategy: Prioritize title matches, then content matches
         $titleMatches = News::where('status', 'Accept')
             ->where(function ($q) use ($query) {
-                $q->where('title', 'LIKE', '%' . $query . '%')
-                    ->orWhereRaw('BINARY title LIKE ?', ['%' . $query . '%']);
+                $q->where('title', 'LIKE', '%'.$query.'%')
+                    ->orWhereRaw('BINARY title LIKE ?', ['%'.$query.'%']);
             })
             ->with(['category', 'author'])
             ->orderBy('created_at', 'desc')
@@ -580,8 +545,8 @@ class NewsController extends Controller
         if ($titleMatches->isEmpty()) {
             $contentMatches = News::where('status', 'Accept')
                 ->where(function ($q) use ($query) {
-                    $q->where('content', 'LIKE', '%' . $query . '%')
-                        ->orWhereRaw('BINARY content LIKE ?', ['%' . $query . '%']);
+                    $q->where('content', 'LIKE', '%'.$query.'%')
+                        ->orWhereRaw('BINARY content LIKE ?', ['%'.$query.'%']);
                 })
                 ->with(['category', 'author'])
                 ->orderBy('created_at', 'desc')
@@ -603,15 +568,15 @@ class NewsController extends Controller
                 'content' => Str::limit(strip_tags($item->content), 100),
                 'category' => $item->category->name ?? '',
                 'author' => $item->author->name ?? '',
-                'image' => $item->image ? asset('storage/images/' . $item->image) : null,
+                'image' => $item->image ? asset('storage/images/'.$item->image) : null,
                 'url' => route('news.show', $item->id),
                 'created_at' => $item->created_at->diffForHumans(),
-                'match_type' => $titleMatches->contains('id', $item->id) ? 'title' : 'content'
+                'match_type' => $titleMatches->contains('id', $item->id) ? 'title' : 'content',
             ];
         });
 
         $message = $results->count() > 0
-            ? 'រកឃើញ ' . $results->count() . ' លទ្ធផល'
+            ? 'រកឃើញ '.$results->count().' លទ្ធផល'
             : 'រកមិនឃើញលទ្ធផល';
 
         if ($request->ajax()) {
@@ -619,12 +584,13 @@ class NewsController extends Controller
                 'success' => $results->count() > 0,
                 'message' => $message,
                 'data' => $results->values()->all(),
-                'total' => $results->count()
+                'total' => $results->count(),
             ]);
         }
 
         // Convert collection to array for the view
         $resultsArray = $results->values()->all();
+
         return view('search-results', ['resultsArray' => $resultsArray, 'query' => $query]);
     }
 
@@ -638,6 +604,6 @@ class NewsController extends Controller
         }
 
         // For Khmer text, use a simple case-insensitive replacement
-        return preg_replace('/(' . preg_quote($searchTerm, '/') . ')/ui', '<mark>$1</mark>', $text);
+        return preg_replace('/('.preg_quote($searchTerm, '/').')/ui', '<mark>$1</mark>', $text);
     }
 }

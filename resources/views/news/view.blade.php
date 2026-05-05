@@ -55,16 +55,20 @@
                                 </div>
                             @endif
                             <div class="card-body">
-                                <div class="position-relative rounded mb-3">
-                                    <div class="d-flex justify-content-center">
-                                        <img src="{{ $news->image ? asset('storage/images/' . $news->image) : asset('img/noimg.jpg') }}"
-                                            class="img-fluid rounded w-50" alt="">
+                                @if($news->title_audio)
+                                <div class="magnews-audio-player mb-4 d-flex align-items-center bg-light p-3 rounded shadow-sm border">
+                                    <div class="me-3 text-primary">
+                                        <i class="fas fa-volume-up fs-4"></i>
                                     </div>
-                                    <div class="position-absolute text-white px-4 py-2 bg-primary rounded"
-                                        style="top: 20px; right: 20px;">
-                                        {{ $news->category->name }}
+                                    <div class="flex-grow-1">
+                                        <p class="mb-1 fw-bold" style="font-size: 14px; color: #333; font-family: 'Kantumruy Pro', sans-serif;">ស្តាប់ចំណងជើង (Title Audio)</p>
+                                        <audio controls class="w-100 mt-1" style="height: 36px; border-radius: 4px;">
+                                            <source src="{{ asset('storage/audio/' . $news->title_audio) }}" type="audio/mpeg">
+                                            Your browser does not support the audio element.
+                                        </audio>
                                     </div>
                                 </div>
+                                @endif
                                 @if($news->audio)
                                 <div class="magnews-audio-player my-4 d-flex align-items-center bg-light p-3 rounded shadow-sm border">
                                     <div class="me-3 text-danger">
@@ -79,6 +83,16 @@
                                     </div>
                                 </div>
                                 @endif
+                                <div class="position-relative rounded mb-3">
+                                    <div class="d-flex justify-content-center">
+                                        <img src="{{ $news->image ? asset('storage/images/' . $news->image) : asset('img/noimg.jpg') }}"
+                                            class="img-fluid rounded w-50" alt="">
+                                    </div>
+                                    <div class="position-absolute text-white px-4 py-2 bg-primary rounded"
+                                        style="top: 20px; right: 20px;">
+                                        {{ $news->category->name }}
+                                    </div>
+                                </div>
                                 <div class="news-content-wrapper my-2">
                                     <style>
                                         .news-content-wrapper img {

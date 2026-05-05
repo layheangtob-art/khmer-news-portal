@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <title>KH News - ព័ត៌មានខ្មែរ</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://fonts.googleapis.com/css2?family=Koulen&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="{{ asset('img/logo_for_header_2.png') }}">
 
