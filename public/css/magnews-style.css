@@ -97,7 +97,8 @@ body.dark-mode span.fw-semibold {
 }
 
 .magnews-social-icon:hover {
-    color: #4CAF50;
+color : #e2162d;
+
 }
 
 .magnews-search-icon-btn {
@@ -112,7 +113,8 @@ body.dark-mode span.fw-semibold {
 }
 
 .magnews-search-icon-btn:hover {
-    color: #4CAF50;
+color : #e2162d;
+
 }
 
 /* Header Section */
@@ -161,7 +163,8 @@ body.dark-mode span.fw-semibold {
 }
 
 .magnews-mobile-logo .magnews-logo-mag {
-    color: #4CAF50;
+color : #e2162d;
+
 }
 
 .magnews-mobile-logo .magnews-logo-news {

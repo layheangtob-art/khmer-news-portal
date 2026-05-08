@@ -169,20 +169,20 @@
 
     <!-- Mobile Ad Banner (Responsive) -->
     <!-- @php
-    $mobileHeaderBanner = $homeBanners ?? $categoryBanners ?? $detailBanners ?? null;
+        $mobileHeaderBanner = $homeBanners ?? ($categoryBanners ?? ($detailBanners ?? null));
     @endphp
     @if (isset($mobileHeaderBanner) && $mobileHeaderBanner->count() > 0)
     <div class="magnews-mobile-ad-banner d-md-none">
         <div class="container">
             <div class="magnews-mobile-ad-inner d-flex flex-column gap-2">
-                @foreach($mobileHeaderBanner as $banner)
-                <a href="{{ $banner->url ?? '#' }}" class="magnews-mobile-ad-link" @if($banner->url) target="_blank" rel="noopener" @endif>
+                @foreach ($mobileHeaderBanner as $banner)
+<a href="{{ $banner->url ?? '#' }}" class="magnews-mobile-ad-link" @if ($banner->url) target="_blank" rel="noopener" @endif>
                     <img src="{{ asset('storage/banners/' . $banner->image) }}"
                         alt="{{ $banner->title }}" class="magnews-mobile-ad-img w-100"
                         style="object-fit: contain; max-height: 80px;"
                         onerror="this.style.display='none';">
                 </a>
-                @endforeach
+@endforeach
             </div>
         </div>
     </div>
@@ -201,26 +201,26 @@
                                 class="nav-link {{ request()->routeIs('index') ? 'active' : '' }}">ទំព័រដើម</a>
                         </li>
                         @php
-                        $navCategories = \App\Models\Category::all();
-                        $catParam =
-                        request()->route() && request()->route()->getName() === 'news.viewCategory'
-                        ? request()->route()->parameter('categories')
-                        : null;
-                        $currentCategoryId =
-                        $catParam instanceof \App\Models\Category
-                        ? $catParam->id
-                        : (is_numeric($catParam)
-                        ? (int) $catParam
-                        : null);
+                            $navCategories = \App\Models\Category::all();
+                            $catParam =
+                                request()->route() && request()->route()->getName() === 'news.viewCategory'
+                                    ? request()->route()->parameter('categories')
+                                    : null;
+                            $currentCategoryId =
+                                $catParam instanceof \App\Models\Category
+                                    ? $catParam->id
+                                    : (is_numeric($catParam)
+                                        ? (int) $catParam
+                                        : null);
                         @endphp
 
                         @foreach ($navCategories as $cat)
-                        <li class="nav-item">
-                            <a href="{{ route('news.viewCategory', $cat->id) }}"
-                                class="nav-link {{ $currentCategoryId === $cat->id ? 'active' : '' }}">
-                                {{ $cat->name }}
-                            </a>
-                        </li>
+                            <li class="nav-item">
+                                <a href="{{ route('news.viewCategory', $cat->id) }}"
+                                    class="nav-link {{ $currentCategoryId === $cat->id ? 'active' : '' }}">
+                                    {{ $cat->name }}
+                                </a>
+                            </li>
                         @endforeach
                     </ul>
                     <div class="magnews-nav-right d-flex align-items-center gap-2 ms-auto">
@@ -254,20 +254,20 @@
             <div class="breaking-content">
                 <div class="breaking-ticker">
                     @php
-                    $tickerNews = \App\Models\News::where('status', 'Accept')->latest()->take(10)->get();
+                        $tickerNews = \App\Models\News::where('status', 'Accept')->latest()->take(10)->get();
                     @endphp
-                    @foreach($tickerNews as $news)
-                    <a href="{{ route('news.show', $news->id) }}" class="ticker-item">
-                        <span class="ticker-separator">|</span>
-                        {{ $news->title }}
-                    </a>
+                    @foreach ($tickerNews as $news)
+                        <a href="{{ route('news.show', $news->id) }}" class="ticker-item">
+                            <span class="ticker-separator">|</span>
+                            {{ $news->title }}
+                        </a>
                     @endforeach
                     {{-- Duplicate items for seamless loop --}}
-                    @foreach($tickerNews as $news)
-                    <a href="{{ route('news.show', $news->id) }}" class="ticker-item">
-                        <span class="ticker-separator">|</span>
-                        {{ $news->title }}
-                    </a>
+                    @foreach ($tickerNews as $news)
+                        <a href="{{ route('news.show', $news->id) }}" class="ticker-item">
+                            <span class="ticker-separator">|</span>
+                            {{ $news->title }}
+                        </a>
                     @endforeach
                 </div>
             </div>
@@ -279,26 +279,26 @@
     <!-- <div class="col-12 d-none d-md-block mt-3">
         <div class=" magnews-ad-banner d-flex flex-column align-items-center gap-3">
             @php
-            $headerBanner = $homeBanners ?? $categoryBanners ?? $detailBanners ?? null;
+                $headerBanner = $homeBanners ?? ($categoryBanners ?? ($detailBanners ?? null));
             @endphp
             @if (isset($headerBanner) && $headerBanner->count() > 0)
-            @foreach($headerBanner as $banner)
-            @if($banner->url)
-            <a href="{{ $banner->url }}" target="_blank" rel="noopener" class="w-100 text-center">
+            @foreach ($headerBanner as $banner)
+@if ($banner->url)
+<a href="{{ $banner->url }}" target="_blank" rel="noopener" class="w-100 text-center">
                 <img src="{{ asset('storage/banners/' . $banner->image) }}"
                     alt="{{ $banner->title }}" class="img-fluid"
                     style="max-height: 100px; width: auto; object-fit: contain;"
                     onerror="this.style.display='none';">
             </a>
-            @else
-            <div class="w-100 text-center">
+@else
+<div class="w-100 text-center">
                 <img src="{{ asset('storage/banners/' . $banner->image) }}"
                     alt="{{ $banner->title }}" class="img-fluid"
                     style="max-height: 100px; width: auto; object-fit: contain;"
                     onerror="this.style.display='none';">
             </div>
-            @endif
-            @endforeach
+@endif
+@endforeach
             @endif
         </div>
     </div> -->
@@ -327,14 +327,14 @@
                     </a>
                 </li>
                 @foreach (\App\Models\Category::all() as $categories)
-                <li class="mobile-menu-item">
-                    <a href="{{ route('news.viewCategory', $categories->id) }}" class="mobile-menu-link">
-                        <span>{{ $categories->name }}</span>
-                        @if ($loop->last)
-                        <i class="fas fa-chevron-right mobile-menu-chevron"></i>
-                        @endif
-                    </a>
-                </li>
+                    <li class="mobile-menu-item">
+                        <a href="{{ route('news.viewCategory', $categories->id) }}" class="mobile-menu-link">
+                            <span>{{ $categories->name }}</span>
+                            @if ($loop->last)
+                                <i class="fas fa-chevron-right mobile-menu-chevron"></i>
+                            @endif
+                        </a>
+                    </li>
                 @endforeach
             </ul>
         </div>
@@ -356,8 +356,8 @@
                     </div>
                     <p class="magnews-footer-text mb-3">ប្រព័ន្ធផ្សព្វផ្សាយ ហ្វេសប៊ុក ទូរស័ព្ទ អ៊ីនធឺណិត
                     </p>
-                    <p class="magnews-footer-contact mb-2"><i class="fas fa-phone me-2"></i>Phone: +855 855 481 01</p>
-                    <p class="magnews-footer-contact mb-2"><i class="fas fa-envelope me-2"></i>Email:
+                    <p class="mb-2"><i class="fas fa-phone me-2"></i>Phone: +855 855 481 01</p>
+                    <p class="mb-2"><i class="fas fa-envelope me-2"></i>Email:
                         sela168@gmail.com</p>
                     <div class="magnews-footer-social mt-3">
                         <a href="#" class="magnews-footer-social-icon" title="Facebook"><i
@@ -376,30 +376,30 @@
                 <div class="col-md-4 magnews-footer-column">
                     <h5 class="magnews-footer-title mb-3">Popular Posts</h5>
                     @php
-                    $popularPosts = \App\Models\News::where('status', 'Accept')
-                    ->withCount('likes')
-                    ->orderBy('likes_count', 'desc')
-                    ->orderBy('views', 'desc')
-                    ->take(3)
-                    ->get();
+                        $popularPosts = \App\Models\News::where('status', 'Accept')
+                            ->withCount('likes')
+                            ->orderBy('likes_count', 'desc')
+                            ->orderBy('views', 'desc')
+                            ->take(3)
+                            ->get();
                     @endphp
                     @foreach ($popularPosts as $post)
-                    <div class="magnews-footer-post mb-3">
-                        <div class="row g-2">
-                            <div class="col-4">
-                                <img src="{{ $post->image ? asset('storage/images/' . $post->image) : asset('img/noimg.jpg') }}"
-                                    alt="{{ $post->title }}" class="magnews-footer-post-img">
-                            </div>
-                            <div class="col-8">
-                                <a href="{{ route('news.show', $post->id) }}" class="magnews-footer-post-title">
-                                    {{ Str::limit($post->title, 50) }}
-                                </a>
-                                <p class="magnews-footer-post-date mb-0">
-                                    {{ $post->created_at->translatedFormat('M d, Y') }}
-                                </p>
+                        <div class="magnews-footer-post mb-3">
+                            <div class="row g-2">
+                                <div class="col-4">
+                                    <img src="{{ $post->image ? asset('storage/images/' . $post->image) : asset('img/noimg.jpg') }}"
+                                        alt="{{ $post->title }}" class="magnews-footer-post-img">
+                                </div>
+                                <div class="col-8">
+                                    <a href="{{ route('news.show', $post->id) }}" class="magnews-footer-post-title">
+                                        {{ Str::limit($post->title, 50) }}
+                                    </a>
+                                    <p class="magnews-footer-post-date mb-0">
+                                        {{ $post->created_at->translatedFormat('M d, Y') }}
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     @endforeach
                 </div>
                 <!-- Right Column - Categories -->
@@ -407,13 +407,13 @@
                     <h5 class="magnews-footer-title mb-3">Category</h5>
                     <ul class="magnews-footer-category-list">
                         @foreach (\App\Models\Category::orderBy('views', 'desc')->take(10)->get() as $category)
-                        <li class="magnews-footer-category-item">
-                            <a href="{{ route('news.viewCategory', $category->id) }}"
-                                class="magnews-footer-category-link">
-                                {{ $category->name }} <span
-                                    class="magnews-footer-category-count">({{ $category->news()->where('status', 'Accept')->count() }})</span>
-                            </a>
-                        </li>
+                            <li class="magnews-footer-category-item">
+                                <a href="{{ route('news.viewCategory', $category->id) }}"
+                                    class="magnews-footer-category-link">
+                                    {{ $category->name }} <span
+                                        class="magnews-footer-category-count">({{ $category->news()->where('status', 'Accept')->count() }})</span>
+                                </a>
+                            </li>
                         @endforeach
                     </ul>
                 </div>

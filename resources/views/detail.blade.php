@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
     <!-- Blog Detail Page Start -->
     <div class="container-fluid py-4">
         <div class="container">
@@ -61,16 +62,22 @@
                     </div>
 
                     @if ($news->audio)
-                        <div class="magnews-audio-player mb-4 d-flex align-items-center bg-light p-3 rounded shadow-sm border">
-                            <div class="me-3 text-danger">
-                                <i class="fas fa-volume-up fs-4"></i>
-                            </div>
+                        <div class="magnews-audio-player mb-4 d-flex align-items-center rounded ">
+
                             <div class="flex-grow-1">
-                                <div class="d-flex justify-content-between align-items-center mb-1">
-                                    <p class="mb-0 fw-bold"
+                                <div
+                                    class="d-flex align-items-center justify-content-center justify-content-between mb-1  ">
+                                    <p class="mb-0 fw-bold "
                                         style="font-size: 14px; color: #333; font-family: 'Kantumruy Pro', sans-serif;">
-                                        ស្តាប់អត្ថបទព័ត៌មាននេះ</p>
-                                    <span class="badge bg-secondary bg-opacity-25 text-dark border" style="font-size: 10px;">MP3</span>
+                                    <p class="mb-0 fw-bold 
+                                            @if (request()->cookie('dark_mode') === '1' || session('dark_mode') === true) text-light
+                                            @else
+                                                text-dark @endif
+                                        "
+                                        style="font-size: 14px; font-family: 'Kantumruy Pro', sans-serif;">
+                                        ស្តាប់អត្ថបទព័ត៌មាននេះ
+                                    </p>
+
                                 </div>
                                 <audio controls class="w-100 mt-1" style="height: 36px; border-radius: 4px;">
                                     <source src="{{ asset('storage/audio/' . $news->audio) }}" type="audio/mpeg">
@@ -86,58 +93,6 @@
                         <img src="{{ $news->image ? asset('storage/images/' . $news->image) : asset('img/noimg.jpg') }}"
                             alt="{{ $news->title }}" class="img-fluid w-100">
                     </div>
-
-                    <!-- Middle Banner Carousel -->
-                    @if (isset($detailBanners) && $detailBanners->count() > 0)
-                        <div class="mb-4">
-                            <div id="detailBannerCarousel" class="carousel slide rounded overflow-hidden shadow-sm"
-                                data-bs-ride="carousel" data-bs-interval="1500">
-                                @if ($detailBanners->count() > 1)
-                                    <div class="carousel-indicators">
-                                        @foreach ($detailBanners as $i => $banner)
-                                            <button type="button" data-bs-target="#detailBannerCarousel"
-                                                data-bs-slide-to="{{ $i }}"
-                                                class="{{ $i === 0 ? 'active' : '' }}"
-                                                aria-label="Banner {{ $i + 1 }}"></button>
-                                        @endforeach
-                                    </div>
-                                @endif
-
-                                <div class="carousel-inner">
-                                    @foreach ($detailBanners as $i => $banner)
-                                        <div class="carousel-item {{ $i === 0 ? 'active' : '' }}">
-                                            @if ($banner->url)
-                                                <a href="{{ $banner->url }}" target="_blank" rel="noopener">
-                                                    <img src="{{ asset('storage/banners/' . $banner->image) }}"
-                                                        alt="{{ $banner->title }}"
-                                                        class="d-block w-100 responsive-home-banner"
-                                                        onerror="this.closest('.carousel-item').style.display='none';">
-                                                </a>
-                                            @else
-                                                <img src="{{ asset('storage/banners/' . $banner->image) }}"
-                                                    alt="{{ $banner->title }}"
-                                                    class="d-block w-100 responsive-home-banner"
-                                                    onerror="this.closest('.carousel-item').style.display='none';">
-                                            @endif
-                                        </div>
-                                    @endforeach
-                                </div>
-
-                                @if ($detailBanners->count() > 1)
-                                    <button class="carousel-control-prev" type="button"
-                                        data-bs-target="#detailBannerCarousel" data-bs-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Previous</span>
-                                    </button>
-                                    <button class="carousel-control-next" type="button"
-                                        data-bs-target="#detailBannerCarousel" data-bs-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="visually-hidden">Next</span>
-                                    </button>
-                                @endif
-                            </div>
-                        </div>
-                    @endif
 
                     <!-- Additional Images Gallery -->
                     @if ($news->images && count($news->images) > 0)
@@ -191,8 +146,7 @@
                                             </button>
                                         </div>
                                         <div class="bg-dark bg-opacity-75 p-3">
-                                            <div class="d-flex justify-content-center gap-2 flex-wrap"
-                                                id="thumbnailStrip">
+                                            <div class="d-flex justify-content-center gap-2 flex-wrap" id="thumbnailStrip">
                                                 @foreach ($news->images as $thumbIndex => $thumbImage)
                                                     <img src="{{ asset('storage/images/' . $thumbImage) }}"
                                                         class="thumbnail-img rounded border border-2"
@@ -423,34 +377,45 @@
     <!-- Blog Detail Page End -->
 
     <style>
-        /* Middle banner carousel (match home) */
-        .responsive-home-banner {
-            max-height: 400px;
+        /* Middle banner carousel (detail page only) */
+        .detail-banner-carousel {
+            --detail-banner-height-desktop: 260px;
+            --detail-banner-height-lg: 220px;
+            --detail-banner-height-md: 200px;
+            --detail-banner-height-sm: 160px;
+        }
+
+        .detail-banner-carousel .carousel-item {
+            height: var(--detail-banner-height-desktop);
+        }
+
+        .detail-banner-carousel .responsive-home-banner {
+            height: 100%;
             width: 100%;
             object-fit: cover;
             border-radius: 8px;
             transition: transform 0.3s ease;
         }
 
-        .responsive-home-banner:hover {
+        .detail-banner-carousel .responsive-home-banner:hover {
             transform: scale(1.01);
         }
 
         @media (max-width: 991px) {
-            .responsive-home-banner {
-                max-height: 300px;
+            .detail-banner-carousel .carousel-item {
+                height: var(--detail-banner-height-lg);
             }
         }
 
         @media (max-width: 768px) {
-            .responsive-home-banner {
-                max-height: 250px;
+            .detail-banner-carousel .carousel-item {
+                height: var(--detail-banner-height-md);
             }
         }
 
         @media (max-width: 576px) {
-            .responsive-home-banner {
-                max-height: 180px;
+            .detail-banner-carousel .carousel-item {
+                height: var(--detail-banner-height-sm);
             }
         }
 

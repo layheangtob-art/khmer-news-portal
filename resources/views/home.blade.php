@@ -100,8 +100,8 @@
 <!-- Middle Banner Carousel -->
 
 @if(isset($homeBanners) && $homeBanners->count() > 0)
-<div class="container mt-4 mb-2">
-    <div id="homeBannerCarousel" class="carousel slide rounded overflow-hidden shadow-sm" data-bs-ride="carousel" data-bs-interval="2000">
+<div class="container mt-4 mb-2 ">
+    <div id="homeBannerCarousel" class="carousel slide rounded overflow-hidden shadow-lg" data-bs-ride="carousel" data-bs-interval="1600">
         {{-- Indicators --}}
         @if($homeBanners->count() > 1)
         <div class="carousel-indicators">
@@ -120,13 +120,13 @@
                 <a href="{{ $banner->url }}" target="_blank" rel="noopener">
                     <img src="{{ asset('storage/banners/' . $banner->image) }}"
                         alt="{{ $banner->title }}"
-                        class="d-block w-100 responsive-home-banner"
+                        class="d-block w-100 responsive-home-banner shadow"
                         onerror="this.closest('.carousel-item').style.display='none';">
                 </a>
                 @else
                 <img src="{{ asset('storage/banners/' . $banner->image) }}"
                     alt="{{ $banner->title }}"
-                    class="d-block w-100 responsive-home-banner"
+                    class="d-block w-100 responsive-home-banner shadow"
                     onerror="this.closest('.carousel-item').style.display='none';">
                 @endif
             </div>
