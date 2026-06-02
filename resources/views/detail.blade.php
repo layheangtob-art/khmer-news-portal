@@ -26,15 +26,6 @@
                     <!-- Article Title -->
                     <h1 class="magnews-article-title mb-3">{{ $news->title }}</h1>
 
-                    @if ($news->title_audio)
-                        <div class="mb-4">
-                            <audio controls style="height: 30px; width: 100%; max-width: 300px;">
-                                <source src="{{ asset('storage/audio/' . $news->title_audio) }}" type="audio/mpeg">
-                                Your browser does not support the audio element.
-                            </audio>
-                        </div>
-                    @endif
-
                     <!-- Meta Information -->
                     <div class="magnews-meta-info mb-4 d-flex align-items-center flex-wrap gap-2">
                         <span>By {{ $news->author->name ?? 'Admin' }}</span>

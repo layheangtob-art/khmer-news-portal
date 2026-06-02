@@ -7,7 +7,6 @@ use App\Events\NewsStatusUpdated;
 use App\Models\Banner;
 use App\Models\Category;
 use App\Models\News;
-use App\Services\CambTextToSpeechService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -15,9 +14,7 @@ use Illuminate\Support\Str;
 
 class NewsController extends Controller
 {
-    public function __construct(
-        protected CambTextToSpeechService $cambTts
-    ) {}
+    public function __construct() {}
 
     /**
      * Display a listing of the resource.
@@ -225,13 +222,6 @@ class NewsController extends Controller
                 'audio' => $audioFileName,
             ]);
 
-            if ($this->cambTts->isConfigured()) {
-                $titleAudio = $this->cambTts->synthesizeTitleToFile($request->title);
-                if ($titleAudio) {
-                    $news->update(['title_audio' => $titleAudio]);
-                }
-            }
-
             event(new NewsCreated($news));
 
             return response()->json([
@@ -382,20 +372,8 @@ class NewsController extends Controller
                 $data['audio'] = $audioFileName;
             }
 
-            if ($request->title !== $news->title && $news->title_audio) {
-                Storage::delete('public/audio/'.$news->title_audio);
-                $data['title_audio'] = null;
-            }
-
             $news->update($data);
             $news->refresh();
-
-            if ($this->cambTts->isConfigured() && $titleBefore !== $request->title) {
-                $titleAudio = $this->cambTts->synthesizeTitleToFile($news->title);
-                if ($titleAudio) {
-                    $news->update(['title_audio' => $titleAudio]);
-                }
-            }
 
             event(new NewsCreated($news));
 
@@ -437,9 +415,6 @@ class NewsController extends Controller
             }
             if ($news->audio) {
                 Storage::delete('public/audio/'.$news->audio);
-            }
-            if ($news->title_audio) {
-                Storage::delete('public/audio/'.$news->title_audio);
             }
             $news->delete();
 

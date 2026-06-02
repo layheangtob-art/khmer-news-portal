@@ -209,12 +209,20 @@
                                 <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fa fa-bell"></i>
-                                    <span class="notification" id="unread-notification-count"></span>
+                                    @php
+                                        $unreadNotificationCount = auth()->user()->notifications()->whereNull('read_at')->count();
+                                    @endphp
+                                    <span class="notification" id="unread-notification-count"
+                                        @if ($unreadNotificationCount <= 0) style="display: none;" @endif>{{ $unreadNotificationCount > 99 ? '99+' : $unreadNotificationCount }}</span>
                                 </a>
-                                <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
+                                <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown"
+                                    data-bs-auto-close="outside">
                                     <li>
                                         <div class="dropdown-title">
                                             <span>Notifications</span>
+                                            <button type="button" class="notif-mark-all-read" id="mark-all-notifications-read">
+                                                Mark all read
+                                            </button>
                                         </div>
                                     </li>
                                     <li>

@@ -59,6 +59,7 @@ Route::middleware(['auth', 'online.status'])->group(function () {
     Route::prefix('notifications')->name('notifications.')->group(function () {
         Route::get('/count', [NotificationController::class, 'unreadNotificationsCount'])->name('count');
         Route::get('/fetch', [NotificationController::class, 'fetchNotifications'])->name('fetch');
+        Route::post('/read-all', [NotificationController::class, 'markAllAsRead'])->name('markAllAsRead');
         Route::post('/{id}/read', [NotificationController::class, 'markAsRead'])->name('markAsRead');
     });
 });

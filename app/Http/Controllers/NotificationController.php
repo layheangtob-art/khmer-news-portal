@@ -43,4 +43,13 @@ class NotificationController extends Controller
 
         return response()->json(['success' => false, 'message' => 'Notification not found or does not belong to the current user.'], 404);
     }
+
+    public function markAllAsRead()
+    {
+        $updated = Notification::where('user_id', Auth::id())
+            ->whereNull('read_at')
+            ->update(['read_at' => now()]);
+
+        return response()->json(['success' => true, 'updated' => $updated]);
+    }
 }

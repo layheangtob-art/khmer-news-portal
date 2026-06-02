@@ -24,13 +24,28 @@ document.addEventListener('turbo:load', function() {
 
             fetch(url, {
                 method: 'POST',
+                credentials: 'same-origin',
                 headers: {
                     'X-CSRF-TOKEN': token,
                     'Accept': 'application/json',
                     'X-Requested-With': 'XMLHttpRequest'
                 }
             })
-            .then(response => response.json())
+            .then(async (response) => {
+                const contentType = response.headers.get('content-type') || ''
+
+                if (!response.ok) {
+                    const bodyText = await response.text()
+                    throw new Error(`Request failed (${response.status}): ${bodyText.slice(0, 200)}`)
+                }
+
+                if (!contentType.includes('application/json')) {
+                    const bodyText = await response.text()
+                    throw new Error(`Expected JSON but received: ${bodyText.slice(0, 200)}`)
+                }
+
+                return await response.json()
+            })
             .then(data => {
                 if(data.success) {
                     countSpan.textContent = data.likes;
@@ -59,7 +74,10 @@ document.addEventListener('turbo:load', function() {
                     }
                 }
             })
-            .catch(err => console.error('Error:', err));
+            .catch(err => {
+                console.error('Error:', err)
+                alert(err.message || 'Something went wrong')
+            });
         });
     });
 });

@@ -55,20 +55,6 @@
                                 </div>
                             @endif
                             <div class="card-body">
-                                @if($news->title_audio)
-                                <div class="magnews-audio-player mb-4 d-flex align-items-center bg-light p-3 rounded shadow-sm border">
-                                    <div class="me-3 text-primary">
-                                        <i class="fas fa-volume-up fs-4"></i>
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <p class="mb-1 fw-bold" style="font-size: 14px; color: #333; font-family: 'Kantumruy Pro', sans-serif;">ស្តាប់ចំណងជើង (Title Audio)</p>
-                                        <audio controls class="w-100 mt-1" style="height: 36px; border-radius: 4px;">
-                                            <source src="{{ asset('storage/audio/' . $news->title_audio) }}" type="audio/mpeg">
-                                            Your browser does not support the audio element.
-                                        </audio>
-                                    </div>
-                                </div>
-                                @endif
                                 @if($news->audio)
                                 <div class="magnews-audio-player my-4 d-flex align-items-center bg-light p-3 rounded shadow-sm border">
                                     <div class="me-3 text-danger">

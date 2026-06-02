@@ -805,8 +805,7 @@ Handles all news articles authored by staff members.
 - **content:** Full article body stored as rich HTML from CKEditor 5
 - **image:** Main featured image path
 - **images:** JSON array of additional images (optional)
-- **audio:** Path to generated Text-to-Speech audio for article content (optional)
-- **title_audio:** Path to generated TTS audio for the article title (optional)
+- **audio:** Optional uploaded audio voice file path (MP3)
 - **status:** Publication status (Pending, Accepted, Rejected)
 - **is_pinned:** Boolean flag to feature article on homepage
 - **user_id:** Foreign key referencing the author in `users`
@@ -896,7 +895,7 @@ The backend is built using Laravel 11 and PHP 8.2, with a feature-driven design 
   - `Category.php` – News category definitions and view counts.
   - `Banner.php` – Sponsor banner assets, links, and active status.
 - **app/Http/Controllers/** – Route controllers handling business logic for news, auth, likes, categories, banners, users, and notifications.
-- **app/Services/** – Contains `CambTextToSpeechService.php` for generating Khmer audio from article content.
+- **app/Services/** – Service layer for reusable business logic (project-specific).
 - **app/Events/ & app/Listeners/** – Event-driven notification handling for news creation and status updates.
 - **app/Http/Middleware/** – Custom middleware such as `OnlineStatus.php` for tracking active users.
 - **routes/web.php** – Defines all public and admin URL routes with middleware groups.
@@ -916,7 +915,7 @@ The backend is built using Laravel 11 and PHP 8.2, with a feature-driven design 
 | Category Filtering | Backend filtering logic by predefined categories (sports, local news, etc.) |
 | View & Like Tracking | Each article tracks total views; likes stored per device via UUID in MySQL |
 | Sponsor Banners | Dynamic banner carousel with active/inactive toggle and position control |
-| Khmer Text-to-Speech | Google Cloud TTS API generates audio files for article accessibility |
+| Audio Voice (Optional) | Admin can upload an MP3 voice file per article and users can play it on the detail page |
 
 ### 5.3.4 Data Flow Overview
 
