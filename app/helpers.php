@@ -6,9 +6,9 @@ if (! function_exists('media_url')) {
     /**
      * Resolve the public URL of a file stored on the "media" disk.
      *
-     * The "media" disk is the local public disk during development and the
-     * Laravel Cloud object storage bucket in production, so the same call
-     * returns the correct URL in both environments.
+     * Local deployments can use either /media/<path> or /storage/<path> because
+     * the app creates a media symlink for compatibility. Cloud deployments keep
+     * uploaded files on the configured bucket and return the object URL directly.
      */
     function media_url(?string $path): ?string
     {
@@ -18,14 +18,32 @@ if (! function_exists('media_url')) {
 
         $path = ltrim($path, '/');
 
-        // Local files are served by MediaController. Do not use /storage/... on
-        // Laravel Cloud: public/storage is a symlink, so missing files 404 at
-        // the web server and never reach Laravel.
-        if (config('filesystems.disks.media.driver') === 'local') {
-            return url('media/'.$path);
+        if (blank($path)) {
+            return null;
         }
 
-        return Storage::disk('media')->url($path);
+        $disk = Storage::disk('media');
+        $driver = config('filesystems.disks.media.driver');
+
+        if ($driver === 'local') {
+            $localUrl = url('media/'.$path);
+
+            if (file_exists($disk->path($path)) || file_exists(public_path('media/'.$path))) {
+                return $localUrl;
+            }
+
+            if (file_exists(storage_path('app/public/'.$path))) {
+                return url('storage/'.$path);
+            }
+
+            return $localUrl;
+        }
+
+        if (method_exists($disk, 'url')) {
+            return $disk->url($path);
+        }
+
+        return url('storage/'.$path);
     }
 }
 

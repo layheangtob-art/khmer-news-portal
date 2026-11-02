@@ -16,8 +16,17 @@ class MediaController extends Controller
         }
 
         $disk = Storage::disk('media');
+        $diskPath = $disk->path($path);
 
         if (! $disk->exists($path)) {
+            $publicPath = storage_path('app/public/'.$path);
+
+            if (file_exists($publicPath)) {
+                return response()->file($publicPath, [
+                    'Cache-Control' => 'public, max-age=31536000',
+                ]);
+            }
+
             if (str_starts_with($path, 'audio/')) {
                 abort(404);
             }
@@ -26,7 +35,7 @@ class MediaController extends Controller
         }
 
         if (config('filesystems.disks.media.driver') === 'local') {
-            return response()->file($disk->path($path), [
+            return response()->file($diskPath, [
                 'Cache-Control' => 'public, max-age=31536000',
             ]);
         }
