@@ -1,5 +1,14 @@
 @extends('layouts.app')
 
+@section('title', 'ព័ត៌មានទាំងអស់ - KH News')
+@section('description', 'ព័ត៌មានថ្មីៗទាំងអស់ពី KH News — ព័ត៌មានជាតិ អន្តរជាតិ កម្សាន្ត និងកីឡា ធ្វើបច្ចុប្បន្នភាពជារៀងរាល់ថ្ងៃ។')
+
+@if ($allNews->currentPage() > 1)
+    @push('meta')
+        <meta name="robots" content="noindex, follow">
+    @endpush
+@endif
+
 @section('content')
     <!-- Banner Carousel Section -->
     @if(isset($listBanners) && $listBanners->count() > 0)
@@ -23,15 +32,15 @@
                     <a href="{{ $banner->url }}" target="_blank" rel="noopener">
                         <img src="{{ asset('storage/banners/' . $banner->image) }}"
                              alt="{{ $banner->title }}"
-                             class="d-block w-100 rounded"
-                             style="max-height: 200px; object-fit: cover;"
+                             class="d-block w-100 rounded" width="1200" height="200"
+                             style="max-height: 200px; height: auto; object-fit: cover;"
                              onerror="this.closest('.carousel-item').style.display='none';">
                     </a>
                     @else
                     <img src="{{ asset('storage/banners/' . $banner->image) }}"
                          alt="{{ $banner->title }}"
-                         class="d-block w-100 rounded"
-                         style="max-height: 200px; object-fit: cover;"
+                         class="d-block w-100 rounded" width="1200" height="200"
+                         style="max-height: 200px; height: auto; object-fit: cover;"
                          onerror="this.closest('.carousel-item').style.display='none';">
                     @endif
                 </div>
@@ -73,7 +82,7 @@
                                     <div class="col-md-4">
                                         <div class="position-relative h-100" style="min-height: 250px;">
                                             <img src="{{ $news->image ? asset('storage/images/' . $news->image) : asset('img/noimg.jpg') }}"
-                                                class="img-fluid w-100 h-100" alt="{{ $news->title }}" style="object-fit: cover;" />
+                                                class="img-fluid w-100 h-100" alt="{{ $news->title }}" width="800" height="600" style="object-fit: cover;" loading="lazy" decoding="async" />
            
                                             <!-- Additional images indicator -->
                                             @if($news->images && count($news->images) > 0)
@@ -92,7 +101,7 @@
                                                     <i class="fa fa-calendar-alt me-1"></i>{{ $news->created_at->translatedFormat('d F Y') }}
                                                 </div>
                                             </div>
-                                            <h4><a href="{{ route('news.show', $news->id) }}">{{ $news->title }}</a></h4>
+                                            <h4><a href="{{ route('news.show', $news->slug) }}">{{ $news->title }}</a></h4>
                                             <p>{{ Str::limit(strip_tags($news->content), 180, '...') }}</p>
                                             <div class="news-item-stats">
                                                 <div>
@@ -154,7 +163,7 @@
                                         class="rounded" style="width: 80px; height: 60px; object-fit: cover;" alt="{{ $news->title }}">
                                 </div>
                                 <div class="flex-grow-1">
-                                    <a href="{{ route('news.show', $news->id) }}" class="text-decoration-none">
+                                    <a href="{{ route('news.show', $news->slug) }}" class="text-decoration-none">
                                         <h6 class="mb-1 fw-bold line-clamp-2 news-title" style="font-size: 0.9rem;">
                                             {{ Str::limit($news->title, 50) }}
                                         </h6>
@@ -181,7 +190,7 @@
                                     <span class="badge bg-light text-dark border fw-bold rounded-circle d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;">{{ $index + 1 }}</span>
                                 </div>
                                 <div class="flex-grow-1">
-                                    <a href="{{ route('news.show', $news->id) }}" class="text-decoration-none">
+                                    <a href="{{ route('news.show', $news->slug) }}" class="text-decoration-none">
                                         <h6 class="mb-1 fw-bold line-clamp-2 news-title" style="font-size: 0.9rem;">
                                             {{ Str::limit($news->title, 50) }}
                                         </h6>

@@ -1,33 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8" />
-    <title>KH News - ព័ត៌មានខ្មែរ</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link href="https://fonts.googleapis.com/css2?family=Koulen&display=swap" rel="stylesheet">
+
+    <!-- SEO Meta Tags -->
+    <title>@yield('title', 'KH News - ព័ត៌មានខ្មែរ')</title>
+    <meta name="description" content="@yield('description', 'KH News គឺជាគេហទំព័រព័ត៌មានឈានមុខគេ ដែលផ្តល់ជូននូវព័ត៌មានថ្មីៗបំផុតពីប្រទេសកម្ពុជា និងជុំវិញពិភពលោក។')">
+    <meta name="keywords" content="@yield('keywords', 'KH News, ព័ត៌មានខ្មែរ, ព័ត៌មានកម្ពុជា, Cambodia News, Khmer News, Latest News')">
+    <meta name="author" content="KH News">
+    <link rel="canonical" href="{{ url()->current() }}">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="@yield('og_type', 'website')">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="@yield('title', 'KH News - ព័ត៌មានខ្មែរ')">
+    <meta property="og:description" content="@yield('description', 'KH News គឺជាគេហទំព័រព័ត៌មានឈានមុខគេ ដែលផ្តល់ជូននូវព័ត៌មានថ្មីៗបំផុតពីប្រទេសកម្ពុជា និងជុំវិញពិភពលោក។')">
+    <meta property="og:image" content="@yield('og_image', asset('img/logo.png'))">
+    <meta property="og:site_name" content="KH News">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="{{ url()->current() }}">
+    <meta name="twitter:title" content="@yield('title', 'KH News - ព័ត៌មានខ្មែរ')">
+    <meta name="twitter:description" content="@yield('description', 'KH News គឺជាគេហទំព័រព័ត៌មានឈានមុខគេ ដែលផ្តល់ជូននូវព័ត៌មានថ្មីៗបំផុតពីប្រទេសកម្ពុជា និងជុំវិញពិភពលោក។')">
+    <meta name="twitter:image" content="@yield('og_image', asset('img/logo.png'))">
+
+    @stack('meta')
+
     <link rel="icon" type="image/png" href="{{ asset('img/logo_for_header_2.png') }}">
 
-    <!-- <link rel="" type="image/png" href="{{ asset('img/logo.png') }}"> -->
-
-
     <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@100;600;800&display=swap"
-        rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&family=Koulen&family=Open+Sans:wght@400;600&family=Raleway:wght@100;600;800&display=swap">
 
     <!-- Icon Font Stylesheet -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&family=Koulen&display=swap"
-        rel="stylesheet">
+    <!-- Organization / WebSite structured data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": "{{ url('/') }}#website",
+                "url": "{{ url('/') }}",
+                "name": "KH News",
+                "description": "KH News គឺជាគេហទំព័រព័ត៌មានឈានមុខគេ ដែលផ្តល់ជូននូវព័ត៌មានថ្មីៗបំផុតពីប្រទេសកម្ពុជា និងជុំវិញពិភពលោក។",
+                "inLanguage": "{{ str_replace('_', '-', app()->getLocale()) }}",
+                "publisher": { "@id": "{{ url('/') }}#organization" },
+                "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": {
+                        "@type": "EntryPoint",
+                        "urlTemplate": "{{ route('news.search') }}?q={search_term_string}"
+                    },
+                    "query-input": "required name=search_term_string"
+                }
+            },
+            {
+                "@type": "Organization",
+                "@id": "{{ url('/') }}#organization",
+                "name": "KH News",
+                "url": "{{ url('/') }}",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": "{{ asset('img/logo.png') }}"
+                }
+            }
+        ]
+    }
+    </script>
 
     <!-- Libraries Stylesheet -->
     <link href="{{ asset('th/lib/animate/animate.min.css') }}" rel="stylesheet" />
@@ -57,14 +106,14 @@
     <link rel="stylesheet" href="{{ asset('css/magnews-style.css') }}">
     
     <!-- JavaScript Libraries -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js" data-turbo-track="reload"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" data-turbo-track="reload"></script>
-    <script src="{{ asset('th/lib/easing/easing.min.js') }}" data-turbo-track="reload"></script>
-    <script src="{{ asset('th/lib/waypoints/waypoints.min.js') }}" data-turbo-track="reload"></script>
-    <script src="{{ asset('th/lib/owlcarousel/owl.carousel.min.js') }}" data-turbo-track="reload"></script>
-    <script src="{{ asset('th/js/main.js') }}" data-turbo-track="reload"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="{{ asset('th/lib/easing/easing.min.js') }}" defer></script>
+    <script src="{{ asset('th/lib/waypoints/waypoints.min.js') }}" defer></script>
+    <script src="{{ asset('th/lib/owlcarousel/owl.carousel.min.js') }}" defer></script>
+    <script src="{{ asset('th/js/main.js') }}" defer></script>
     
-    <script src="https://unpkg.com/@hotwired/turbo@8.0.0/dist/turbo.es2017-umd.js"></script>
+    <script src="https://unpkg.com/@hotwired/turbo@8.0.0/dist/turbo.es2017-umd.js" defer></script>
 
     <!-- it make for not relaod page -->
     <script>
@@ -115,11 +164,11 @@
                     <!-- <a href="#" class="magnews-topbar-link">Login</a>
                     <a href="#" class="magnews-topbar-link">Register</a> -->
                     <div class="magnews-social-icons d-flex align-items-center gap-2">
-                        <a href="#" class="magnews-social-icon" title="Facebook"><i
+                        <a href="#" class="magnews-social-icon" title="Facebook" aria-label="Facebook"><i
                                 class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="magnews-social-icon" title="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="magnews-social-icon" title="YouTube"><i class="fab fa-youtube"></i></a>
-                        <a href="#" class="magnews-social-icon" title="Vimeo"><i class="fab fa-vimeo-v"></i></a>
+                        <a href="#" class="magnews-social-icon" title="Twitter" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="magnews-social-icon" title="YouTube" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="magnews-social-icon" title="Vimeo" aria-label="Vimeo"><i class="fab fa-vimeo-v"></i></a>
                     </div>
                     {{-- <button class="magnews-search-icon-btn" data-bs-toggle="modal" data-bs-target="#searchModal">
                         <i class="fas fa-search"></i>
@@ -237,14 +286,14 @@
                             id="navbarSearchForm">
                             <div class="magnews-search-wrapper">
                                 <input type="text" class="magnews-search-input" name="q"
-                                    id="navbarSearchInput" placeholder="Search" autocomplete="off">
-                                <button type="button" class="magnews-search-icon-btn" id="navbarSearchIcon">
+                                    id="navbarSearchInput" placeholder="Search" autocomplete="off" aria-label="Search">
+                                <button type="button" class="magnews-search-icon-btn" id="navbarSearchIcon" aria-label="Submit Search">
                                     <i class="fas fa-search magnews-search-icon"></i>
                                 </button>
                             </div>
                         </form>
                         {{-- <button class="magnews-contact-btn">Contact</button> --}}
-                        <button class="magnews-theme-toggle-btn" type="button" id="themeToggleButton">
+                        <button class="magnews-theme-toggle-btn" type="button" id="themeToggleButton" aria-label="Toggle Theme">
                             <i class="fas fa-moon"></i>
                         </button>
                     </div>
@@ -266,14 +315,14 @@
                         $tickerNews = \App\Models\News::where('status', 'Accept')->latest()->take(10)->get();
                     @endphp
                     @foreach ($tickerNews as $news)
-                        <a href="{{ route('news.show', $news->id) }}" class="ticker-item">
+                        <a href="{{ route('news.show', $news->slug) }}" class="ticker-item">
                             <span class="ticker-separator">|</span>
                             {{ $news->title }}
                         </a>
                     @endforeach
                     {{-- Duplicate items for seamless loop --}}
                     @foreach ($tickerNews as $news)
-                        <a href="{{ route('news.show', $news->id) }}" class="ticker-item">
+                        <a href="{{ route('news.show', $news->slug) }}" class="ticker-item">
                             <span class="ticker-separator">|</span>
                             {{ $news->title }}
                         </a>
@@ -397,10 +446,10 @@
                             <div class="row g-2">
                                 <div class="col-4">
                                     <img src="{{ $post->image ? asset('storage/images/' . $post->image) : asset('img/noimg.jpg') }}"
-                                        alt="{{ $post->title }}" class="magnews-footer-post-img">
+                                        alt="{{ $post->title }}" class="magnews-footer-post-img" width="150" height="70" loading="lazy" decoding="async">
                                 </div>
                                 <div class="col-8">
-                                    <a href="{{ route('news.show', $post->id) }}" class="magnews-footer-post-title">
+                                    <a href="{{ route('news.show', $post->slug) }}" class="magnews-footer-post-title">
                                         {{ Str::limit($post->title, 50) }}
                                     </a>
                                     <p class="magnews-footer-post-date mb-0">
@@ -437,7 +486,7 @@
     <!-- Footer End -->
 
     <!-- Back to Top -->
-    <a href="#" id="back-to-top">
+    <a href="#" id="back-to-top" aria-label="Back to Top">
         <i class="fa fa-arrow-up"></i>
     </a>
 

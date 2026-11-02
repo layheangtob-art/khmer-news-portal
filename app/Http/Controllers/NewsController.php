@@ -172,6 +172,8 @@ class NewsController extends Controller
                 'image' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
                 'audio_file' => 'nullable|mimes:mp3,wav,ogg,mpeg|max:2048',
                 'category_id' => 'required|exists:category,id',
+                'meta_description' => 'nullable|string|max:255',
+                'focus_keyword' => 'nullable|string|max:255',
             ]);
 
             $imageHashName = null;
@@ -220,6 +222,8 @@ class NewsController extends Controller
                 'images' => ! empty($additionalImages) ? $additionalImages : null,
                 'is_pinned' => $request->has('is_pinned') ? true : false,
                 'audio' => $audioFileName,
+                'meta_description' => $request->input('meta_description'),
+                'focus_keyword' => $request->input('focus_keyword'),
             ]);
 
             event(new NewsCreated($news));
@@ -299,6 +303,8 @@ class NewsController extends Controller
                 'image' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
                 'audio_file' => 'nullable|mimes:mp3,wav,ogg,mpeg|max:2048',
                 'category_id' => 'required|exists:category,id',
+                'meta_description' => 'nullable|string|max:255',
+                'focus_keyword' => 'nullable|string|max:255',
             ]);
 
             $data = [
@@ -307,6 +313,8 @@ class NewsController extends Controller
                 'user_id' => Auth::id(),
                 'category_id' => $request->category_id,
                 'is_pinned' => $request->has('is_pinned') ? true : false,
+                'meta_description' => $request->input('meta_description'),
+                'focus_keyword' => $request->input('focus_keyword'),
             ];
 
             // Handle main image update
@@ -544,7 +552,7 @@ class NewsController extends Controller
                 'category' => $item->category->name ?? '',
                 'author' => $item->author->name ?? '',
                 'image' => $item->image ? asset('storage/images/'.$item->image) : null,
-                'url' => route('news.show', $item->id),
+                'url' => route('news.show', $item->slug),
                 'created_at' => $item->created_at->diffForHumans(),
                 'match_type' => $titleMatches->contains('id', $item->id) ? 'title' : 'content',
             ];

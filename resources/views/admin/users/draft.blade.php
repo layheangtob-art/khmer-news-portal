@@ -155,7 +155,7 @@
                                                         <div
                                                             class="form-button-action d-flex justify-content-center align-items-center">
                                                             <span data-bs-toggle="tooltip" title="View">
-                                                                <a href="{{ route('news.show', $news->id) }}"
+                                                                <a href="{{ route('news.show', $news->slug) }}"
                                                                     class="btn btn-link btn-primary btn-lg">
                                                                     <i class="far fa-eye"></i>
                                                                 </a>

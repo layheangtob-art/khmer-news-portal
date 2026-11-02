@@ -337,7 +337,7 @@
                                                             <i class="fas fa-edit"></i>
                                                         </a>
                                                     @endif
-                                                    <a href="{{ route('news.show', $news->id) }}" class="btn btn-outline-info" title="View">
+                                                    <a href="{{ route('news.show', $news->slug) }}" class="btn btn-outline-info" title="View">
                                                         <i class="fas fa-eye"></i>
                                                     </a>
                                                 </div>

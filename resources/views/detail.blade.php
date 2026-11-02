@@ -1,5 +1,72 @@
 @extends('layouts.app')
 
+@section('title', $news->title . ' - KH News')
+@section('description', $news->meta_description ?: Str::limit(strip_tags($news->content), 160))
+@section('keywords', ($news->focus_keyword ? $news->focus_keyword . ', ' : '') . ($news->category->name ?? 'News') . ', KH News, ព័ត៌មានខ្មែរ')
+@section('og_type', 'article')
+@section('og_image', $news->image ? asset('storage/images/' . $news->image) : asset('img/logo.png'))
+
+@php
+    $newsImage = $news->image ? asset('storage/images/' . $news->image) : asset('img/noimg.jpg');
+    $newsUrl = route('news.show', $news->slug);
+    $newsDescription = $news->meta_description ?: Str::limit(strip_tags($news->content), 160);
+@endphp
+
+@push('meta')
+    <meta property="article:published_time" content="{{ $news->created_at->toIso8601String() }}">
+    <meta property="article:modified_time" content="{{ $news->updated_at->toIso8601String() }}">
+    <meta property="article:section" content="{{ $news->category->name }}">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "NewsArticle",
+                "@id": @json($newsUrl . '#article'),
+                "isPartOf": { "@id": "{{ url('/') }}#website" },
+                "mainEntityOfPage": @json($newsUrl),
+                "headline": @json(Str::limit($news->title, 110)),
+                "image": [@json($newsImage)],
+                "datePublished": @json($news->created_at->toIso8601String()),
+                "dateModified": @json($news->updated_at->toIso8601String()),
+                "articleSection": @json($news->category->name),
+                "author": [{
+                    "@type": "Person",
+                    "name": @json($news->author->name ?? 'Admin'),
+                    "url": @json(route('index'))
+                }],
+                "publisher": { "@id": "{{ url('/') }}#organization" },
+                "description": @json($newsDescription),
+                "inLanguage": "{{ str_replace('_', '-', app()->getLocale()) }}"
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "ទំព័រដើម",
+                        "item": @json(route('index'))
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": @json($news->category->name),
+                        "item": @json(route('news.viewCategory', $news->category->id))
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 3,
+                        "name": @json(Str::limit($news->title, 60))
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
+@endpush
+
 @section('content')
 
     <!-- Blog Detail Page Start -->
@@ -82,7 +149,7 @@
                     <!-- Featured Image -->
                     <div class="magnews-featured-image mb-4">
                         <img src="{{ $news->image ? asset('storage/images/' . $news->image) : asset('img/noimg.jpg') }}"
-                            alt="{{ $news->title }}" class="img-fluid w-100">
+                            alt="{{ $news->title }}" class="img-fluid w-100" width="1200" height="630" loading="lazy">
                     </div>
 
                     <!-- Additional Images Gallery -->
@@ -94,10 +161,12 @@
                                         <div class="gallery-item position-relative overflow-hidden rounded shadow-sm">
                                             <img src="{{ asset('storage/images/' . $image) }}"
                                                 class="img-fluid w-100 gallery-image"
-                                                alt="Additional image {{ $index + 1 }}"
+                                                alt="Additional image {{ $index + 1 }} - {{ $news->title }}"
+                                                width="300" height="180"
                                                 style="height: 180px; object-fit: cover; cursor: pointer; transition: all 0.3s ease;"
                                                 data-bs-toggle="modal" data-bs-target="#imageGalleryModal"
-                                                onclick="openGallery('{{ $index }}')">
+                                                onclick="openGallery('{{ $index }}')"
+                                                loading="lazy">
                                             <div class="gallery-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
                                                 style="background: rgba(0,0,0,0.5); opacity: 0; transition: opacity 0.3s ease;">
                                                 <i class="fas fa-search-plus text-white fs-3"></i>
@@ -269,9 +338,9 @@
                                     <div class="col-lg-6">
                                         <div class="magnews-related-post">
                                             <img src="{{ $relatedNews->image ? asset('storage/images/' . $relatedNews->image) : asset('img/noimg.jpg') }}"
-                                                alt="{{ $relatedNews->title }}" class="magnews-related-img">
+                                                alt="{{ $relatedNews->title }}" class="magnews-related-img" width="120" height="120">
                                             <div class="magnews-related-content">
-                                                <a href="{{ route('news.show', $relatedNews->id) }}"
+                                                <a href="{{ route('news.show', $relatedNews->slug) }}"
                                                     class="magnews-related-title-link">
                                                     {{ Str::limit($relatedNews->title, 60) }}
                                                 </a>
@@ -334,9 +403,9 @@
                                 @foreach ($popularPosts as $popularPost)
                                     <div class="magnews-popular-post-item">
                                         <img src="{{ $popularPost->image ? asset('storage/images/' . $popularPost->image) : asset('img/noimg.jpg') }}"
-                                            alt="{{ $popularPost->title }}" class="magnews-popular-img">
+                                            alt="{{ $popularPost->title }}" class="magnews-popular-img" width="80" height="80">
                                         <div class="magnews-popular-content">
-                                            <a href="{{ route('news.show', $popularPost->id) }}"
+                                            <a href="{{ route('news.show', $popularPost->slug) }}"
                                                 class="magnews-popular-title">
                                                 {{ Str::limit($popularPost->title, 50) }}
                                             </a>

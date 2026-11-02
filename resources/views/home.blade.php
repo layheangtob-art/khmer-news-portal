@@ -1,6 +1,12 @@
 @extends('layouts.app')
 
+@section('title', 'KH News | ព័ត៌មានខ្មែរ និងអន្តរជាតិថ្មីៗបំផុត')
+@section('description', 'KH News ផ្តល់ព័ត៌មានកម្ពុជា និងអន្តរជាតិថ្មីៗបំផុត — ព័ត៌មានជាតិ អន្តរជាតិ កម្សាន្ត និងកីឡា ធ្វើបច្ចុប្បន្នភាពជារៀងរាល់ថ្ងៃ។')
+@section('keywords', 'ព័ត៌មានខ្មែរ, ព័ត៌មានកម្ពុជា, ព័ត៌មានថ្មីៗ, ព័ត៌មានអន្តរជាតិ, KH News, Cambodia news')
+
 @section('content')
+
+<h1 class="visually-hidden">KH News — ព័ត៌មានខ្មែរ និងអន្តរជាតិថ្មីៗបំផុត</h1>
 
 <!-- Hero / Latest News Section -->
 <div class="container py-2">
@@ -19,10 +25,12 @@
                     <img src="{{ $latestNews->first()->image ? asset('storage/images/' . $latestNews->first()->image) : asset('img/noimg.jpg') }}"
                         class="w-100 h-100"
                         style="object-fit: cover;"
-                        alt="{{ $latestNews->first()->title }}">
+                        width="1200" height="800"
+                        alt="{{ $latestNews->first()->title }}"
+                        fetchpriority="high" decoding="async">
                     <div class="position-absolute bottom-0 start-0 w-100 hero-card-content p-4" style="background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);">
                         <span class="badge bg-primary mb-2">{{ $latestNews->first()->category->name ?? 'News' }}</span>
-                        <a href="{{ route('news.show', $latestNews->first()->id) }}" class="text-decoration-none">
+                        <a href="{{ route('news.show', $latestNews->first()->slug) }}" class="text-decoration-none">
                             <h2 class="text-white fw-bold mb-2 hero-card-title">{{ $latestNews->first()->title }}</h2>
                         </a>
                         <div class="text-white-50 small">
@@ -44,11 +52,13 @@
                                 <img src="{{ $news->image ? asset('storage/images/' . $news->image) : asset('img/noimg.jpg') }}"
                                     class="img-fluid rounded-start h-100"
                                     style="object-fit: cover;"
-                                    alt="{{ $news->title }}">
+                                    width="600" height="600"
+                                    alt="{{ $news->title }}"
+                                    loading="lazy">
                             </div>
                             <div class="col-8">
                                 <div class="card-body py-2 pe-2">
-                                    <a href="{{ route('news.show', $news->id) }}" class="text-decoration-none">
+                                    <a href="{{ route('news.show', $news->slug) }}" class="text-decoration-none">
                                         <h6 class="card-title fw-bold mb-2 line-clamp-2 news-title">
                                             {{ Str::limit($news->title, 50) }}
                                         </h6>
@@ -78,7 +88,7 @@
                         <span class="badge bg-light text-dark border fw-bold rounded-circle d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;">{{ $index + 1 }}</span>
                     </div>
                     <div class="flex-grow-1">
-                        <a href="{{ route('news.show', $news->id) }}" class="text-decoration-none">
+                        <a href="{{ route('news.show', $news->slug) }}" class="text-decoration-none">
                             <h6 class="mb-1 fw-bold line-clamp-2 news-title">
                                 {{ Str::limit($news->title, 60) }}
                             </h6>
@@ -121,18 +131,20 @@
                     <img src="{{ asset('storage/banners/' . $banner->image) }}"
                         alt="{{ $banner->title }}"
                         class="d-block w-100 responsive-home-banner shadow"
-                        onerror="this.closest('.carousel-item').style.display='none';">
+                        width="1200" height="400"
+                        onerror="this.closest('.carousel-item').style.display='none';"
+                        loading="lazy">
                 </a>
                 @else
                 <img src="{{ asset('storage/banners/' . $banner->image) }}"
                     alt="{{ $banner->title }}"
                     class="d-block w-100 responsive-home-banner shadow"
-                    onerror="this.closest('.carousel-item').style.display='none';">
+                    onerror="this.closest('.carousel-item').style.display='none';"
+                    loading="lazy">
                 @endif
             </div>
             @endforeach
         </div>
-
         {{-- Prev/Next controls --}}
         @if($homeBanners->count() > 1)
         <button class="carousel-control-prev" type="button" data-bs-target="#homeBannerCarousel" data-bs-slide="prev">
@@ -183,15 +195,17 @@
                             <img src="{{ $news->image ? asset('storage/images/' . $news->image) : asset('img/noimg.jpg') }}"
                                 class="card-img-top w-100 h-100"
                                 style="object-fit: cover; transition: transform 0.3s;"
+                                width="600" height="400"
                                 onmouseover="this.style.transform='scale(1.1)'"
                                 onmouseout="this.style.transform='scale(1)'"
-                                alt="{{ $news->title }}">
+                                alt="{{ $news->title }}"
+                                loading="lazy">
                             <div class="position-absolute top-0 start-0 m-2">
                                 <span class="badge bg-primary">{{ $news->category->name ?? 'News' }}</span>
                             </div>
                         </div>
                         <div class="card-body d-flex flex-column">
-                            <a href="{{ route('news.show', $news->id) }}" class="text-decoration-none mb-auto">
+                            <a href="{{ route('news.show', $news->slug) }}" class="text-decoration-none mb-auto">
                                 <h5 class="card-title fw-bold line-clamp-2 news-title" style="font-size: 1.1rem;">
                                     {{ Str::limit($news->title, 60) }}
                                 </h5>
@@ -218,12 +232,14 @@
                             <img src="{{ $news->image ? asset('storage/images/' . $news->image) : asset('img/noimg.jpg') }}"
                                 class="card-img-top w-100 h-100"
                                 style="object-fit: cover; transition: transform 0.3s;"
+                                width="600" height="400"
                                 onmouseover="this.style.transform='scale(1.1)'"
                                 onmouseout="this.style.transform='scale(1)'"
-                                alt="{{ $news->title }}">
+                                alt="{{ $news->title }}"
+                                loading="lazy">
                         </div>
                         <div class="card-body d-flex flex-column">
-                            <a href="{{ route('news.show', $news->id) }}" class="text-decoration-none mb-auto">
+                            <a href="{{ route('news.show', $news->slug) }}" class="text-decoration-none mb-auto">
                                 <h5 class="card-title fw-bold line-clamp-2 news-title" style="font-size: 1.1rem;">
                                     {{ Str::limit($news->title, 60) }}
                                 </h5>
@@ -260,6 +276,7 @@
     .responsive-home-banner {
         max-height: 400px;
         width: 100%;
+        height: auto;
         object-fit: cover;
         border-radius: 8px;
         transition: transform 0.3s ease;

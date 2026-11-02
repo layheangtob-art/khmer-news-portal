@@ -7,16 +7,36 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserController;
+use App\Models\Category;
+use App\Models\News;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
 // All
 Route::get('/', [NewsController::class, 'index'])->name('index');
 Route::get('/news', [NewsController::class, 'listAllNews'])->name('news.index');
-Route::get('/news/{news}/show', [NewsController::class, 'show'])->name('news.show');
+
+// Legacy ID-based article URLs → permanent 301 redirect to the slug URL.
+Route::get('/news/{id}/show', function (int $id) {
+    $news = News::findOrFail($id);
+
+    return redirect()->to(route('news.show', $news->slug), 301);
+})->whereNumber('id');
+
+Route::get('/news/{news:slug}/show', [NewsController::class, 'show'])->name('news.show');
 Route::post('/news/{news}/like', [LikeController::class, 'likeNews'])->name('news.like');
 Route::get('/news/{categories}/category', [NewsController::class, 'viewCategory'])->name('news.viewCategory');
 Route::get('/search', [NewsController::class, 'search'])->name('news.search');
+
+// XML sitemap for search engines.
+Route::get('/sitemap.xml', function () {
+    $news = News::where('status', 'Accept')->orderBy('updated_at', 'desc')->get();
+    $categories = Category::all();
+
+    return response()->view('sitemap', compact('news', 'categories'))
+        ->header('Content-Type', 'text/xml');
+})->name('sitemap');
+
 Route::get('/storage/images/{filename}', function (string $filename) {
     if (! preg_match('/^[A-Za-z0-9._-]+$/', $filename)) {
         abort(404);

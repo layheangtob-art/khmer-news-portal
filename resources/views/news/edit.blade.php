@@ -208,6 +208,18 @@
                                             <label for="editor" class="mb-2">Content</label>
                                             <textarea class="form-control col-12" id="editor" name="content" style="border: none; outline: none;">{{ $news->content }}</textarea>
                                         </div>
+                                        <div class="form-group">
+                                            <label for="metaDescription">Meta Description (SEO)</label>
+                                            <textarea class="form-control" id="metaDescription" name="meta_description" rows="2" maxlength="255"
+                                                placeholder="Short summary shown in search results (max 255 characters)">{{ $news->meta_description }}</textarea>
+                                            <small class="form-text text-muted">Optional. If left empty, an excerpt of the news body is used.</small>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="focusKeyword">Focus Keyword (SEO)</label>
+                                            <input type="text" class="form-control" id="focusKeyword" name="focus_keyword" maxlength="255"
+                                                placeholder="e.g. ព័ត៌មានកម្ពុជា" value="{{ $news->focus_keyword }}" />
+                                            <small class="form-text text-muted">Optional. Main keyword for this article.</small>
+                                        </div>
                                         <div class="form-group col-md-6">
                                             <label>Main Image</label>
                                             <input type="file" class="form-control" id="imageInput" name="image" accept="image/*" />

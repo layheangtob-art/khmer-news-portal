@@ -1,11 +1,18 @@
 @extends('layouts.app')
 
+@section('title', (isset($query) && $query !== '' ? $query . ' - ' : '') . 'ស្វែងរក - KH News')
+@section('description', 'លទ្ធផលស្វែងរកព័ត៌មាននៅលើ KH News។')
+
+@push('meta')
+    <meta name="robots" content="noindex, follow">
+@endpush
+
 @section('content')
 <div class="container-fluid py-5">
     <div class="container">
         <!-- Search Results Header -->
         <div class="mb-4">
-            <h2 class="mb-3">Search Results</h2>
+            <h1 class="mb-3 h2">Search Results</h1>
             @if(isset($query) && !empty($query))
                 <p class="text-muted">
                     @if(isset($resultsArray) && is_array($resultsArray) && count($resultsArray) > 0)
@@ -26,9 +33,10 @@
                             @if(isset($result['image']) && $result['image'])
                                 <div class="position-relative" style="height: 180px; overflow: hidden;">
                                     <img src="{{ $result['image'] }}" 
-                                         class="card-img-top w-100 h-100" 
+                                         class="card-img-top w-100 h-100" width="400" height="300" 
                                          style="object-fit: cover;" 
                                          alt="{{ $result['title'] }}"
+                                         loading="lazy" decoding="async"
                                          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                                     <div class="card-img-top bg-light align-items-center justify-content-center" style="height: 180px; display: none;">
                                         <i class="fas fa-newspaper fa-2x text-muted"></i>

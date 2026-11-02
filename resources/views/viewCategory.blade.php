@@ -1,5 +1,32 @@
 @extends('layouts.app')
 
+@section('title', $categories->name . ' - KH News')
+@section('description', 'មើលព័ត៌មានថ្មីៗបំផុតក្នុងប្រភេទ ' . $categories->name . ' នៅលើ KH News')
+@section('keywords', $categories->name . ', KH News, ព័ត៌មានខ្មែរ, ' . $categories->name . ' news')
+
+@push('meta')
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "ទំព័រដើម",
+                "item": @json(route('index'))
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": @json($categories->name),
+                "item": @json(route('news.viewCategory', $categories->id))
+            }
+        ]
+    }
+    </script>
+@endpush
+
 @section('content')
 <!-- Category News Section Start -->
 <div class="container-fluid py-5">
@@ -17,7 +44,7 @@
                 <div class="position-relative mb-5">
                     <div class="news-featured-image">
                         <img src="{{ $news->image ? asset('storage/images/' . $news->image) : asset('img/noimg.jpg') }}"
-                            class="img-fluid w-100 featured-news-img" alt="{{ $news->title }}" onerror="this.src=`{{ asset('img/noimg.jpg') }}`;" />
+                            class="img-fluid w-100 featured-news-img" width="1200" height="500" alt="{{ $news->title }}" onerror="this.src=`{{ asset('img/noimg.jpg') }}`;" loading="lazy" />
                         <!-- Additional images indicator for featured news -->
                         @if($news->images && count($news->images) > 0)
                         <div class="position-absolute image-indicator text-white"
@@ -33,7 +60,7 @@
                                     <i class="fa fa-calendar-alt me-1"></i>{{ $news->created_at->translatedFormat('d F Y') }}
                                 </div>
                             </div>
-                            <h2><a href="{{ route('news.show', $news->id) }}">{{ $news->title }}</a></h2>
+                            <h2><a href="{{ route('news.show', $news->slug) }}">{{ $news->title }}</a></h2>
                             <p>{!! Str::limit(strip_tags($news->content), 200, '...') !!}</p>
                         </div>
                     </div>
@@ -49,7 +76,7 @@
                                 <div class="col-md-4">
                                     <div class="position-relative h-100" style="min-height: 250px;">
                                         <img src="{{ $news->image ? asset('storage/images/' . $news->image) : asset('img/noimg.jpg') }}"
-                                            class="img-fluid w-100 h-100" alt="{{ $news->title }}" style="object-fit: cover;" onerror="this.src=`{{ asset('img/noimg.jpg') }}`;" />
+                                            class="img-fluid w-100 h-100" alt="{{ $news->title }}" width="800" height="600" style="object-fit: cover;" onerror="this.src=`{{ asset('img/noimg.jpg') }}`;" loading="lazy" />
                                         <div class="position-absolute" style="top: 15px; left: 15px;">
                                             <div class="d-flex">
                                                 <div class="flag-corner-blue"></div>
@@ -73,7 +100,7 @@
                                                 <i class="fa fa-calendar-alt me-1"></i>{{ $news->created_at->translatedFormat('d F Y') }}
                                             </div>
                                         </div>
-                                        <h4><a href="{{ route('news.show', $news->id) }}">{{ $news->title }}</a></h4>
+                                        <h4><a href="{{ route('news.show', $news->slug) }}">{{ $news->title }}</a></h4>
                                         <p>{{ Str::limit(strip_tags($news->content), 180, '...') }}</p>
                                         <div class="news-item-stats">
                                             <div>
@@ -121,10 +148,10 @@
                         <div class="d-flex align-items-start mb-3 pb-3 border-bottom {{ $loop->last ? 'border-0 mb-0 pb-0' : '' }}">
                             <div class="me-3">
                                 <img src="{{ $news->image ? asset('storage/images/' . $news->image) : asset('img/noimg.jpg') }}"
-                                    class="rounded" style="width: 80px; height: 60px; object-fit: cover;" alt="{{ $news->title }}" onerror="this.src=`{{ asset('img/noimg.jpg') }}`;">
+                                    class="rounded" width="80" height="60" style="width: 80px; height: 60px; object-fit: cover;" alt="{{ $news->title }}" onerror="this.src=`{{ asset('img/noimg.jpg') }}`;">
                             </div>
                             <div class="flex-grow-1">
-                                <a href="{{ route('news.show', $news->id) }}" class="text-decoration-none">
+                                <a href="{{ route('news.show', $news->slug) }}" class="text-decoration-none">
                                     <h6 class="mb-1 fw-bold line-clamp-2 news-title" style="font-size: 0.9rem;">
                                         {{ Str::limit($news->title, 50) }}
                                     </h6>
@@ -151,7 +178,7 @@
                                 <span class="badge bg-light text-dark border fw-bold rounded-circle d-flex align-items-center justify-content-center" style="width: 30px; height: 30px;">{{ $index + 1 }}</span>
                             </div>
                             <div class="flex-grow-1">
-                                <a href="{{ route('news.show', $news->id) }}" class="text-decoration-none">
+                                <a href="{{ route('news.show', $news->slug) }}" class="text-decoration-none">
                                     <h6 class="mb-1 fw-bold line-clamp-2 news-title" style="font-size: 0.9rem;">
                                         {{ Str::limit($news->title, 50) }}
                                     </h6>
