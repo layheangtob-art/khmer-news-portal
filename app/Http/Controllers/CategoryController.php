@@ -18,6 +18,7 @@ class CategoryController extends Controller
     public function manage()
     {
         $allCategory = Category::all();
+
         return view('admin.category.manage', compact('allCategory'));
     }
 
@@ -46,12 +47,12 @@ class CategoryController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Successfully saved the data.',
-                'redirect_url' => route('admin.category.manage')
+                'redirect_url' => route('admin.category.manage'),
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ]);
         }
     }
@@ -80,7 +81,7 @@ class CategoryController extends Controller
         try {
             $request->validate([
                 // Lebih baik gunakan name, karena jika menggunakan id, saat di update dengan nama yang sama, maka akan berhasil
-                'name' => 'required|string|max:255|unique:category,name,' . $category->name,
+                'name' => 'required|string|max:255|unique:category,name,'.$category->name,
             ]);
 
             $category->update([
@@ -90,12 +91,12 @@ class CategoryController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Successfully update the data.',
-                'redirect_url' => route('admin.category.manage')
+                'redirect_url' => route('admin.category.manage'),
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ]);
         }
     }
@@ -106,13 +107,29 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         try {
+            $newsCount = $category->news()->count();
+
+            if ($newsCount > 0) {
+                $message = "Cannot delete this category because it is used by {$newsCount} news article(s). Please reassign or delete those articles first.";
+
+                if (request()->ajax() || request()->wantsJson()) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => $message,
+                    ]);
+                }
+
+                return redirect()->route('admin.category.manage')
+                    ->with('error', $message);
+            }
+
             $category->delete();
 
             if (request()->ajax() || request()->wantsJson()) {
                 return response()->json([
                     'success' => true,
                     'message' => 'Successfully delete the data.',
-                    'redirect_url' => route('admin.category.manage')
+                    'redirect_url' => route('admin.category.manage'),
                 ]);
             }
 
@@ -122,13 +139,12 @@ class CategoryController extends Controller
             if (request()->ajax() || request()->wantsJson()) {
                 return response()->json([
                     'success' => false,
-                    'message' => $e->getMessage()
+                    'message' => $e->getMessage(),
                 ]);
             }
 
             return redirect()->route('admin.category.manage')
                 ->with('error', $e->getMessage());
-                
         }
     }
 }

@@ -2,7 +2,22 @@
 
 ## Chapter 1: Introduction
 
-People in Cambodia rely on online platforms to read news daily and seek fast, easy access to hot and trending topics. However, existing news sources are often difficult to organize and access. To address these challenges, this project introduces a user-friendly news web application for Cambodian users, called **KH News Portal**. The system is designed to help users stay updated with the latest news at any time, offering a reliable, high-performance platform with features such as category browsing, keyword search, real-time likes, and Khmer Text-to-Speech for improved accessibility. Users can also connect with social platforms for further details and updates.
+People in Cambodia rely on online platforms to read news daily and seek fast, easy access to hot and trending topics. However, existing news sources are often difficult to organize and access. To address these challenges, this project introduces a user-friendly news web application for Cambodian users, called **KH News Portal**. The system is designed to help users stay updated with the latest news at any time, offering a reliable, high-performance platform with features such as category browsing, keyword search, real-time likes, and notifications for staff. Users can also connect with social platforms for further details and updates.
+
+## Aim and Objectives
+
+**Aim:** To design and develop a responsive Khmer news web platform for Cambodian readers and newsroom administrators.
+
+**Objectives:**
+
+- To create a web platform for displaying the newest and hot news in Cambodia.
+- To provide organized news categories such as sports, entertainment, technology, and politics.
+- To design a simple and responsive user interface for users.
+- To allow users to access news easily anytime and anywhere.
+- To implement keyword search and category browsing so readers can find articles quickly.
+- To enable real-time interaction features such as article likes without page reload.
+- To build a secure administrative dashboard for managing news, categories, users, and banners.
+- To improve knowledge and skills in web development and database management.
 
 ## Problem Statement
 
@@ -63,25 +78,16 @@ The development successfully achieved:
 
 ## Chapter 5: Key Findings
 
-Simple and user-friendly UI designed for Cambodian users
+The development outcomes were evaluated against the project objectives as follows:
 
-Displays the latest and pinned news articles on the homepage
-
-News categories include sports, local news, technology, and more
-
-Allows readers to browse and search news by keywords or category
-
-Users can like articles with real-time count updates without page reload
-
-Khmer Text-to-Speech lets users listen to news articles for better accessibility
-
-Dark mode support for comfortable reading in different lighting conditions
-
-Dynamic sponsor banner carousel for rotating advertisements
-
-Admin dashboard for managing news content, categories, banners, and users
-
-Role-based access control for Super Admin, Editor, and Writer staff
+- To create a web platform for displaying the newest and hot news in Cambodia — **achieved** through the public homepage with latest and trending articles.
+- To provide organized news categories such as sports, entertainment, technology, and politics — **achieved** through category-based browsing and filtering.
+- To design a simple and responsive user interface for users — **achieved** with a mobile-friendly layout using Bootstrap 5 and modern CSS.
+- To allow users to access news easily anytime and anywhere — **achieved** through a web-based system accessible on phones, tablets, and desktops.
+- To implement keyword search and category browsing — **achieved** with integrated search and category navigation.
+- To enable real-time interaction features such as article likes — **achieved** with AJAX like updates without full page reload.
+- To build a secure administrative dashboard — **achieved** with role-based access for Super Admin, Editor, and Writer staff.
+- To improve knowledge and skills in web development and database management — **achieved** through Laravel, MySQL, and full-stack implementation practice.
 
 ## Chapter 6: Conclusion
 
@@ -93,27 +99,14 @@ Issues such as search errors in `NewsController.php`, image display problems in 
 
 **Limitations**
 
-The project is still under development and not fully completed.
 
-Advanced features such as public commenting, AI-based news recommendations, and detailed banner analytics are not yet implemented.
+**Future Goals**
 
-The system requires a smartphone or internet-connected device for access.
-
-No native mobile application is available; the platform is web-only.
-
-User experience may still need improvement based on real user testing and feedback.
-
-**Future Goal**
-
-Develop a complete and fully deployed website for real users on Hostinger with Cloudflare CDN.
-
-Integrate AI features such as personalized content recommendations and automated article summarization.
-
-Build a cross-platform mobile application using Flutter or React Native.
-
-Improve system features based on user feedback, including public accounts, commenting, and social media sharing.
-
-Enhance user experience and performance optimization for better usability.
+- To deploy a complete and fully functional website for real users on Hostinger with Cloudflare CDN.
+- To integrate AI features such as personalized content recommendations and automated article summarization.
+- To build a cross-platform mobile application using Flutter or React Native.
+- To improve system features based on user feedback, including public accounts, commenting, and social media sharing.
+- To enhance user experience and performance optimization for better usability.
 
 ## Chapter 7: Future Works
 - **Mobile Application**: Developing a cross-platform mobile app using Flutter or React Native.

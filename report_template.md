@@ -126,13 +126,14 @@ To address these problems, the **Khmer News Portal** was developed as a complete
 
 **Objectives:**
 
-1. To develop a secure backend with Laravel to manage news articles, categories, and user accounts.
-2. To implement a real-time "Like" feature so readers can interact with articles without reloading the page.
-3. To create a dynamic sponsor banner system that can display and rotate multiple advertisements on the website.
-4. To design a clean and responsive public interface using HTML, CSS, JavaScript, and Laravel Blade templates.
-5. To provide an administrative dashboard for creating, editing, and organizing news content and categories.
-6. To implement a search function that allows readers to find news articles quickly by keywords.
-7. To test and evaluate the system to ensure it meets functional and non-functional requirements.
+- To create a web platform for displaying the newest and hot news in Cambodia.
+- To provide organized news categories such as sports, entertainment, technology, and politics.
+- To design a simple and responsive user interface for users.
+- To allow users to access news easily anytime and anywhere.
+- To implement keyword search and category browsing so readers can find articles quickly.
+- To enable real-time interaction features such as article likes without page reload.
+- To build a secure administrative dashboard for managing news, categories, users, and banners.
+- To improve knowledge and skills in web development and database management.
 
 ## 1.4 Rationale of the Study
 
@@ -146,16 +147,14 @@ This project includes the development of a Khmer news web application consisting
 
 ### Limitations
 
-The system has the following limitations:
-
-1. **Web Application Only:** It is only accessible via a website and does not offer native mobile apps for iOS or Android devices.
-2. **No Public User Registration:** Regular users cannot create accounts or log in; only admin staff have access to protected areas.
-3. **No Article Commenting:** Visitors cannot comment on news articles; comment functionality is not included in this version.
-4. **Single Language Support:** The platform currently supports only the Khmer language; there is no multi-language or translation feature.
-5. **Basic Analytics:** There are no advanced analytics, such as real-time user statistics or detailed banner click tracking, provided to administrators.
-6. **No Email Notifications:** The system does not send notification emails for new posts, comments, or system updates.
-7. **No Social Media Integration:** There are no features for sharing articles directly to social media platforms from the website.
-8. **Admin-Only Content Management:** Only authorized staff can add, edit, or delete news articles, categories, and banners. Public users have no content contribution abilities.
+- Focuses on Cambodian news and selected important international news.
+- Depends on an internet connection to access and display news content.
+- Advanced features such as AI-based news recommendation and live video streaming are not supported.
+- Features and social media integration may be limited or unavailable.
+- The platform is web-only and does not provide a native mobile application.
+- Public user registration and article commenting are not available in this version.
+- Content management is limited to authorized admin staff only.
+- The platform currently supports only the Khmer language; there is no multi-language feature.
 
 ### Key Features:
 
@@ -1056,13 +1055,14 @@ The project aimed to create a functional, user-friendly, and modern Khmer news p
 
 | Objective | Evaluation Result |
 | --- | --- |
-| Develop a secure backend with Laravel to manage news articles, categories, and user accounts | ☑ Laravel backend with MySQL, Eloquent ORM, and Spatie RBAC implemented successfully |
-| Implement a real-time "Like" feature so readers can interact without reloading the page | ☑ AJAX-based like/unlike system with instant count updates completed |
-| Create a dynamic sponsor banner system that displays and rotates multiple advertisements | ☑ Banner carousel with active/inactive toggle and position control fully functional |
-| Design a clean and responsive public interface using HTML, CSS, JavaScript, and Blade | ☑ Responsive public site with Bootstrap 5, dark mode, and Hotwire Turbo completed |
-| Provide an administrative dashboard for creating, editing, and organizing news content | ☑ Full admin dashboard with news workflow, categories, banners, and user management |
-| Implement a search function that allows readers to find news articles quickly by keywords | ☑ Integrated keyword search with category browsing working as required |
-| Test and evaluate the system to ensure it meets functional and non-functional requirements | ☑ Manual and functional testing completed; all core requirements verified |
+| To create a web platform for displaying the newest and hot news in Cambodia | ☑ Public homepage with latest and trending news implemented |
+| To provide organized news categories such as sports, entertainment, technology, and politics | ☑ Category-based browsing and management completed |
+| To design a simple and responsive user interface for users | ☑ Responsive layout with Bootstrap 5 and modern CSS completed |
+| To allow users to access news easily anytime and anywhere | ☑ Web-based platform accessible on mobile, tablet, and desktop |
+| To implement keyword search and category browsing so readers can find articles quickly | ☑ Integrated search and category navigation working as required |
+| To enable real-time interaction features such as article likes without page reload | ☑ AJAX-based like system with instant count updates completed |
+| To build a secure administrative dashboard for managing news, categories, users, and banners | ☑ Admin dashboard with Spatie RBAC for Super Admin, Editor, and Writer |
+| To improve knowledge and skills in web development and database management | ☑ Full-stack development with Laravel, MySQL, and JavaScript completed |
 
 **Figure 6: Objective and evaluation result**
 
