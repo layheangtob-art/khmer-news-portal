@@ -4,10 +4,10 @@
 @section('description', $news->meta_description ?: Str::limit(strip_tags($news->content), 160))
 @section('keywords', ($news->focus_keyword ? $news->focus_keyword . ', ' : '') . ($news->category->name ?? 'News') . ', KH News, ព័ត៌មានខ្មែរ')
 @section('og_type', 'article')
-@section('og_image', $news->image ? asset('storage/images/' . $news->image) : asset('img/logo.png'))
+@section('og_image', media_image($news->image, 'img/logo.png'))
 
 @php
-    $newsImage = $news->image ? asset('storage/images/' . $news->image) : asset('img/noimg.jpg');
+    $newsImage = media_image($news->image);
     $newsUrl = route('news.show', $news->slug);
     $newsDescription = $news->meta_description ?: Str::limit(strip_tags($news->content), 160);
 @endphp
@@ -138,7 +138,7 @@
 
                                 </div>
                                 <audio controls class="w-100 mt-1" style="height: 36px; border-radius: 4px;">
-                                    <source src="{{ asset('storage/audio/' . $news->audio) }}" type="audio/mpeg">
+                                    <source src="{{ media_url('audio/' . $news->audio) }}" type="audio/mpeg">
                                     Your browser does not support the audio element.
                                 </audio>
                             </div>
@@ -148,7 +148,7 @@
 
                     <!-- Featured Image -->
                     <div class="magnews-featured-image mb-4">
-                        <img src="{{ $news->image ? asset('storage/images/' . $news->image) : asset('img/noimg.jpg') }}"
+                        <img src="{{ media_image($news->image) }}"
                             alt="{{ $news->title }}" class="img-fluid w-100" width="1200" height="630" loading="lazy">
                     </div>
 
@@ -159,7 +159,7 @@
                                 @foreach ($news->images as $index => $image)
                                     <div class="col-lg-3 col-md-4 col-sm-6 col-6">
                                         <div class="gallery-item position-relative overflow-hidden rounded shadow-sm">
-                                            <img src="{{ asset('storage/images/' . $image) }}"
+                                            <img src="{{ media_url('images/' . $image) }}"
                                                 class="img-fluid w-100 gallery-image"
                                                 alt="Additional image {{ $index + 1 }} - {{ $news->title }}"
                                                 width="300" height="180"
@@ -208,7 +208,7 @@
                                         <div class="bg-dark bg-opacity-75 p-3">
                                             <div class="d-flex justify-content-center gap-2 flex-wrap" id="thumbnailStrip">
                                                 @foreach ($news->images as $thumbIndex => $thumbImage)
-                                                    <img src="{{ asset('storage/images/' . $thumbImage) }}"
+                                                    <img src="{{ media_url('images/' . $thumbImage) }}"
                                                         class="thumbnail-img rounded border border-2"
                                                         style="width: 60px; height: 60px; object-fit: cover; cursor: pointer; opacity: 0.7; transition: all 0.3s ease;"
                                                         onclick="showImage('{{ $thumbIndex }}')">
@@ -221,7 +221,7 @@
                         </div>
 
                         <script id="news-images-data" type="application/json">
-                    @json(array_map(function($img) { return asset('storage/images/'.$img); }, $news->images))
+                    @json(array_map(function($img) { return media_url('images/'.$img); }, $news->images))
                 </script>
                         <script>
                             let currentImageIndex = 0;
@@ -337,7 +337,7 @@
                                 @foreach ($randomNews as $relatedNews)
                                     <div class="col-lg-6">
                                         <div class="magnews-related-post">
-                                            <img src="{{ $relatedNews->image ? asset('storage/images/' . $relatedNews->image) : asset('img/noimg.jpg') }}"
+                                            <img src="{{ media_image($relatedNews->image) }}"
                                                 alt="{{ $relatedNews->title }}" class="magnews-related-img" width="120" height="120">
                                             <div class="magnews-related-content">
                                                 <a href="{{ route('news.show', $relatedNews->slug) }}"
@@ -402,7 +402,7 @@
                             <div class="magnews-popular-posts">
                                 @foreach ($popularPosts as $popularPost)
                                     <div class="magnews-popular-post-item">
-                                        <img src="{{ $popularPost->image ? asset('storage/images/' . $popularPost->image) : asset('img/noimg.jpg') }}"
+                                        <img src="{{ media_image($popularPost->image) }}"
                                             alt="{{ $popularPost->title }}" class="magnews-popular-img" width="80" height="80">
                                         <div class="magnews-popular-content">
                                             <a href="{{ route('news.show', $popularPost->slug) }}"

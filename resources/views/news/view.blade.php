@@ -63,7 +63,7 @@
                                     <div class="flex-grow-1">
                                         <p class="mb-1 fw-bold" style="font-size: 14px; color: #333; font-family: 'Kantumruy Pro', sans-serif;">ស្តាប់អត្ថបទព័ត៌មាននេះ</p>
                                         <audio controls class="w-100 mt-1" style="height: 36px; border-radius: 4px;">
-                                            <source src="{{ asset('storage/audio/' . $news->audio) }}" type="audio/mpeg">
+                                            <source src="{{ media_url('audio/' . $news->audio) }}" type="audio/mpeg">
                                             Your browser does not support the audio element.
                                         </audio>
                                     </div>
@@ -71,7 +71,7 @@
                                 @endif
                                 <div class="position-relative rounded mb-3">
                                     <div class="d-flex justify-content-center">
-                                        <img src="{{ $news->image ? asset('storage/images/' . $news->image) : asset('img/noimg.jpg') }}"
+                                        <img src="{{ media_image($news->image) }}"
                                             class="img-fluid rounded w-50" alt="">
                                     </div>
                                     <div class="position-absolute text-white px-4 py-2 bg-primary rounded"
@@ -101,7 +101,7 @@
                                 <div class="card-footer">
                                     <div class="row g-2 align-items-center mt-1">
                                         {{-- <div class="col-3">
-                                            <img src="{{ $news->author->image ? asset('storage/images/' . $news->author->image) : asset('img/user.png') }}"
+                                            <img src="{{ media_image($news->author->image, 'img/user.png') }}"
                                                 class="img-fluid w-100 rounded" alt="">
                                         </div> --}}
                                         {{-- <div class="col-9">

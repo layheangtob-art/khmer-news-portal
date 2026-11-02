@@ -28,5 +28,11 @@ class AppServiceProvider extends ServiceProvider
             Debugbar::disable();
         }
         Paginator::useBootstrapFive();
+
+        // Laravel Cloud overwrites the media disk with S3 config but does not
+        // set visibility, so uploaded objects would be private and unreadable.
+        if (config('filesystems.disks.media.driver') === 's3') {
+            config(['filesystems.disks.media.visibility' => 'public']);
+        }
     }
 }

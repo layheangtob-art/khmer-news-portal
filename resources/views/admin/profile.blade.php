@@ -40,7 +40,7 @@
                             <div class="card-header">Profile Picture</div>
                             <div class="card-body text-center">
                                 <img class="img-account-profile rounded-circle mb-3"
-                                    src="{{ $user->image ? asset('storage/images/' . $user->image) : asset('img/user.png') }}"
+                                    src="{{ media_image($user->image, 'img/user.png') }}"
                                     alt="Profile Picture" id="pictPreview">
                                 <div class="small font-italic text-muted mb-4">JPEG, JPG, or PNG no larger than 2 MB</div>
                                 <label class="btn btn-dark text-light">

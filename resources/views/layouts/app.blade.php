@@ -235,7 +235,7 @@
             <div class="magnews-mobile-ad-inner d-flex flex-column gap-2">
                 @foreach ($mobileHeaderBanner as $banner)
 <a href="{{ $banner->url ?? '#' }}" class="magnews-mobile-ad-link" @if ($banner->url) target="_blank" rel="noopener" @endif>
-                    <img src="{{ asset('storage/banners/' . $banner->image) }}"
+                    <img src="{{ media_url('banners/' . $banner->image) }}"
                         alt="{{ $banner->title }}" class="magnews-mobile-ad-img w-100"
                         style="object-fit: contain; max-height: 80px;"
                         onerror="this.style.display='none';">
@@ -343,14 +343,14 @@
             @foreach ($headerBanner as $banner)
 @if ($banner->url)
 <a href="{{ $banner->url }}" target="_blank" rel="noopener" class="w-100 text-center">
-                <img src="{{ asset('storage/banners/' . $banner->image) }}"
+                <img src="{{ media_url('banners/' . $banner->image) }}"
                     alt="{{ $banner->title }}" class="img-fluid"
                     style="max-height: 100px; width: auto; object-fit: contain;"
                     onerror="this.style.display='none';">
             </a>
 @else
 <div class="w-100 text-center">
-                <img src="{{ asset('storage/banners/' . $banner->image) }}"
+                <img src="{{ media_url('banners/' . $banner->image) }}"
                     alt="{{ $banner->title }}" class="img-fluid"
                     style="max-height: 100px; width: auto; object-fit: contain;"
                     onerror="this.style.display='none';">
@@ -445,7 +445,7 @@
                         <div class="magnews-footer-post mb-3">
                             <div class="row g-2">
                                 <div class="col-4">
-                                    <img src="{{ $post->image ? asset('storage/images/' . $post->image) : asset('img/noimg.jpg') }}"
+                                    <img src="{{ media_image($post->image) }}"
                                         alt="{{ $post->title }}" class="magnews-footer-post-img" width="150" height="70" loading="lazy" decoding="async">
                                 </div>
                                 <div class="col-8">
@@ -640,6 +640,17 @@
             }
         });
     </script>
+<script>
+    // Fall back to the placeholder when an uploaded image is missing (e.g. media deleted from storage).
+    document.addEventListener('error', function (event) {
+        var element = event.target;
+
+        if (element && element.tagName === 'IMG' && !element.dataset.fallbackApplied) {
+            element.dataset.fallbackApplied = '1';
+            element.src = '{{ asset('img/noimg.svg') }}';
+        }
+    }, true);
+</script>
 </body>
 
 </html>

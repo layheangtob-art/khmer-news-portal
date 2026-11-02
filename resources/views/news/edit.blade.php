@@ -224,7 +224,7 @@
                                             <label>Main Image</label>
                                             <input type="file" class="form-control" id="imageInput" name="image" accept="image/*" />
                                             <img id="imagePreview"
-                                                src="{{ $news->image ? asset('storage/images/' . $news->image) : '#' }}"
+                                                src="{{ $news->image ? media_url('images/' . $news->image) : '#' }}"
                                                 alt="Preview"
                                                 @if($news->image)
                                             style="display: block; max-width: 200px;"
@@ -240,7 +240,7 @@
                                             <div class="mt-2">
                                                 <small class="text-success">Current audio: {{ $news->audio }}</small>
                                                 <audio controls class="w-100 mt-1" style="height: 30px;">
-                                                    <source src="{{ asset('storage/audio/' . $news->audio) }}" type="audio/mpeg">
+                                                    <source src="{{ media_url('audio/' . $news->audio) }}" type="audio/mpeg">
                                                 </audio>
                                             </div>
                                             @endif

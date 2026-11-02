@@ -88,9 +88,9 @@ class UserController extends Controller
 
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
-                $image->storeAs('public/images/', $image->hashName());
+                store_public_media('images', $image, $image->hashName());
 
-                Storage::delete('public/images/' . $user->image);
+                Storage::disk('media')->delete('images/' . $user->image);
 
                 $data['image'] = $image->hashName();
             }
@@ -117,12 +117,12 @@ class UserController extends Controller
     {
         try {
             if ($user->image) {
-                Storage::delete('public/images/' . $user->image);
+                Storage::disk('media')->delete('images/' . $user->image);
             }
 
             foreach ($user->news as $news) {
                 if ($news->image) {
-                    Storage::delete('public/images/' . $news->image);
+                    Storage::disk('media')->delete('images/' . $news->image);
                 }
             }
 

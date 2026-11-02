@@ -238,7 +238,7 @@
                                 <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown"
                                     aria-expanded="false">
                                     <div class="avatar-sm">
-                                        <img src="{{ auth()->user()->image ? asset('storage/images/' . auth()->user()->image) : asset('img/user.png') }}"
+                                        <img src="{{ media_image(auth()->user()->image, 'img/user.png') }}"
                                             alt="Profile Picture" class="avatar-img rounded-circle" />
                                     </div>
                                     <span class="profile-username">
@@ -252,7 +252,7 @@
                                         <li>
                                             <div class="user-box">
                                                 <div class="avatar-lg">
-                                                    <img src="{{ auth()->user()->image ? asset('storage/images/' . auth()->user()->image) : asset('img/user.png') }}"
+                                                    <img src="{{ media_image(auth()->user()->image, 'img/user.png') }}"
                                                         alt="Profile Picture" class="avatar-img rounded" />
                                                 </div>
                                                 <div class="u-text">

@@ -43,7 +43,7 @@ class BannerController extends Controller
             // Handle image upload
             if ($request->hasFile('image')) {
                 $imageName = time() . '.' . $request->image->extension();
-                $request->image->storeAs('public/banners', $imageName);
+                store_public_media('banners', $request->image, $imageName);
             } else {
                 return redirect()->back()->with('error', 'Please select an image file.');
             }
@@ -112,12 +112,12 @@ class BannerController extends Controller
         // Handle image update
         if ($request->hasFile('image')) {
             // Delete old image
-            if ($banner->image && Storage::exists('public/banners/' . $banner->image)) {
-                Storage::delete('public/banners/' . $banner->image);
+            if ($banner->image && Storage::disk('media')->exists('banners/' . $banner->image)) {
+                Storage::disk('media')->delete('banners/' . $banner->image);
             }
 
             $imageName = time() . '.' . $request->image->extension();
-            $request->image->storeAs('public/banners', $imageName);
+            store_public_media('banners', $request->image, $imageName);
             $data['image'] = $imageName;
         }
 
@@ -132,8 +132,8 @@ class BannerController extends Controller
     public function destroy(Banner $banner)
     {
         // Delete image file
-        if ($banner->image && Storage::exists('public/banners/' . $banner->image)) {
-            Storage::delete('public/banners/' . $banner->image);
+        if ($banner->image && Storage::disk('media')->exists('banners/' . $banner->image)) {
+            Storage::disk('media')->delete('banners/' . $banner->image);
         }
 
         $banner->delete();

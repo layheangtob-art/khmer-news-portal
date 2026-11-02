@@ -30,14 +30,14 @@
                 <div class="carousel-item {{ $i === 0 ? 'active' : '' }}">
                     @if($banner->url)
                     <a href="{{ $banner->url }}" target="_blank" rel="noopener">
-                        <img src="{{ asset('storage/banners/' . $banner->image) }}"
+                        <img src="{{ media_url('banners/' . $banner->image) }}"
                              alt="{{ $banner->title }}"
                              class="d-block w-100 rounded" width="1200" height="200"
                              style="max-height: 200px; height: auto; object-fit: cover;"
                              onerror="this.closest('.carousel-item').style.display='none';">
                     </a>
                     @else
-                    <img src="{{ asset('storage/banners/' . $banner->image) }}"
+                    <img src="{{ media_url('banners/' . $banner->image) }}"
                          alt="{{ $banner->title }}"
                          class="d-block w-100 rounded" width="1200" height="200"
                          style="max-height: 200px; height: auto; object-fit: cover;"
@@ -81,7 +81,7 @@
                                 <div class="row g-0">
                                     <div class="col-md-4">
                                         <div class="position-relative h-100" style="min-height: 250px;">
-                                            <img src="{{ $news->image ? asset('storage/images/' . $news->image) : asset('img/noimg.jpg') }}"
+                                            <img src="{{ media_image($news->image) }}"
                                                 class="img-fluid w-100 h-100" alt="{{ $news->title }}" width="800" height="600" style="object-fit: cover;" loading="lazy" decoding="async" />
            
                                             <!-- Additional images indicator -->
@@ -159,7 +159,7 @@
                             @foreach($globalLatestNews as $news)
                             <div class="d-flex align-items-start mb-3 pb-3 border-bottom {{ $loop->last ? 'border-0 mb-0 pb-0' : '' }}">
                                 <div class="me-3">
-                                   <img src="{{ $news->image ? asset('storage/images/' . $news->image) : asset('img/noimg.jpg') }}"
+                                   <img src="{{ media_image($news->image) }}"
                                         class="rounded" style="width: 80px; height: 60px; object-fit: cover;" alt="{{ $news->title }}">
                                 </div>
                                 <div class="flex-grow-1">

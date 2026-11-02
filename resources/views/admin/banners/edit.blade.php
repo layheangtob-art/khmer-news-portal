@@ -120,7 +120,7 @@
                         <h5 class="card-title">Current Image</h5>
                     </div>
                     <div class="card-body text-center">
-                        <img src="{{ asset('storage/banners/' . $banner->image) }}" 
+                        <img src="{{ media_url('banners/' . $banner->image) }}" 
                              alt="{{ $banner->title }}" 
                              class="img-fluid rounded mb-3" 
                              style="max-height: 200px;"

@@ -67,6 +67,15 @@ class News extends Model
         return trim(Str::limit($slug, 120, ''), '-');
     }
 
+    public function getContentAttribute(?string $value): ?string
+    {
+        if ($value === null) {
+            return null;
+        }
+
+        return str_replace('/storage/images/', '/media/images/', $value);
+    }
+
     public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');

@@ -22,7 +22,7 @@
             <!-- Big Hero Card -->
             <div class="card border-0 shadow-sm overflow-hidden mb-4">
                 <div class="position-relative hero-card-container">
-                    <img src="{{ $latestNews->first()->image ? asset('storage/images/' . $latestNews->first()->image) : asset('img/noimg.jpg') }}"
+                    <img src="{{ media_image($latestNews->first()->image) }}"
                         class="w-100 h-100"
                         style="object-fit: cover;"
                         width="1200" height="800"
@@ -49,7 +49,7 @@
                     <div class="card border-0 shadow-sm h-100">
                         <div class="row g-0 h-100">
                             <div class="col-4">
-                                <img src="{{ $news->image ? asset('storage/images/' . $news->image) : asset('img/noimg.jpg') }}"
+                                <img src="{{ media_image($news->image) }}"
                                     class="img-fluid rounded-start h-100"
                                     style="object-fit: cover;"
                                     width="600" height="600"
@@ -128,7 +128,7 @@
             <div class="carousel-item {{ $i === 0 ? 'active' : '' }}">
                 @if($banner->url)
                 <a href="{{ $banner->url }}" target="_blank" rel="noopener">
-                    <img src="{{ asset('storage/banners/' . $banner->image) }}"
+                    <img src="{{ media_url('banners/' . $banner->image) }}"
                         alt="{{ $banner->title }}"
                         class="d-block w-100 responsive-home-banner shadow"
                         width="1200" height="400"
@@ -136,7 +136,7 @@
                         loading="lazy">
                 </a>
                 @else
-                <img src="{{ asset('storage/banners/' . $banner->image) }}"
+                <img src="{{ media_url('banners/' . $banner->image) }}"
                     alt="{{ $banner->title }}"
                     class="d-block w-100 responsive-home-banner shadow"
                     onerror="this.closest('.carousel-item').style.display='none';"
@@ -192,7 +192,7 @@
                 <div class="col-md-6 col-lg-3">
                     <div class="card h-100 border-0 shadow-sm hover-shadow transition-all">
                         <div class="position-relative overflow-hidden" style="height: 200px;">
-                            <img src="{{ $news->image ? asset('storage/images/' . $news->image) : asset('img/noimg.jpg') }}"
+                            <img src="{{ media_image($news->image) }}"
                                 class="card-img-top w-100 h-100"
                                 style="object-fit: cover; transition: transform 0.3s;"
                                 width="600" height="400"
@@ -229,7 +229,7 @@
                 <div class="col-md-6 col-lg-3">
                     <div class="card h-100 border-0 shadow-sm hover-shadow transition-all">
                         <div class="position-relative overflow-hidden" style="height: 200px;">
-                            <img src="{{ $news->image ? asset('storage/images/' . $news->image) : asset('img/noimg.jpg') }}"
+                            <img src="{{ media_image($news->image) }}"
                                 class="card-img-top w-100 h-100"
                                 style="object-fit: cover; transition: transform 0.3s;"
                                 width="600" height="400"

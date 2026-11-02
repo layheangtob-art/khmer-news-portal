@@ -76,7 +76,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>
-                                            <img src="{{ asset('storage/banners/' . $banner->image) }}" 
+                                            <img src="{{ media_url('banners/' . $banner->image) }}" 
                                                  alt="{{ $banner->title }}" 
                                                  style="width: 80px; height: 50px; object-fit: cover;" 
                                                  class="rounded">

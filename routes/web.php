@@ -4,13 +4,13 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MediaController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserController;
 use App\Models\Category;
 use App\Models\News;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
 
 // All
 Route::get('/', [NewsController::class, 'index'])->name('index');
@@ -37,20 +37,13 @@ Route::get('/sitemap.xml', function () {
         ->header('Content-Type', 'text/xml');
 })->name('sitemap');
 
+Route::get('/media/{path}', [MediaController::class, 'show'])
+    ->where('path', '.*')
+    ->name('media.show');
+
 Route::get('/storage/images/{filename}', function (string $filename) {
-    if (! preg_match('/^[A-Za-z0-9._-]+$/', $filename)) {
-        abort(404);
-    }
-
-    $relativePath = 'images/'.$filename;
-    if (! Storage::disk('public')->exists($relativePath)) {
-        abort(404);
-    }
-
-    return response()->file(Storage::disk('public')->path($relativePath), [
-        'Cache-Control' => 'public, max-age=31536000',
-    ]);
-})->name('storage.images.show');
+    return redirect('/media/images/'.$filename, 301);
+})->where('filename', '[A-Za-z0-9._-]+')->name('storage.images.show');
 
 // Guest
 Route::middleware(['guest'])->group(function () {

@@ -43,8 +43,8 @@
                 @foreach ($latestNews->take(1) as $news)
                 <div class="position-relative mb-5">
                     <div class="news-featured-image">
-                        <img src="{{ $news->image ? asset('storage/images/' . $news->image) : asset('img/noimg.jpg') }}"
-                            class="img-fluid w-100 featured-news-img" width="1200" height="500" alt="{{ $news->title }}" onerror="this.src=`{{ asset('img/noimg.jpg') }}`;" loading="lazy" />
+                        <img src="{{ media_image($news->image) }}"
+                            class="img-fluid w-100 featured-news-img" width="1200" height="500" alt="{{ $news->title }}" onerror="this.src=`{{ asset('img/noimg.svg') }}`;" loading="lazy" />
                         <!-- Additional images indicator for featured news -->
                         @if($news->images && count($news->images) > 0)
                         <div class="position-absolute image-indicator text-white"
@@ -75,8 +75,8 @@
                             <div class="row g-0">
                                 <div class="col-md-4">
                                     <div class="position-relative h-100" style="min-height: 250px;">
-                                        <img src="{{ $news->image ? asset('storage/images/' . $news->image) : asset('img/noimg.jpg') }}"
-                                            class="img-fluid w-100 h-100" alt="{{ $news->title }}" width="800" height="600" style="object-fit: cover;" onerror="this.src=`{{ asset('img/noimg.jpg') }}`;" loading="lazy" />
+                                        <img src="{{ media_image($news->image) }}"
+                                            class="img-fluid w-100 h-100" alt="{{ $news->title }}" width="800" height="600" style="object-fit: cover;" onerror="this.src=`{{ asset('img/noimg.svg') }}`;" loading="lazy" />
                                         <div class="position-absolute" style="top: 15px; left: 15px;">
                                             <div class="d-flex">
                                                 <div class="flag-corner-blue"></div>
@@ -147,8 +147,8 @@
                         @foreach($globalLatestNews as $news)
                         <div class="d-flex align-items-start mb-3 pb-3 border-bottom {{ $loop->last ? 'border-0 mb-0 pb-0' : '' }}">
                             <div class="me-3">
-                                <img src="{{ $news->image ? asset('storage/images/' . $news->image) : asset('img/noimg.jpg') }}"
-                                    class="rounded" width="80" height="60" style="width: 80px; height: 60px; object-fit: cover;" alt="{{ $news->title }}" onerror="this.src=`{{ asset('img/noimg.jpg') }}`;">
+                                <img src="{{ media_image($news->image) }}"
+                                    class="rounded" width="80" height="60" style="width: 80px; height: 60px; object-fit: cover;" alt="{{ $news->title }}" onerror="this.src=`{{ asset('img/noimg.svg') }}`;">
                             </div>
                             <div class="flex-grow-1">
                                 <a href="{{ route('news.show', $news->slug) }}" class="text-decoration-none">

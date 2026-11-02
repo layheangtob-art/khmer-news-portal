@@ -44,6 +44,22 @@ return [
             'throw' => false,
         ],
 
+        /*
+         * User uploads (news images, avatars, banners, audio) live on the
+         * "media" disk. Locally it is the public disk above. On Laravel Cloud,
+         * create an object storage bucket using "media" as its disk name:
+         * Cloud injects LARAVEL_CLOUD_DISK_CONFIG, which replaces this
+         * definition with the S3-compatible bucket so uploads are not lost
+         * when the ephemeral filesystem is reset on each deployment.
+         */
+        'media' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public'),
+            'url' => env('APP_URL').'/media',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

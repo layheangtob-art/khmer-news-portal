@@ -104,9 +104,9 @@ class NewsController extends Controller
             if ($request->hasFile('upload')) {
                 $image = $request->file('upload');
                 $imageName = $image->hashName();
-                $image->storeAs('public/images', $imageName);
+                store_public_media('images', $image, $imageName);
 
-                $url = asset('storage/images/'.$imageName);
+                $url = media_url('images/'.$imageName);
 
                 return response()->json([
                     'url' => $url,
@@ -183,14 +183,14 @@ class NewsController extends Controller
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
                 $imageHashName = $image->hashName();
-                $image->storeAs('public/images', $imageHashName);
+                store_public_media('images', $image, $imageHashName);
             } else {
                 // If no main image is uploaded, check if there's an image in the news body content
                 $content = $request->input('content');
                 if (preg_match('/<img[^>]+src="([^">]+)"/', $content, $matches)) {
                     $imageUrl = $matches[1];
-                    // Check if it's a local storage image
-                    if (strpos($imageUrl, asset('storage/images/')) !== false) {
+                    // Check if it's a media disk image
+                    if (strpos($imageUrl, media_url('images/')) !== false) {
                         $imageHashName = basename(parse_url($imageUrl, PHP_URL_PATH));
                     }
                 }
@@ -200,7 +200,7 @@ class NewsController extends Controller
             if ($request->hasFile('additional_images')) {
                 foreach ($request->file('additional_images') as $additionalImage) {
                     $additionalImageName = $additionalImage->hashName();
-                    $additionalImage->storeAs('public/images', $additionalImageName);
+                    store_public_media('images', $additionalImage, $additionalImageName);
                     $additionalImages[] = $additionalImageName;
                 }
             }
@@ -210,7 +210,7 @@ class NewsController extends Controller
             if ($request->hasFile('audio_file')) {
                 $audioFile = $request->file('audio_file');
                 $audioFileName = 'audio_'.time().'_'.uniqid().'.'.$audioFile->getClientOriginalExtension();
-                $audioFile->storeAs('public/audio', $audioFileName);
+                store_public_media('audio', $audioFile, $audioFileName);
             }
 
             $news = News::create([
@@ -320,11 +320,11 @@ class NewsController extends Controller
             // Handle main image update
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
-                $image->storeAs('public/images/', $image->hashName());
+                store_public_media('images', $image, $image->hashName());
 
                 // Delete old main image
                 if ($news->image) {
-                    Storage::delete('public/images/'.$news->image);
+                    Storage::disk('media')->delete('images/'.$news->image);
                 }
 
                 $data['image'] = $image->hashName();
@@ -333,8 +333,8 @@ class NewsController extends Controller
                 $content = $request->input('content');
                 if (preg_match('/<img[^>]+src="([^">]+)"/', $content, $matches)) {
                     $imageUrl = $matches[1];
-                    // Check if it's a local storage image
-                    if (strpos($imageUrl, asset('storage/images/')) !== false) {
+                    // Check if it's a media disk image
+                    if (strpos($imageUrl, media_url('images/')) !== false) {
                         $imageHashName = basename(parse_url($imageUrl, PHP_URL_PATH));
 
                         // If it's a different image than current, update it
@@ -352,14 +352,14 @@ class NewsController extends Controller
                 // Delete old additional images
                 if ($news->images && is_array($news->images)) {
                     foreach ($news->images as $oldImage) {
-                        Storage::delete('public/images/'.$oldImage);
+                        Storage::disk('media')->delete('images/'.$oldImage);
                     }
                 }
 
                 // Store new additional images
                 foreach ($request->file('additional_images') as $additionalImage) {
                     $additionalImageName = $additionalImage->hashName();
-                    $additionalImage->storeAs('public/images', $additionalImageName);
+                    store_public_media('images', $additionalImage, $additionalImageName);
                     $additionalImages[] = $additionalImageName;
                 }
 
@@ -370,11 +370,11 @@ class NewsController extends Controller
             if ($request->hasFile('audio_file')) {
                 $audioFile = $request->file('audio_file');
                 $audioFileName = 'audio_'.time().'_'.uniqid().'.'.$audioFile->getClientOriginalExtension();
-                $audioFile->storeAs('public/audio', $audioFileName);
+                store_public_media('audio', $audioFile, $audioFileName);
 
                 // Delete old audio
                 if ($news->audio) {
-                    Storage::delete('public/audio/'.$news->audio);
+                    Storage::disk('media')->delete('audio/'.$news->audio);
                 }
 
                 $data['audio'] = $audioFileName;
@@ -419,10 +419,10 @@ class NewsController extends Controller
     {
         try {
             if ($news->image) {
-                Storage::delete('public/images/'.$news->image);
+                Storage::disk('media')->delete('images/'.$news->image);
             }
             if ($news->audio) {
-                Storage::delete('public/audio/'.$news->audio);
+                Storage::disk('media')->delete('audio/'.$news->audio);
             }
             $news->delete();
 
@@ -551,7 +551,7 @@ class NewsController extends Controller
                 'content' => Str::limit(strip_tags($item->content), 100),
                 'category' => $item->category->name ?? '',
                 'author' => $item->author->name ?? '',
-                'image' => $item->image ? asset('storage/images/'.$item->image) : null,
+                'image' => $item->image ? media_url('images/'.$item->image) : null,
                 'url' => route('news.show', $item->slug),
                 'created_at' => $item->created_at->diffForHumans(),
                 'match_type' => $titleMatches->contains('id', $item->id) ? 'title' : 'content',
