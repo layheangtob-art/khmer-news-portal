@@ -39,6 +39,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>ID</th>
+                                        <th>Image</th>
                                         <th>Title</th>
                                         <th>Category</th>
                                         <th>Author</th>
@@ -51,6 +52,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>ID</th>
+                                        <th>Image</th>
                                         <th>Title</th>
                                         <th>Category</th>
                                         <th>Author</th>
@@ -64,6 +66,12 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $news->id }}</td>
+                                        <td>
+                                            <img src="{{ media_image($news->image) }}"
+                                                alt="{{ $news->title }}"
+                                                class="rounded"
+                                                style="width: 80px; height: 50px; object-fit: cover;">
+                                        </td>
                                         <td>{{ \Illuminate\Support\Str::limit($news->title, 50) }}</td>
                                         <td>{{ $news->category->name ?? 'N/A' }}</td>
                                         <td>{{ $news->author->name ?? 'N/A' }}</td>
