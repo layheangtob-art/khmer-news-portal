@@ -55,6 +55,15 @@
     <link rel="stylesheet" href="{{ asset('css/ckeditor-content.css') }}">
 
     <link rel="stylesheet" href="{{ asset('css/magnews-style.css') }}">
+    
+    <!-- JavaScript Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js" data-turbo-track="reload"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" data-turbo-track="reload"></script>
+    <script src="{{ asset('th/lib/easing/easing.min.js') }}" data-turbo-track="reload"></script>
+    <script src="{{ asset('th/lib/waypoints/waypoints.min.js') }}" data-turbo-track="reload"></script>
+    <script src="{{ asset('th/lib/owlcarousel/owl.carousel.min.js') }}" data-turbo-track="reload"></script>
+    <script src="{{ asset('th/js/main.js') }}" data-turbo-track="reload"></script>
+    
     <script src="https://unpkg.com/@hotwired/turbo@8.0.0/dist/turbo.es2017-umd.js"></script>
 
     <!-- it make for not relaod page -->
@@ -432,15 +441,7 @@
         <i class="fa fa-arrow-up"></i>
     </a>
 
-    <!-- JavaScript Libraries -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('th/lib/easing/easing.min.js') }}"></script>
-    <script src="{{ asset('th/lib/waypoints/waypoints.min.js') }}"></script>
-    <script src="{{ asset('th/lib/owlcarousel/owl.carousel.min.js') }}"></script>
-
-    <!-- Template Javascript -->
-    <script src="{{ asset('th/js/main.js') }}"></script>
+    <!-- JavaScript Libraries removed from here -->
 
     {{-- Custom JS --}}
     <script src="{{ asset('js/shortcut.js') }}"></script>
